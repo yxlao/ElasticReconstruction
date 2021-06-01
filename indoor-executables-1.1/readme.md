@@ -4,18 +4,18 @@
 
 Put `input.oni` in sandbox/
 E.g. download from:
-https://github.com/yxlao/ElasticReconstruction/releases/download/bin/input.oni
+https://github.com/yxlao/ElasticReconstruction/releases/download/bin/input.oni.
 
-## Get MS Visual C++ 2010 runtime
+## Get MS Visual C++ 2010 runtime (`vcomp100.dll`)
 
 `vcomp100.dll` has already been copied to `indoor-executables-1.1\bin`. Skip
 this step if it works.
 
-- Get it from: http://www.microsoft.com/download/details.aspx?id=26999
-- Also see: https://support.microsoft.com/en-us/topic/the-latest-supported-visual-c-downloads-2647da03-1eea-4433-9aff-95f26a218cc0
-- After inttallation, it will be in `C:\Windows\System32\vcomp100.dll`
+- Get it from: http://www.microsoft.com/download/details.aspx?id=26999.
+- Also see: https://support.microsoft.com/en-us/topic/.the-latest-supported-visual-c-downloads-2647da03-1eea-4433-9aff-95f26a218cc0.
+- After inttallation, it will be in `C:\Windows\System32\vcomp100.dll`.
 
-## Get CUDA 7.0
+## Get CUDA 7.0 (`curand64_70.dll`)
 
 `curand64_70.dll` has already been copied to `indoor-executables-1.1\bin`. Skip
 this step if it works.
@@ -26,9 +26,17 @@ this step if it works.
   1. Run the installer.
   2. It will ask for the path to extract the files, typically it is
      `%USERPROFILE%\AppData\Local\Temp\CUDA`
-  3. Go to `%USERPROFILE%\AppData\Local\Temp\CUDA\CUDAToolkit\bin`
-  4. Copy `curand64_70.dll` to `indoor-executables-1.1\bin`
+  3. Go to `%USERPROFILE%\AppData\Local\Temp\CUDA\CUDAToolkit\bin`.
+  4. Copy `curand64_70.dll` to `indoor-executables-1.1\bin`.
   5. Close the installer. You don't need to install it.
+
+## Get OpenNI library (`OpenNI64.dll`)
+
+`OpenNI64.dll` has already been copied to `indoor-executables-1.1\bin`. Skip
+this step if it works.
+
+- Install [OpenNI 1.5.4](http://redwood-data.org/indoor/data/OpenNI-Win64-1.5.4-Dev.msi).
+- Copy `C:\Program Files\OpenNI\Bin64\OpenNI64.dll` to `indoor-executables-1.1\bin`.
 
 ## Get a bash shell
 
