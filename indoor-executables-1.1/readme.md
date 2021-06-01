@@ -61,7 +61,7 @@ add the following profile to the settings.
 
 ## Run test scripts
 
-Using the bash shell, go to `indoor-executables-1.1\bin`. If everything goes
+Using the bash shell, go to `indoor-executables-1.1/bin`. If everything goes
 correct, this shall work:
 
 ```bash
