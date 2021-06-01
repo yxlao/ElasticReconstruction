@@ -3,8 +3,6 @@
 script_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 echo $script_dir
 export PATH=$PATH:$script_dir
-export PATH=$PATH:"/c/Program Files/OpenNI/Bin64"
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:"/c/Program Files/OpenNI/Bin64"
 
 echo "######## Running: pcl_kinfu_largeScale_release.exe"
 pcl_kinfu_largeScale_release.exe
