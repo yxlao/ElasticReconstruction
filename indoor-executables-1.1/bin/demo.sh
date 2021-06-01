@@ -1,5 +1,9 @@
 #!/bin/bash
 
+script_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+echo $script_dir
+export PATH=$PATH:$script_dir
+
 pcl_kinfu_largeScale_release.exe -r -ic -sd 10 -oni ../sandbox/input.oni -vs 4 --fragment 25 --rgbd_odometry --record_log ../sandbox/100-0.log --camera longrange.param
 mkdir ../sandbox/pcds/
 mv cloud_bin* ../sandbox/pcds/
