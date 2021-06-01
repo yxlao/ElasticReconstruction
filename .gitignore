@@ -1,3 +1,4 @@
+*.oni
 /ipch/
 /*.sdf
 /*.suo
