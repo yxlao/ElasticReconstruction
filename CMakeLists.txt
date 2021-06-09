@@ -56,6 +56,7 @@ if(BOOST_FOUND)
     message(STATUS "Boost found")
     message(STATUS "Boost_INCLUDE_DIRS: ${Boost_INCLUDE_DIRS}")
     message(STATUS "BOOST_LIBRARIES: ${BOOST_LIBRARIES}") # Upper case
+    message(STATUS "Boost_LIBRARIES: ${Boost_LIBRARIES}") # Upper case
     message(STATUS "Boost_LIBRARY_DIRS: ${Boost_LIBRARY_DIRS}")
 else()
     message(FATAL_ERROR "BOOST_FOUND: ${BOOST_FOUND}")
@@ -162,6 +163,7 @@ function(elastic_reconstruction_set_global_properties target)
         ${CSPARSE_LIBRARY}
         ${PCL_LIBRARIES}
         ${BOOST_LIBRARIES}
+        boost_program_options # TODO: update me
         ${CHOLMOD_LIBRARIES}
         ${G2O_LIBRARIES}
     )
