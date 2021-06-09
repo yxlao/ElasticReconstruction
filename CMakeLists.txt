@@ -164,6 +164,7 @@ function(elastic_reconstruction_set_global_properties target)
         ${PCL_LIBRARIES}
         ${BOOST_LIBRARIES}
         boost_program_options # TODO: update me
+        /home/yixing/repo/ElasticReconstruction/Deps/build/install/lib/libg2o_opengl_helper.so
         ${CHOLMOD_LIBRARIES}
         ${G2O_LIBRARIES}
     )
