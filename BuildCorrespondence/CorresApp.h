@@ -7,7 +7,7 @@
 #include <unordered_map>
 #include <vector>
 
-#include "Helper.h"
+#include "BuildCorrespondence/Helper.h"
 
 typedef std::pair<int, int> CorrespondencePair;
 

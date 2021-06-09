@@ -7,7 +7,7 @@
 #include <cmath>
 #include <unordered_map>
 
-#include "CorresApp.h"
+#include "BuildCorrespondence/CorresApp.h"
 
 CCorresApp::CCorresApp(void)
     : save_xyzn_(false), save_corres_(true), dist_thresh_(0.015),

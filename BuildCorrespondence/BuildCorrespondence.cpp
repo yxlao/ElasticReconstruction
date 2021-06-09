@@ -2,7 +2,7 @@
 // application.
 //
 
-#include "CorresApp.h"
+#include "BuildCorrespondence/CorresApp.h"
 
 #include <string>
 #include <iostream>

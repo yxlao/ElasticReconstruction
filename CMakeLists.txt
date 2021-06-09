@@ -93,9 +93,8 @@ function(elastic_reconstruction_set_global_properties target)
         )
     endif()
 
-    target_include_directories(${target} PUBLIC
-        $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/cpp>
-        $<INSTALL_INTERFACE:${Open3D_INSTALL_INCLUDE_DIR}>
+    target_include_directories(${target} PRIVATE
+        $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
     )
 
     # Propagate build configuration into source code
