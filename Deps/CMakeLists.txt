@@ -16,5 +16,6 @@ include(${PROJECT_SOURCE_DIR}/eigen/eigen.cmake)
 include(${PROJECT_SOURCE_DIR}/suitesparse/suitesparse.cmake)
 
 # G2O
-# include(${PROJECT_SOURCE_DIR}/g2o/g2o.cmake)
-# add_dependencies(ext_g2o ext_eigen)
+include(${PROJECT_SOURCE_DIR}/g2o/g2o.cmake)
+add_dependencies(ext_g2o ext_eigen)
+add_dependencies(ext_g2o ext_suitesparse)
