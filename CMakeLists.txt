@@ -138,20 +138,6 @@ function(elastic_reconstruction_set_global_properties target)
         set_target_properties(${target} PROPERTIES POSITION_INDEPENDENT_CODE ON)
     endif()
 
-    # Tell CMake we want a compiler that supports C++14 features
-    target_compile_features(${target} PUBLIC cxx_std_14)
-
-    # Colorize GCC/Clang terminal outputs
-    if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
-        target_compile_options(${target} PRIVATE
-            $<$<COMPILE_LANGUAGE:CXX>:-fdiagnostics-color=always>
-        )
-    elseif (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
-        target_compile_options(${target} PRIVATE
-            $<$<COMPILE_LANGUAGE:CXX>:-fcolor-diagnostics>
-        )
-    endif()
-
     target_include_directories(${target} PRIVATE
         $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
     )
