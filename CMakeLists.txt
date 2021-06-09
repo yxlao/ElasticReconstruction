@@ -29,4 +29,8 @@ list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/CMake")
 include(set_global_properties)
 
 # Subdirectories.
+add_subdirectory(BuildCorrespondence)
 add_subdirectory(FragmentOptimizer)
+add_subdirectory(GlobalRegistration)
+add_subdirectory(GraphOptimizer)
+add_subdirectory(Integrate)
