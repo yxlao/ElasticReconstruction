@@ -77,6 +77,7 @@ find_package(SuiteSparse)
 if(CSPARSE_FOUND)
     message(STATUS "SuiteSparse found")
     message(STATUS "CHOLMOD_LIBRARIES: ${CHOLMOD_LIBRARIES}")
+    message(STATUS "CSPARSE_LIBRARY: ${CSPARSE_LIBRARY}")
 else()
     message(FATAL_ERROR "CSPARSE_FOUND: ${CSPARSE_FOUND}")
 endif()
@@ -172,6 +173,7 @@ function(elastic_reconstruction_set_global_properties target)
         ${Boost_LIBRARY_DIRS}
     )
     target_link_libraries(${target} PRIVATE
+        ${CSPARSE_LIBRARY}
         ${PCL_LIBRARIES}
         ${BOOST_LIBRARIES}
         ${CHOLMOD_LIBRARIES}
