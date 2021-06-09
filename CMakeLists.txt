@@ -125,7 +125,35 @@ function(elastic_reconstruction_set_global_properties target)
     target_compile_options(${target} PRIVATE
         -Wno-attributes
         -Wno-unused-result
+
+        -Wno-conversion
+        -Wno-dangling-else
+        -Wno-deprecated-declarations
+        -Wno-expansion-to-defined
+        -Wno-enum-compare
+        -Wno-float-conversion
+        -Wno-format-extra-args
+        -Wno-format
+        -Wno-ignored-attributes
+        -Wno-implicit-fallthrough
+        -Wno-int-in-bool-context
+        -Wno-invalid-offsetof
+        -Wno-logical-not-parentheses
+        -Wno-misleading-indentation
+        -Wno-narrowing
+        -Wno-old-style-cast
+        -Wno-reorder
+        -Wno-sign-compare
+        -Wno-strict-aliasing
+        -Wno-unknown-pragmas
+        -Wno-unused-function
+        -Wno-unused-local-typedefs
+        -Wno-unused-parameter
+        -Wno-unused-variable
+
+        -fpermissive # Could be dangerous
     )
+
 endfunction()
 
 # Subdirectories.

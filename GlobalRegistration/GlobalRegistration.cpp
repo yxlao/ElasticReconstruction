@@ -1,7 +1,6 @@
 // GlobalRegistration.cpp : Defines the entry point for the console application.
 //
 
-#include "stdafx.h"
 #include <Eigen/Core>
 #include <pcl/point_types.h>
 #include <pcl/point_cloud.h>
@@ -15,8 +14,9 @@
 #include <pcl/filters/voxel_grid.h>
 #include <pcl/io/pcd_io.h>
 #include <pcl/registration/icp.h>
-#include "helper.h"
-#include "RansacCurvature.h"
+
+#include "GlobalRegistration/Helper.h"
+#include "GlobalRegistration/RansacCurvature.h"
 
 // Types
 typedef pcl::PointXYZ PointT;

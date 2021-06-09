@@ -1,2 +1,2 @@
-#include "stdafx.h"
-#include "RansacCurvature.h"
+
+#include "GlobalRegistration/RansacCurvature.h"
