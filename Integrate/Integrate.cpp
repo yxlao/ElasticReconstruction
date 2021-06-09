@@ -10,22 +10,22 @@
 int print_help() {
     // clang-format off
     std::cout << "\nApplication parameters:" << std::endl;
-	cout << "    --help, -h                      : print this message" << std::endl;
+    std::cout << "    --help, -h                      : print this message" << std::endl;
     std::cout << "    --ref_traj <log_file>           : use a reference trajectory file" << std::endl;
-	cout << "    --pose_traj <log_file>          : use a pose trajectory file to create a reference trajectory" << std::endl;
-	cout << "    --seg_traj <log_file>           : trajectory within each fragment - must have" << std::endl;
-	cout << "    --ctr <ctr_file>                : enables distortion, must specify the following parameters" << std::endl;
-	cout << "    --num <number>                  : number of pieces, important parameter" << std::endl;
-	cout << "    --resolution <resolution>       : default - 8" << std::endl;
-	cout << "    --length <length>               : default - 3.0" << std::endl;
-	cout << "    --interval <interval>           : default - 50" << std::endl;
-	cout << "    --camera <param_file>           : load camera parameters" << std::endl;
-	cout << "    --save_to <pcd_file>            : output file, default - world.pcd" << std::endl;
-	cout << "    --start_from <frame_id>         : frames before frame_id will be skipped" << std::endl;
-	cout << "    --end_at <frame_id>             : frames after frame_id will be skipped" << std::endl;
-	cout << "Valid depth data sources:" << std::endl;
-	cout << "    -dev <device> (default), -oni <oni_file>" << std::endl;
-	return 0;
+    std::cout << "    --pose_traj <log_file>          : use a pose trajectory file to create a reference trajectory" << std::endl;
+    std::cout << "    --seg_traj <log_file>           : trajectory within each fragment - must have" << std::endl;
+    std::cout << "    --ctr <ctr_file>                : enables distortion, must specify the following parameters" << std::endl;
+    std::cout << "    --num <number>                  : number of pieces, important parameter" << std::endl;
+    std::cout << "    --resolution <resolution>       : default - 8" << std::endl;
+    std::cout << "    --length <length>               : default - 3.0" << std::endl;
+    std::cout << "    --interval <interval>           : default - 50" << std::endl;
+    std::cout << "    --camera <param_file>           : load camera parameters" << std::endl;
+    std::cout << "    --save_to <pcd_file>            : output file, default - world.pcd" << std::endl;
+    std::cout << "    --start_from <frame_id>         : frames before frame_id will be skipped" << std::endl;
+    std::cout << "    --end_at <frame_id>             : frames after frame_id will be skipped" << std::endl;
+    std::cout << "Valid depth data sources:" << std::endl;
+    std::cout << "    -dev <device> (default), -oni <oni_file>" << std::endl;
+    return 0;
     // clang-format on
 }
 
