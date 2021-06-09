@@ -85,10 +85,46 @@ endif()
 set(G2O_ROOT ${ELASTIC_RECONSTRUCTION_DEPS_INSTALL_PREFIX})
 find_package(G2O)
 if(G2O_FOUND)
-    message(STATUS "G2O_INCLUDE_DIR: ${G2O_INCLUDE_DIR}")
-    message(STATUS "G2O_CORE_LIBRARY: ${G2O_CORE_LIBRARY}")
-    message(STATUS "G2O_STUFF_LIBRARY: ${G2O_STUFF_LIBRARY}")
-    message(STATUS "G2O_TYPES_SLAM3D: ${G2O_TYPES_SLAM3D}")
+    message(STATUS "G2O_INCLUDE_DIR              : ${G2O_INCLUDE_DIR}")
+    message(STATUS "G2O_CORE_LIBRARY             : ${G2O_CORE_LIBRARY}")
+    message(STATUS "G2O_STUFF_LIBRARY            : ${G2O_STUFF_LIBRARY}")
+    message(STATUS "G2O_CLI_LIBRARY              : ${G2O_CLI_LIBRARY}")
+    message(STATUS "G2O_SOLVER_CHOLMOD           : ${G2O_SOLVER_CHOLMOD}")
+    message(STATUS "G2O_SOLVER_CSPARSE           : ${G2O_SOLVER_CSPARSE}")
+    message(STATUS "G2O_SOLVER_CSPARSE_EXTENSION : ${G2O_SOLVER_CSPARSE_EXTENSION}")
+    message(STATUS "G2O_SOLVER_DENSE             : ${G2O_SOLVER_DENSE}")
+    message(STATUS "G2O_SOLVER_PCG               : ${G2O_SOLVER_PCG}")
+    message(STATUS "G2O_SOLVER_SLAM2D_LINEAR     : ${G2O_SOLVER_SLAM2D_LINEAR}")
+    message(STATUS "G2O_SOLVER_STRUCTURE_ONLY    : ${G2O_SOLVER_STRUCTURE_ONLY}")
+    message(STATUS "G2O_SOLVER_EIGEN             : ${G2O_SOLVER_EIGEN}")
+    message(STATUS "G2O_TYPES_DATA               : ${G2O_TYPES_DATA}")
+    message(STATUS "G2O_TYPES_ICP                : ${G2O_TYPES_ICP}")
+    message(STATUS "G2O_TYPES_SBA                : ${G2O_TYPES_SBA}")
+    message(STATUS "G2O_TYPES_SCLAM2D            : ${G2O_TYPES_SCLAM2D}")
+    message(STATUS "G2O_TYPES_SIM3               : ${G2O_TYPES_SIM3}")
+    message(STATUS "G2O_TYPES_SLAM2D             : ${G2O_TYPES_SLAM2D}")
+    message(STATUS "G2O_TYPES_SLAM3D             : ${G2O_TYPES_SLAM3D}")
+
+    set(G2O_LIBRARIES
+        ${G2O_CORE_LIBRARY}
+        ${G2O_STUFF_LIBRARY}
+        ${G2O_CLI_LIBRARY}
+        ${G2O_SOLVER_CHOLMOD}
+        ${G2O_SOLVER_CSPARSE}
+        ${G2O_SOLVER_CSPARSE_EXTENSION}
+        ${G2O_SOLVER_DENSE}
+        ${G2O_SOLVER_PCG}
+        ${G2O_SOLVER_SLAM2D_LINEAR}
+        ${G2O_SOLVER_STRUCTURE_ONLY}
+        # ${G2O_SOLVER_EIGEN}
+        ${G2O_TYPES_DATA}
+        ${G2O_TYPES_ICP}
+        ${G2O_TYPES_SBA}
+        ${G2O_TYPES_SCLAM2D}
+        ${G2O_TYPES_SIM3}
+        ${G2O_TYPES_SLAM2D}
+        ${G2O_TYPES_SLAM3D}
+    )
 else()
     message(FATAL_ERROR "G2O_FOUND: ${G2O_FOUND}")
 endif()
@@ -139,9 +175,7 @@ function(elastic_reconstruction_set_global_properties target)
         ${PCL_LIBRARIES}
         ${BOOST_LIBRARIES}
         ${CHOLMOD_LIBRARIES}
-        ${G2O_CORE_LIBRARY}
-        ${G2O_STUFF_LIBRARY}
-        ${G2O_TYPES_SLAM3D}
+        ${G2O_LIBRARIES}
     )
     target_compile_definitions(${target} PRIVATE
         EIGEN_USE_NEW_STDVECTOR
