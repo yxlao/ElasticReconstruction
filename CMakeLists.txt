@@ -28,6 +28,9 @@ endif()
 list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/CMake")
 include(set_global_properties)
 
+# Thrid-party dependencies.
+include(${PROJECT_SOURCE_DIR}/ThirdParty/pcl/pcl.cmake)
+
 # Subdirectories.
 add_subdirectory(BuildCorrespondence)
 add_subdirectory(FragmentOptimizer)

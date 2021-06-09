@@ -1,0 +1,10 @@
+find_package(PCL 1.7 REQUIRED PATHS /home/yixing/pcl_install NO_DEFAULT_PATH)
+
+if(PCL_FOUND)
+    message(STATUS "PCL_INCLUDE_DIRS: ${PCL_INCLUDE_DIRS}")
+    message(STATUS "PCL_DEFINITIONS: ${PCL_DEFINITIONS}")
+    message(STATUS "PCL_LIBRARY_DIRS: ${PCL_LIBRARY_DIRS}")
+    message(STATUS "PCL_LIBRARIES: ${PCL_LIBRARIES}")
+else()
+    message(FATAL_ERROR "PCL_FOUND: ${PCL_FOUND}")
+endif()
