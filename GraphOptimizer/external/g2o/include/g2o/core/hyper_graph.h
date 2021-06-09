@@ -90,7 +90,7 @@ class G2O_CORE_API HyperGraph {
     typedef std::set<Edge *> EdgeSet;
     typedef std::set<Vertex *> VertexSet;
 
-    typedef std::tr1::unordered_map<int, Vertex *> VertexIDMap;
+    typedef std::unordered_map<int, Vertex *> VertexIDMap;
     typedef std::vector<Vertex *> VertexContainer;
 
     //! abstract Vertex, your types must derive from that one

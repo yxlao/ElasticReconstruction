@@ -33,7 +33,7 @@ template <typename Scalar> struct StdMapTraits {
  *
  * For instance, with current version of gcc you can either enable C++0x
  * standard (-std=c++0x) or do: \code #include <tr1/unordered_map> #define
- * EIGEN_UNORDERED_MAP_SUPPORT namespace std { using std::tr1::unordered_map;
+ * EIGEN_UNORDERED_MAP_SUPPORT namespace std { using std::unordered_map;
  * }
  * \endcode
  *

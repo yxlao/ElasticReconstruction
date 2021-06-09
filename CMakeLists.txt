@@ -88,6 +88,7 @@ if(G2O_FOUND)
     message(STATUS "G2O_INCLUDE_DIR: ${G2O_INCLUDE_DIR}")
     message(STATUS "G2O_CORE_LIBRARY: ${G2O_CORE_LIBRARY}")
     message(STATUS "G2O_STUFF_LIBRARY: ${G2O_STUFF_LIBRARY}")
+    message(STATUS "G2O_TYPES_SLAM3D: ${G2O_TYPES_SLAM3D}")
 else()
     message(FATAL_ERROR "G2O_FOUND: ${G2O_FOUND}")
 endif()
@@ -128,6 +129,7 @@ function(elastic_reconstruction_set_global_properties target)
         ${PCL_INCLUDE_DIRS}
         ${Boost_INCLUDE_DIRS}
         ${EIGEN_INCLUDE_DIRS}
+        ${G2O_INCLUDE_DIR}
     )
     target_link_directories(${target} PRIVATE
         ${PCL_LIBRARY_DIRS}
@@ -137,6 +139,9 @@ function(elastic_reconstruction_set_global_properties target)
         ${PCL_LIBRARIES}
         ${BOOST_LIBRARIES}
         ${CHOLMOD_LIBRARIES}
+        ${G2O_CORE_LIBRARY}
+        ${G2O_STUFF_LIBRARY}
+        ${G2O_TYPES_SLAM3D}
     )
     target_compile_definitions(${target} PRIVATE
         EIGEN_USE_NEW_STDVECTOR

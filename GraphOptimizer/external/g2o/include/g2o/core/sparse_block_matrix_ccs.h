@@ -237,7 +237,7 @@ template <class MatrixType> class SparseBlockMatrixHashMap {
         return _rowBlockIndices.size() ? _rowBlockIndices.back() : 0;
     }
 
-    typedef std::tr1::unordered_map<int, MatrixType *> SparseColumn;
+    typedef std::unordered_map<int, MatrixType *> SparseColumn;
 
     SparseBlockMatrixHashMap(const std::vector<int> &rowIndices,
                              const std::vector<int> &colIndices)

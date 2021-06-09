@@ -53,7 +53,7 @@ class G2O_CORE_API MarginalCovarianceCholesky {
      * hash struct for storing the matrix elements needed to compute the
      * covariance
      */
-    typedef std::tr1::unordered_map<int, double> LookupMap;
+    typedef std::unordered_map<int, double> LookupMap;
 
   public:
     MarginalCovarianceCholesky();

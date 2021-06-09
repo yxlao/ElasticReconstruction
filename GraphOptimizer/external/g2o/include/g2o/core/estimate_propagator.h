@@ -138,8 +138,8 @@ class EstimatePropagator {
         }
     };
 
-    typedef std::tr1::unordered_map<OptimizableGraph::Vertex *,
-                                    AdjacencyMapEntry, VertexIDHashFunction>
+    typedef std::unordered_map<OptimizableGraph::Vertex *, AdjacencyMapEntry,
+                               VertexIDHashFunction>
         AdjacencyMap;
 
   public:
