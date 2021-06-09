@@ -71,6 +71,16 @@ else()
     message(FATAL_ERROR "EIGEN_FOUND: ${EIGEN_FOUND}")
 endif()
 
+# Depencency: SuiteSparse
+set(CSPARSE_ROOT ${ELASTIC_RECONSTRUCTION_DEPS_INSTALL_PREFIX})
+find_package(SuiteSparse)
+if(CSPARSE_FOUND)
+    message(STATUS "SuiteSparse found")
+    message(STATUS "CHOLMOD_LIBRARIES: ${CHOLMOD_LIBRARIES}")
+else()
+    message(FATAL_ERROR "CSPARSE_FOUND: ${CSPARSE_FOUND}")
+endif()
+
 # CMake helper functions.
 function(elastic_reconstruction_set_global_properties target)
     # Libraries need to be compiled with position independent code
@@ -115,6 +125,7 @@ function(elastic_reconstruction_set_global_properties target)
     target_link_libraries(${target} PRIVATE
         ${PCL_LIBRARIES}
         ${BOOST_LIBRARIES}
+        ${CHOLMOD_LIBRARIES}
     )
     target_compile_definitions(${target} PRIVATE
         EIGEN_USE_NEW_STDVECTOR
