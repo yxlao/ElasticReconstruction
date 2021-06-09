@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "TSDFVolume.h"
 
 #include <pcl/point_types.h>
@@ -60,9 +59,10 @@ void TSDFVolume::Integrate(std::vector<unsigned short> &depth,
         }
     }
     // for ( std::unordered_map< int, TSDFVolumeUnit::Ptr >::iterator it =
-    // data_.begin(); it != data_.end(); it++ ) { 	IntegrateVolumeUnit( scaled,
-    //transformation.cast< float >(), trans_inv.cast< float >(), it->second,
-    //I2F( it->second->xi_ ), I2F( it->second->yi_ ), I2F( it->second->zi_ ) );
+    // data_.begin(); it != data_.end(); it++ ) { 	IntegrateVolumeUnit(
+    // scaled,
+    // transformation.cast< float >(), trans_inv.cast< float >(), it->second,
+    // I2F( it->second->xi_ ), I2F( it->second->yi_ ), I2F( it->second->zi_ ) );
     //}
 }
 

@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "IntegrateApp.h"
 
 CIntegrateApp::CIntegrateApp(pcl::Grabber &source, bool use_device)
