@@ -81,6 +81,17 @@ else()
     message(FATAL_ERROR "CSPARSE_FOUND: ${CSPARSE_FOUND}")
 endif()
 
+# Depencency: G2O
+set(G2O_ROOT ${ELASTIC_RECONSTRUCTION_DEPS_INSTALL_PREFIX})
+find_package(G2O)
+if(G2O_FOUND)
+    message(STATUS "G2O_INCLUDE_DIR: ${G2O_INCLUDE_DIR}")
+    message(STATUS "G2O_CORE_LIBRARY: ${G2O_CORE_LIBRARY}")
+    message(STATUS "G2O_STUFF_LIBRARY: ${G2O_STUFF_LIBRARY}")
+else()
+    message(FATAL_ERROR "G2O_FOUND: ${G2O_FOUND}")
+endif()
+
 # CMake helper functions.
 function(elastic_reconstruction_set_global_properties target)
     # Libraries need to be compiled with position independent code
