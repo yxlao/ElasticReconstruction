@@ -1,4 +1,3 @@
-#include "StdAfx.h"
 #include "OptApp.h"
 #include <boost/filesystem.hpp>
 #include <g2o/types/slam3d/edge_se3.h>

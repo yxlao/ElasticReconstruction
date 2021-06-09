@@ -1,5 +1,4 @@
-#include "StdAfx.h"
-#include "PointCloud.h"
+#include "FragmentOptimizer/PointCloud.h"
 #include <pcl/io/pcd_io.h>
 
 PointCloud::PointCloud(int index, int resolution, float length) {

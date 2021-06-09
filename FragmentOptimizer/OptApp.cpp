@@ -1,5 +1,4 @@
-#include "StdAfx.h"
-#include "OptApp.h"
+#include "FragmentOptimizer/OptApp.h"
 #include <pcl/console/print.h>
 #include <pcl/point_cloud.h>
 #include <pcl/io/pcd_io.h>

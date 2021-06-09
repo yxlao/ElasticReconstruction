@@ -1,5 +1,4 @@
-#include "StdAfx.h"
-#include "HashSparseMatrix.h"
+#include "FragmentOptimizer/HashSparseMatrix.h"
 
 HashSparseMatrix::HashSparseMatrix(int ioffset, int joffset) {
     ioffset_ = ioffset;

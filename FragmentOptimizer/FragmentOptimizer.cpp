@@ -1,9 +1,7 @@
 // FragmentOptimizer.cpp : Defines the entry point for the console application.
 //
 
-#include "stdafx.h"
-
-#include "OptApp.h"
+#include "FragmentOptimizer/OptApp.h"
 #include <pcl/console/parse.h>
 #include <pcl/console/print.h>
 #include <pcl/common/time.h>

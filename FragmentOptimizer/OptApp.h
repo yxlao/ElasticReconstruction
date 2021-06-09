@@ -5,9 +5,9 @@
 #include "external/Eigen/Core"
 #include "external/Eigen/Geometry"
 #include "external/Eigen/SparseCore"
-#include "HashSparseMatrix.h"
-#include "PointCloud.h"
-#include "RGBDTrajectory.h"
+#include "FragmentOptimizer/HashSparseMatrix.h"
+#include "FragmentOptimizer/PointCloud.h"
+#include "FragmentOptimizer/RGBDTrajectory.h"
 
 typedef Eigen::SparseMatrix<double> SparseMatrix;
 
