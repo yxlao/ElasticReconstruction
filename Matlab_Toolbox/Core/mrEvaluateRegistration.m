@@ -3,7 +3,7 @@ function [ recall, precision ] = mrEvaluateRegistration( result, gt, gt_info, er
         err2 = 0.04;
     end
     num = gt( 1 ).info( 3 );
-    
+
     mask = zeros( 1, num * num );
     gt_num = 0;
     for i = 1 : size( gt, 2 )
@@ -35,7 +35,7 @@ function [ recall, precision ] = mrEvaluateRegistration( result, gt, gt_info, er
             end
         end
     end
-    
+
     recall = good / gt_num;
     precision = good / rs_num;
     %disp( [ 'recall : ' num2str( recall ) ' ( ' num2str( good ) ' / ' num2str( gt_num ) ' )' ] );

@@ -32,16 +32,19 @@
 #include "g2o_simulator_api.h"
 
 namespace g2o {
-  
-  class G2O_SIMULATOR_API SensorPointXY: public PointSensorParameters, public BinarySensor<Robot2D, EdgeSE2PointXY, WorldObjectPointXY>{ 
-  public:
-    SensorPointXY(const std::string& name_);
-    virtual void sense();
-    virtual void addNoise(EdgeType* e);
-  protected:
-    bool isVisible(WorldObjectType* to);
-  }; 
 
-}
+class G2O_SIMULATOR_API SensorPointXY
+    : public PointSensorParameters,
+      public BinarySensor<Robot2D, EdgeSE2PointXY, WorldObjectPointXY> {
+  public:
+    SensorPointXY(const std::string &name_);
+    virtual void sense();
+    virtual void addNoise(EdgeType *e);
+
+  protected:
+    bool isVisible(WorldObjectType *to);
+};
+
+} // namespace g2o
 
 #endif

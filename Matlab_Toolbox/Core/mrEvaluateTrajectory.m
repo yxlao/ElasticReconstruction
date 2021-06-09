@@ -12,7 +12,7 @@ function [ rmse, trans ] = mrEvaluateTraj( traj_et, traj_gt )
 
     trans = mrAlignTraj( traj_et, traj_gt );
     err = zeros( 1, n );
-    
+
     for i = 1 : n
         assert( traj_et( i ).info( 3 ) == traj_gt( i ).info( 3 ),...
             'bad trajectory file format or asynchronized frame.' );
@@ -20,7 +20,7 @@ function [ rmse, trans ] = mrEvaluateTraj( traj_et, traj_gt )
         trans_gt = traj_gt( i ).trans;
         err( i ) = norm( trans_gt( 1 : 3, 4 ) - trans_et( 1 : 3, 4 ) );
     end
-    
+
     rmse = sqrt( err * err' / size( err, 2 ) );
     fprintf( 'median absolute translational error %f m\n', median( err ) );
     fprintf( 'rmse %f m\n', rmse );

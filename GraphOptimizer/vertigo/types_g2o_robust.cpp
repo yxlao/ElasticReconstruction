@@ -7,9 +7,8 @@
 #include "edge_se3Switchable.h"
 #include "vertex_switchLinear.h"
 
-
 G2O_REGISTER_TYPE(EDGE_SWITCH_PRIOR, EdgeSwitchPrior);
-//G2O_REGISTER_TYPE(EDGE_SE2_SWITCHABLE, EdgeSE2Switchable);
-//G2O_REGISTER_TYPE(EDGE_SE2_MAXMIX, EdgeSE2MaxMixture);
+// G2O_REGISTER_TYPE(EDGE_SE2_SWITCHABLE, EdgeSE2Switchable);
+// G2O_REGISTER_TYPE(EDGE_SE2_MAXMIX, EdgeSE2MaxMixture);
 G2O_REGISTER_TYPE(EDGE_SE3_SWITCHABLE, EdgeSE3Switchable);
 G2O_REGISTER_TYPE(VERTEX_SWITCH, VertexSwitchLinear);

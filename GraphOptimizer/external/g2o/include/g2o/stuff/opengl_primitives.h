@@ -2,17 +2,17 @@
 // Copyright (C) 2011 R. Kuemmerle, G. Grisetti, W. Burgard
 //
 // This file is part of g2o.
-// 
+//
 // g2o is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-// 
+//
 // g2o is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU General Public License
 // along with g2o.  If not, see <http://www.gnu.org/licenses/>.
 
@@ -31,17 +31,17 @@
 #include "g2o/config.h"
 
 #ifdef _MSC_VER
-#  ifdef G2O_SHARED_LIBS
-#    ifdef opengl_helper_EXPORTS
-#      define G2O_OPENGL_API __declspec(dllexport)
-#    else
-#      define G2O_OPENGL_API __declspec(dllimport)
-#    endif
-#  else
-#    define G2O_OPENGL_API
-#  endif
+#ifdef G2O_SHARED_LIBS
+#ifdef opengl_helper_EXPORTS
+#define G2O_OPENGL_API __declspec(dllexport)
 #else
-#  define G2O_OPENGL_API
+#define G2O_OPENGL_API __declspec(dllimport)
+#endif
+#else
+#define G2O_OPENGL_API
+#endif
+#else
+#define G2O_OPENGL_API
 #endif
 
 namespace g2o {
@@ -69,7 +69,8 @@ void G2O_OPENGL_API drawPlane(GLfloat l, GLfloat w);
 void G2O_OPENGL_API drawSphere(GLfloat radius);
 
 /**
- * draw a ellipsoid whose center is in the origin of the current coordinate frame
+ * draw a ellipsoid whose center is in the origin of the current coordinate
+ * frame
  * @param r1 radius along x axis
  * @param r2 radius along y axis
  * @param r3 radius along z axis
@@ -104,16 +105,20 @@ void G2O_OPENGL_API drawPyramid(GLfloat length, GLfloat height);
  * @param fov Field Of View of the range sensor
  * @param range_width specify how thick the ring should be drawn
  */
-void G2O_OPENGL_API drawRangeRing(GLfloat range, GLfloat fov, GLfloat range_width = 0.05);
+void G2O_OPENGL_API drawRangeRing(GLfloat range, GLfloat fov,
+                                  GLfloat range_width = 0.05);
 
 /**
- * draw a slice of a cylinder (approximated with slices_per_circle triangles for the complete circle)
+ * draw a slice of a cylinder (approximated with slices_per_circle triangles for
+ * the complete circle)
  * @param radius the radius of the cylinder
  * @param height the height of the cylinder
  * @param fov the "fov" of the slice (om degree)
- * @param slices_per_circle the number of triangle used to approximate the fulle circle
+ * @param slices_per_circle the number of triangle used to approximate the fulle
+ * circle
  */
-void G2O_OPENGL_API drawSlice(GLfloat radius, GLfloat height, GLfloat fov, int slices_per_circle = 32);
+void G2O_OPENGL_API drawSlice(GLfloat radius, GLfloat height, GLfloat fov,
+                              int slices_per_circle = 32);
 
 /**
  * draws a box used to represent a 6d pose
@@ -127,7 +132,7 @@ void G2O_OPENGL_API drawArrow2D(float len, float head_width, float head_len);
 
 // @}
 
-} // end namespace
-} // end namespace
+} // namespace opengl
+} // namespace g2o
 
 #endif

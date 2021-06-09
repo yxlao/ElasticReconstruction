@@ -58,21 +58,20 @@
  * a "simple" wrapper for this routine.
  */
 
-int cholmod_super_symbolic
-(
+int cholmod_super_symbolic(
     /* ---- input ---- */
-    cholmod_sparse *A,	/* matrix to analyze */
-    cholmod_sparse *F,	/* F = A' or A(:,f)' */
-    int *Parent,	/* elimination tree */
+    cholmod_sparse *A, /* matrix to analyze */
+    cholmod_sparse *F, /* F = A' or A(:,f)' */
+    int *Parent,       /* elimination tree */
     /* ---- in/out --- */
-    cholmod_factor *L,	/* simplicial symbolic on input,
-			 * supernodal symbolic on output */
+    cholmod_factor *L, /* simplicial symbolic on input,
+                        * supernodal symbolic on output */
     /* --------------- */
-    cholmod_common *Common
-) ;
+    cholmod_common *Common);
 
-int cholmod_l_super_symbolic (cholmod_sparse *, cholmod_sparse *,
-    SuiteSparse_long *, cholmod_factor *, cholmod_common *) ;
+int cholmod_l_super_symbolic(cholmod_sparse *, cholmod_sparse *,
+                             SuiteSparse_long *, cholmod_factor *,
+                             cholmod_common *);
 
 /* -------------------------------------------------------------------------- */
 /* cholmod_super_symbolic2 */
@@ -82,22 +81,21 @@ int cholmod_l_super_symbolic (cholmod_sparse *, cholmod_sparse *,
  * analyzes for supernodal Cholesky, of course.  This "for_cholesky = TRUE"
  * option is used by SuiteSparseQR only.   Added for V1.7 */
 
-int cholmod_super_symbolic2
-(
+int cholmod_super_symbolic2(
     /* ---- input ---- */
-    int for_cholesky,   /* Cholesky if TRUE, QR if FALSE */
-    cholmod_sparse *A,	/* matrix to analyze */
-    cholmod_sparse *F,	/* F = A' or A(:,f)' */
-    int *Parent,	/* elimination tree */
+    int for_cholesky,  /* Cholesky if TRUE, QR if FALSE */
+    cholmod_sparse *A, /* matrix to analyze */
+    cholmod_sparse *F, /* F = A' or A(:,f)' */
+    int *Parent,       /* elimination tree */
     /* ---- in/out --- */
-    cholmod_factor *L,	/* simplicial symbolic on input,
-			 * supernodal symbolic on output */
+    cholmod_factor *L, /* simplicial symbolic on input,
+                        * supernodal symbolic on output */
     /* --------------- */
-    cholmod_common *Common
-) ;
+    cholmod_common *Common);
 
-int cholmod_l_super_symbolic2 (int, cholmod_sparse *, cholmod_sparse *,
-    SuiteSparse_long *, cholmod_factor *, cholmod_common *) ;
+int cholmod_l_super_symbolic2(int, cholmod_sparse *, cholmod_sparse *,
+                              SuiteSparse_long *, cholmod_factor *,
+                              cholmod_common *);
 
 /* -------------------------------------------------------------------------- */
 /* cholmod_super_numeric */
@@ -108,20 +106,18 @@ int cholmod_l_super_symbolic2 (int, cholmod_sparse *, cholmod_sparse *,
  * cholmod_factorize is a "simple" wrapper for this routine.
  */
 
-int cholmod_super_numeric
-(
+int cholmod_super_numeric(
     /* ---- input ---- */
-    cholmod_sparse *A,	/* matrix to factorize */
-    cholmod_sparse *F,	/* F = A' or A(:,f)' */
-    double beta [2],	/* beta*I is added to diagonal of matrix to factorize */
+    cholmod_sparse *A, /* matrix to factorize */
+    cholmod_sparse *F, /* F = A' or A(:,f)' */
+    double beta[2],    /* beta*I is added to diagonal of matrix to factorize */
     /* ---- in/out --- */
-    cholmod_factor *L,	/* factorization */
+    cholmod_factor *L, /* factorization */
     /* --------------- */
-    cholmod_common *Common
-) ;
+    cholmod_common *Common);
 
-int cholmod_l_super_numeric (cholmod_sparse *, cholmod_sparse *, double *,
-    cholmod_factor *, cholmod_common *) ;
+int cholmod_l_super_numeric(cholmod_sparse *, cholmod_sparse *, double *,
+                            cholmod_factor *, cholmod_common *);
 
 /* -------------------------------------------------------------------------- */
 /* cholmod_super_lsolve */
@@ -131,20 +127,18 @@ int cholmod_l_super_numeric (cholmod_sparse *, cholmod_sparse *, double *,
  * need not call this routine directly.  cholmod_solve is a "simple" wrapper
  * for this routine. */
 
-int cholmod_super_lsolve
-(
+int cholmod_super_lsolve(
     /* ---- input ---- */
-    cholmod_factor *L,	/* factor to use for the forward solve */
+    cholmod_factor *L, /* factor to use for the forward solve */
     /* ---- output ---- */
-    cholmod_dense *X,	/* b on input, solution to Lx=b on output */
+    cholmod_dense *X, /* b on input, solution to Lx=b on output */
     /* ---- workspace   */
-    cholmod_dense *E,	/* workspace of size nrhs*(L->maxesize) */
+    cholmod_dense *E, /* workspace of size nrhs*(L->maxesize) */
     /* --------------- */
-    cholmod_common *Common
-) ;
+    cholmod_common *Common);
 
-int cholmod_l_super_lsolve (cholmod_factor *, cholmod_dense *, cholmod_dense *,
-    cholmod_common *) ;
+int cholmod_l_super_lsolve(cholmod_factor *, cholmod_dense *, cholmod_dense *,
+                           cholmod_common *);
 
 /* -------------------------------------------------------------------------- */
 /* cholmod_super_ltsolve */
@@ -154,19 +148,17 @@ int cholmod_l_super_lsolve (cholmod_factor *, cholmod_dense *, cholmod_dense *,
  * need not call this routine directly.  cholmod_solve is a "simple" wrapper
  * for this routine. */
 
-int cholmod_super_ltsolve
-(
+int cholmod_super_ltsolve(
     /* ---- input ---- */
-    cholmod_factor *L,	/* factor to use for the backsolve */
+    cholmod_factor *L, /* factor to use for the backsolve */
     /* ---- output ---- */
-    cholmod_dense *X,	/* b on input, solution to L'x=b on output */
+    cholmod_dense *X, /* b on input, solution to L'x=b on output */
     /* ---- workspace   */
-    cholmod_dense *E,	/* workspace of size nrhs*(L->maxesize) */
+    cholmod_dense *E, /* workspace of size nrhs*(L->maxesize) */
     /* --------------- */
-    cholmod_common *Common
-) ;
+    cholmod_common *Common);
 
-int cholmod_l_super_ltsolve (cholmod_factor *, cholmod_dense *, cholmod_dense *,
-    cholmod_common *) ;
+int cholmod_l_super_ltsolve(cholmod_factor *, cholmod_dense *, cholmod_dense *,
+                            cholmod_common *);
 
 #endif

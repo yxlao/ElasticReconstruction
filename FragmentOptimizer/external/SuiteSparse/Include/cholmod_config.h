@@ -57,7 +57,7 @@
 #define NCHOLESKY
 #define NPARTITION
 
-#define NGPL  
+#define NGPL
 #define NMATRIXOPS
 #define NMODIFY
 #define NSUPERNODAL

@@ -1,8 +1,8 @@
 /*
  Copyright (c) 2011, Intel Corporation. All rights reserved.
 
- Redistribution and use in source and binary forms, with or without modification,
- are permitted provided that the following conditions are met:
+ Redistribution and use in source and binary forms, with or without
+ modification, are permitted provided that the following conditions are met:
 
  * Redistributions of source code must retain the above copyright notice, this
    list of conditions and the following disclaimer.
@@ -36,26 +36,26 @@
 
 #include "Eigen/src/Core/util/MKL_support.h"
 
-namespace Eigen { 
+namespace Eigen {
 
 namespace internal {
 
 /** \internal Specialization for the data types supported by MKL */
 
-#define EIGEN_MKL_QR_NOPIV(EIGTYPE, MKLTYPE, MKLPREFIX) \
-template<typename MatrixQR, typename HCoeffs> \
-void householder_qr_inplace_blocked(MatrixQR& mat, HCoeffs& hCoeffs, \
-                                       typename MatrixQR::Index maxBlockSize=32, \
-                                       EIGTYPE* tempData = 0) \
-{ \
-  lapack_int m = mat.rows(); \
-  lapack_int n = mat.cols(); \
-  lapack_int lda = mat.outerStride(); \
-  lapack_int matrix_order = (MatrixQR::IsRowMajor) ? LAPACK_ROW_MAJOR : LAPACK_COL_MAJOR; \
-  LAPACKE_##MKLPREFIX##geqrf( matrix_order, m, n, (MKLTYPE*)mat.data(), lda, (MKLTYPE*)hCoeffs.data()); \
-  hCoeffs.adjointInPlace(); \
-\
-}
+#define EIGEN_MKL_QR_NOPIV(EIGTYPE, MKLTYPE, MKLPREFIX)                        \
+    template <typename MatrixQR, typename HCoeffs>                             \
+    void householder_qr_inplace_blocked(                                       \
+        MatrixQR &mat, HCoeffs &hCoeffs,                                       \
+        typename MatrixQR::Index maxBlockSize = 32, EIGTYPE * tempData = 0) {  \
+        lapack_int m = mat.rows();                                             \
+        lapack_int n = mat.cols();                                             \
+        lapack_int lda = mat.outerStride();                                    \
+        lapack_int matrix_order =                                              \
+            (MatrixQR::IsRowMajor) ? LAPACK_ROW_MAJOR : LAPACK_COL_MAJOR;      \
+        LAPACKE_##MKLPREFIX##geqrf(matrix_order, m, n, (MKLTYPE *)mat.data(),  \
+                                   lda, (MKLTYPE *)hCoeffs.data());            \
+        hCoeffs.adjointInPlace();                                              \
+    }
 
 EIGEN_MKL_QR_NOPIV(double, double, d)
 EIGEN_MKL_QR_NOPIV(float, float, s)

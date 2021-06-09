@@ -1,3 +1,29 @@
+# Robust Scene Reconstruction
+
+Fork of Qiayi's `ElasticReconstruction` repo to support building with
+CMake + Ubuntu + CUDA.
+
+## Additional notes: formatting
+
+This repo has been formatted with the following commands prior to other changes.
+This is done to show the modifications.
+
+```bash
+# CRLF to LF
+find . -not \( -name .git -prune \) -type f -exec dos2unix {} \;
+
+# Remove trailing space
+find . -not \( -name .git -prune \) -type f -print0 | xargs -0 perl -pi -e 's/ +$//'
+
+# clang-format
+echo "BasedOnStyle: LLVM\nIndentWidth: 4\nSortIncludes: false" > .clang-format
+find BuildCorrespondence FragmentOptimizer GlobalRegistration GraphOptimizer Integrate \
+    -iname *.h -o -iname *.cpp -o -iname *.cc -o -iname *.cu -o -iname *.hpp -o -iname *.cuh | xargs clang-format-10 -i
+```
+
+## Original notes
+
+```txt
 ===============================================================================
 =                       Robust Scene Reconstruction                           =
 ===============================================================================
@@ -24,7 +50,7 @@ the following papers:
 Robust Reconstruction of Indoor Scenes, CVPR 2015
 Sungjoon Choi, Qian-Yi Zhou, and Vladlen Koltun
 
-Simultaneous Localization and Calibration: Self-Calibration of Consumer Depth 
+Simultaneous Localization and Calibration: Self-Calibration of Consumer Depth
 Cameras, CVPR 2014
 Qian-Yi Zhou and Vladlen Koltun
 
@@ -57,11 +83,11 @@ License
 
 The source code is released under MIT license.
 
-In general, you can do anything with the code for any purposes, with proper 
-attribution. If you do something interesting with the code, we'll be happy to 
+In general, you can do anything with the code for any purposes, with proper
+attribution. If you do something interesting with the code, we'll be happy to
 know about it. Feel free to contact us.
 
-We include code and libraries for some software not written by us, to ensure 
+We include code and libraries for some software not written by us, to ensure
 easy compilation of the system. You should be aware that they can be released
 under different licenses:
 
@@ -127,3 +153,4 @@ The compilation requires Visual Studio 2010 on a Windows 7/8.1 64bit system.
 We are not happy with the current compatibility issues. We are working on a new
 code release that will not depend on external libraries as much and will be
 much easier to compile. Stay tuned.
+```

@@ -1,5 +1,5 @@
 % title:LP problem: min c'*x, where Ax=b, l<=x<=u (c,l,u,z0 in lp_afiro.clu    )
-% key:  AFIRO   
+% key:  AFIRO
       27      51         102  0
        3       1     0.100000000000000000E+001
        4       2     0.100000000000000000E+001

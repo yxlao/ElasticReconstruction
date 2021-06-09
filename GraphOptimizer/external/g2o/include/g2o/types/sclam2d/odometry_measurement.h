@@ -32,72 +32,70 @@
 
 namespace g2o {
 
-  /**
-   * \brief velocity measurement of a differential robot
-   */
-  class G2O_TYPES_SCLAM2D_API VelocityMeasurement
-  {
-    public:
-      EIGEN_MAKE_ALIGNED_OPERATOR_NEW;
-      VelocityMeasurement();
-      VelocityMeasurement(double vl, double vr, double dt);
+/**
+ * \brief velocity measurement of a differential robot
+ */
+class G2O_TYPES_SCLAM2D_API VelocityMeasurement {
+  public:
+    EIGEN_MAKE_ALIGNED_OPERATOR_NEW;
+    VelocityMeasurement();
+    VelocityMeasurement(double vl, double vr, double dt);
 
-      double vl() const { return _measurement(0);}
-      void setVl(double v) { _measurement(0) = v;}
+    double vl() const { return _measurement(0); }
+    void setVl(double v) { _measurement(0) = v; }
 
-      double vr() const { return _measurement(1);}
-      void setVr(double v) { _measurement(1) = v;}
+    double vr() const { return _measurement(1); }
+    void setVr(double v) { _measurement(1) = v; }
 
-      double dt() const { return _dt;}
-      void setDt(double t) { _dt = t;}
-      
-      const Eigen::Vector2d& measurement() const { return _measurement;}
+    double dt() const { return _dt; }
+    void setDt(double t) { _dt = t; }
 
-    protected:
-      Eigen::Vector2d _measurement;
-      double _dt;
-  };
+    const Eigen::Vector2d &measurement() const { return _measurement; }
 
-  /**
-   * \brief A 2D odometry measurement expressed as a transformation
-   */
-  class G2O_TYPES_SCLAM2D_API MotionMeasurement
-  {
-    public:
-      EIGEN_MAKE_ALIGNED_OPERATOR_NEW;
-      MotionMeasurement();
-      MotionMeasurement(double x, double y, double theta, double dt);
-      MotionMeasurement(const Eigen::Vector3d& m, double dt);
+  protected:
+    Eigen::Vector2d _measurement;
+    double _dt;
+};
 
-      double x() const { return _measurement(0);}
-      void setX(double v) { _measurement(0) = v;}
+/**
+ * \brief A 2D odometry measurement expressed as a transformation
+ */
+class G2O_TYPES_SCLAM2D_API MotionMeasurement {
+  public:
+    EIGEN_MAKE_ALIGNED_OPERATOR_NEW;
+    MotionMeasurement();
+    MotionMeasurement(double x, double y, double theta, double dt);
+    MotionMeasurement(const Eigen::Vector3d &m, double dt);
 
-      double y() const { return _measurement(1);}
-      void setY(double v) { _measurement(1) = v;}
+    double x() const { return _measurement(0); }
+    void setX(double v) { _measurement(0) = v; }
 
-      double theta() const { return _measurement(2);}
-      void setTheta(double v) { _measurement(2) = v;}
+    double y() const { return _measurement(1); }
+    void setY(double v) { _measurement(1) = v; }
 
-      double dt() const { return _dt;}
-      void setDt(double t) { _dt = t;}
+    double theta() const { return _measurement(2); }
+    void setTheta(double v) { _measurement(2) = v; }
 
-      const Eigen::Vector3d& measurement() const { return _measurement;}
+    double dt() const { return _dt; }
+    void setDt(double t) { _dt = t; }
 
-    protected:
-      Eigen::Vector3d _measurement;
-      double _dt;
-  };
+    const Eigen::Vector3d &measurement() const { return _measurement; }
 
-  /**
-   * \brief convert between the different types of odometry measurements
-   */
-  class G2O_TYPES_SCLAM2D_API OdomConvert
-  {
-    public:
-      static VelocityMeasurement convertToVelocity(const MotionMeasurement& m);
-      static MotionMeasurement convertToMotion(const VelocityMeasurement& vi, double l = 1.0);
-  };
+  protected:
+    Eigen::Vector3d _measurement;
+    double _dt;
+};
 
-} // end namespace
+/**
+ * \brief convert between the different types of odometry measurements
+ */
+class G2O_TYPES_SCLAM2D_API OdomConvert {
+  public:
+    static VelocityMeasurement convertToVelocity(const MotionMeasurement &m);
+    static MotionMeasurement convertToMotion(const VelocityMeasurement &vi,
+                                             double l = 1.0);
+};
+
+} // namespace g2o
 
 #endif

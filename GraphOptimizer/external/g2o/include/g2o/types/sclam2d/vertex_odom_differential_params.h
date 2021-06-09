@@ -32,23 +32,22 @@
 
 namespace g2o {
 
-  class G2O_TYPES_SCLAM2D_API VertexOdomDifferentialParams: public BaseVertex <3, Vector3d> {
-    public:
-      EIGEN_MAKE_ALIGNED_OPERATOR_NEW;
-      VertexOdomDifferentialParams();
-      virtual void setToOriginImpl() {
-        _estimate << 1. , 1., 1.;
-      }
+class G2O_TYPES_SCLAM2D_API VertexOdomDifferentialParams
+    : public BaseVertex<3, Vector3d> {
+  public:
+    EIGEN_MAKE_ALIGNED_OPERATOR_NEW;
+    VertexOdomDifferentialParams();
+    virtual void setToOriginImpl() { _estimate << 1., 1., 1.; }
 
-      virtual void oplusImpl(const double* v) {
-        for (int i=0; i<3; i++)
-          _estimate(i) += v[i];
-      }
+    virtual void oplusImpl(const double *v) {
+        for (int i = 0; i < 3; i++)
+            _estimate(i) += v[i];
+    }
 
-      virtual bool read(std::istream& is);
-      virtual bool write(std::ostream& os) const;
-  };
+    virtual bool read(std::istream &is);
+    virtual bool write(std::ostream &os) const;
+};
 
-}
+} // namespace g2o
 
 #endif

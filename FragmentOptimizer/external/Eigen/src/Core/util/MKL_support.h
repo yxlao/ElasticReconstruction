@@ -1,8 +1,8 @@
 /*
  Copyright (c) 2011, Intel Corporation. All rights reserved.
 
- Redistribution and use in source and binary forms, with or without modification,
- are permitted provided that the following conditions are met:
+ Redistribution and use in source and binary forms, with or without
+ modification, are permitted provided that the following conditions are met:
 
  * Redistributions of source code must retain the above copyright notice, this
    list of conditions and the following disclaimer.
@@ -34,23 +34,24 @@
 #define EIGEN_MKL_SUPPORT_H
 
 #ifdef EIGEN_USE_MKL_ALL
-  #ifndef EIGEN_USE_BLAS
-    #define EIGEN_USE_BLAS
-  #endif
-  #ifndef EIGEN_USE_LAPACKE
-    #define EIGEN_USE_LAPACKE
-  #endif
-  #ifndef EIGEN_USE_MKL_VML
-    #define EIGEN_USE_MKL_VML
-  #endif
+#ifndef EIGEN_USE_BLAS
+#define EIGEN_USE_BLAS
+#endif
+#ifndef EIGEN_USE_LAPACKE
+#define EIGEN_USE_LAPACKE
+#endif
+#ifndef EIGEN_USE_MKL_VML
+#define EIGEN_USE_MKL_VML
+#endif
 #endif
 
 #ifdef EIGEN_USE_LAPACKE_STRICT
-  #define EIGEN_USE_LAPACKE
+#define EIGEN_USE_LAPACKE
 #endif
 
-#if defined(EIGEN_USE_BLAS) || defined(EIGEN_USE_LAPACKE) || defined(EIGEN_USE_MKL_VML)
-  #define EIGEN_USE_MKL
+#if defined(EIGEN_USE_BLAS) || defined(EIGEN_USE_LAPACKE) ||                   \
+    defined(EIGEN_USE_MKL_VML)
+#define EIGEN_USE_MKL
 #endif
 
 #if defined EIGEN_USE_MKL
@@ -62,42 +63,50 @@
 namespace Eigen {
 
 typedef std::complex<double> dcomplex;
-typedef std::complex<float>  scomplex;
+typedef std::complex<float> scomplex;
 
 namespace internal {
 
-template<typename MKLType, typename EigenType>
-static inline void assign_scalar_eig2mkl(MKLType& mklScalar, const EigenType& eigenScalar) {
-  mklScalar=eigenScalar;
+template <typename MKLType, typename EigenType>
+static inline void assign_scalar_eig2mkl(MKLType &mklScalar,
+                                         const EigenType &eigenScalar) {
+    mklScalar = eigenScalar;
 }
 
-template<typename MKLType, typename EigenType>
-static inline void assign_conj_scalar_eig2mkl(MKLType& mklScalar, const EigenType& eigenScalar) {
-  mklScalar=eigenScalar;
-}
-
-template <>
-inline void assign_scalar_eig2mkl<MKL_Complex16,dcomplex>(MKL_Complex16& mklScalar, const dcomplex& eigenScalar) {
-  mklScalar.real=eigenScalar.real();
-  mklScalar.imag=eigenScalar.imag();
+template <typename MKLType, typename EigenType>
+static inline void assign_conj_scalar_eig2mkl(MKLType &mklScalar,
+                                              const EigenType &eigenScalar) {
+    mklScalar = eigenScalar;
 }
 
 template <>
-inline void assign_scalar_eig2mkl<MKL_Complex8,scomplex>(MKL_Complex8& mklScalar, const scomplex& eigenScalar) {
-  mklScalar.real=eigenScalar.real();
-  mklScalar.imag=eigenScalar.imag();
+inline void
+assign_scalar_eig2mkl<MKL_Complex16, dcomplex>(MKL_Complex16 &mklScalar,
+                                               const dcomplex &eigenScalar) {
+    mklScalar.real = eigenScalar.real();
+    mklScalar.imag = eigenScalar.imag();
 }
 
 template <>
-inline void assign_conj_scalar_eig2mkl<MKL_Complex16,dcomplex>(MKL_Complex16& mklScalar, const dcomplex& eigenScalar) {
-  mklScalar.real=eigenScalar.real();
-  mklScalar.imag=-eigenScalar.imag();
+inline void
+assign_scalar_eig2mkl<MKL_Complex8, scomplex>(MKL_Complex8 &mklScalar,
+                                              const scomplex &eigenScalar) {
+    mklScalar.real = eigenScalar.real();
+    mklScalar.imag = eigenScalar.imag();
 }
 
 template <>
-inline void assign_conj_scalar_eig2mkl<MKL_Complex8,scomplex>(MKL_Complex8& mklScalar, const scomplex& eigenScalar) {
-  mklScalar.real=eigenScalar.real();
-  mklScalar.imag=-eigenScalar.imag();
+inline void assign_conj_scalar_eig2mkl<MKL_Complex16, dcomplex>(
+    MKL_Complex16 &mklScalar, const dcomplex &eigenScalar) {
+    mklScalar.real = eigenScalar.real();
+    mklScalar.imag = -eigenScalar.imag();
+}
+
+template <>
+inline void assign_conj_scalar_eig2mkl<MKL_Complex8, scomplex>(
+    MKL_Complex8 &mklScalar, const scomplex &eigenScalar) {
+    mklScalar.real = eigenScalar.real();
+    mklScalar.imag = -eigenScalar.imag();
 }
 
 } // end namespace internal

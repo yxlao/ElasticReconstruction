@@ -8,7 +8,7 @@
 // This Source Code Form is subject to the terms of the Mozilla
 // Public License v. 2.0. If a copy of the MPL was not distributed
 // with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
-// 
+//
 // Contributors:
 // Brian Gladman, Helmut Jarausch, Fokko Beekhof, Ulrich Mutze, Heinz van Saanen, Pere Constans
 
@@ -20,7 +20,7 @@
 #include <Eigen/Core>
 
 namespace Eigen {
-  
+
   /** \ingroup Unsupported_modules
     * \defgroup MPRealSupport_Module MPFRC++ Support module
     *
@@ -132,7 +132,7 @@ namespace internal {
   {
     return a <= b || isApprox(a, b, prec);
   }
-  
+
   template<> inline long double cast<mpfr::mpreal,long double>(const mpfr::mpreal& x)
   { return x.toLDouble(); }
   template<> inline double cast<mpfr::mpreal,double>(const mpfr::mpreal& x)

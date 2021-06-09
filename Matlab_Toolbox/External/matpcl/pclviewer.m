@@ -16,7 +16,7 @@
 % Notes::
 % - Only the "x y z" and "x y z rgb" field formats are currently supported.
 % - The file is written in ascii format.
-% - When viewing colored point clouds in pcl_viewer remember to toggle to 
+% - When viewing colored point clouds in pcl_viewer remember to toggle to
 %
 % See also savepcd, lspcd, readpcd.
 %
@@ -27,24 +27,23 @@
 
 
 function pclviewer(points, args)
-    
+
     % change the next line to suit your operating system
     viewer = '/usr/local/bin/pcl_viewer.app/Contents/MacOS/pcl_viewer';
 
-     
+
     pointfile = [tempname '.pcd'];
-    
+
     if nargin < 2
         args = '';
     end
-    
+
     savepcd(pointfile, points);
-    
+
     system(sprintf('head -20 %s', pointfile));
-    
+
     system(sprintf('%s %s %s &', ...
         viewer, pointfile, args));
-   
+
     pause(1)
     delete(pointfile);
-    

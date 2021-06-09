@@ -32,12 +32,12 @@
 
 namespace g2o {
 
-  typedef WorldObject<VertexSE3> WorldObjectSE3;
+typedef WorldObject<VertexSE3> WorldObjectSE3;
 
-  typedef WorldObject<VertexPointXYZ> WorldObjectTrackXYZ;
+typedef WorldObject<VertexPointXYZ> WorldObjectTrackXYZ;
 
-  typedef Robot<WorldObjectSE3>  Robot3D;
+typedef Robot<WorldObjectSE3> Robot3D;
 
-}
+} // namespace g2o
 
 #endif

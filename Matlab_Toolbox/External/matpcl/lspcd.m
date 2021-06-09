@@ -2,7 +2,7 @@
 %
 % LSPCD() list the attributes of all .PCD files in the current folder.
 %
-% LSPCD(FILESPEC) as above but list only files that match FILESPEC which 
+% LSPCD(FILESPEC) as above but list only files that match FILESPEC which
 % might contain a directory name and/or a wildcard.
 %
 %
@@ -12,40 +12,40 @@
 
 
 function lspcd(name)
-    
+
     % default to .pcd files in current dir
     if nargin < 1
         name = '*.pcd';
     end
-    
-    
+
+
     path = fileparts(name);  % get the common path
     files = dir(name);  % get all the matching files
-    
+
     for file=files'
         header(path, file.name);
     end
-    
+
 end
 
 function header(dir, file)
-    
+
     % build the full path to the file
     fname = fullfile(dir, file);
-    
+
     fp = fopen(fname, 'r');
     version = [];
 
     while true
         line = fgetl(fp);
-        
+
         if line(1) == '#'
             continue;
         end
-        
+
         [field,remain] = strtok(line, ' \t');
         remain = strtrim(remain);
-        
+
         switch field
             case 'VERSION'
                 version = remain;
@@ -70,12 +70,12 @@ function header(dir, file)
                 fprintf('unknown field %s\n', field);
         end
     end
-    
+
     % if no version field we'll assume it's not a PCD file
     if isempty(version)
         return;
     end
-    
+
     if height == 1
         org = 'unorganized';
     else
@@ -84,6 +84,6 @@ function header(dir, file)
     fprintf('%s: %s, %s, <%s> %dx%d\n', ...
         fname, mode, org, fields, width, height);
     fprintf('  %s; %s\n', type, num2str(siz));
-    
+
     fclose(fp);
 end

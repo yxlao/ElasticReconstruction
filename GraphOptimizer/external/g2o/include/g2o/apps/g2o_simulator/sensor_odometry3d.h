@@ -32,13 +32,14 @@
 
 namespace g2o {
 
-  class G2O_SIMULATOR_API SensorOdometry3D: public BinarySensor<Robot3D, EdgeSE3, WorldObjectSE3 > {
+class G2O_SIMULATOR_API SensorOdometry3D
+    : public BinarySensor<Robot3D, EdgeSE3, WorldObjectSE3> {
   public:
-    SensorOdometry3D(const std::string& name_);
+    SensorOdometry3D(const std::string &name_);
     virtual void sense();
-    void addNoise(EdgeType* e);
-  };
+    void addNoise(EdgeType *e);
+};
 
-}
+} // namespace g2o
 
 #endif

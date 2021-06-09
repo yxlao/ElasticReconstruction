@@ -32,9 +32,9 @@
 #else
 
 /* CHOLMOD is being compiled in a stand-alone library */
-#undef  _LARGEFILE64_SOURCE
+#undef _LARGEFILE64_SOURCE
 #define _LARGEFILE64_SOURCE
-#undef  _FILE_OFFSET_BITS
+#undef _FILE_OFFSET_BITS
 #define _FILE_OFFSET_BITS 64
 
 #endif
@@ -42,4 +42,3 @@
 #endif
 
 #endif
-

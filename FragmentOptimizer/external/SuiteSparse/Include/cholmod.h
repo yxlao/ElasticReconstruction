@@ -32,7 +32,7 @@
  *	All routine names, data types, and CHOLMOD library files use the
  *	cholmod_ prefix.  All macros and other #define's use the CHOLMOD
  *	prefix.
- * 
+ *
  * Return value:
  * -------------
  *

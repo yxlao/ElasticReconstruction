@@ -582,7 +582,7 @@ RECURSIVE              = YES
 # subdirectory from a directory tree whose root is specified with the INPUT tag.
 
 EXCLUDE                = "${Eigen_SOURCE_DIR}/unsupported/doc/examples" \
-                         "${Eigen_SOURCE_DIR}/unsupported/doc/snippets" 
+                         "${Eigen_SOURCE_DIR}/unsupported/doc/snippets"
 
 # The EXCLUDE_SYMLINKS tag can be used select whether or not files or
 # directories that are symbolic links (a Unix filesystem feature) are excluded

@@ -83,7 +83,7 @@
 
 /* NULL should already be defined, but ensure it is here. */
 #ifndef NULL
-#define NULL ((void *) 0)
+#define NULL ((void *)0)
 #endif
 
 /* FLIP is a "negation about -1", and is used to mark an integer i that is
@@ -92,59 +92,55 @@
  * for all integers i.  UNFLIP (i) is >= EMPTY. */
 #define EMPTY (-1)
 #define FLIP(i) (-(i)-2)
-#define UNFLIP(i) (((i) < EMPTY) ? FLIP (i) : (i))
+#define UNFLIP(i) (((i) < EMPTY) ? FLIP(i) : (i))
 
 /* MAX and MIN are not safe to use for NaN's */
-#define MAX(a,b) (((a) > (b)) ? (a) : (b))
-#define MAX3(a,b,c) (((a) > (b)) ? (MAX (a,c)) : (MAX (b,c)))
-#define MAX4(a,b,c,d) (((a) > (b)) ? (MAX3 (a,c,d)) : (MAX3 (b,c,d)))
-#define MIN(a,b) (((a) < (b)) ? (a) : (b))
-#define IMPLIES(p,q) (!(p) || (q))
+#define MAX(a, b) (((a) > (b)) ? (a) : (b))
+#define MAX3(a, b, c) (((a) > (b)) ? (MAX(a, c)) : (MAX(b, c)))
+#define MAX4(a, b, c, d) (((a) > (b)) ? (MAX3(a, c, d)) : (MAX3(b, c, d)))
+#define MIN(a, b) (((a) < (b)) ? (a) : (b))
+#define IMPLIES(p, q) (!(p) || (q))
 
 /* find the sign: -1 if x < 0, 1 if x > 0, zero otherwise.
  * Not safe for NaN's */
 #define SIGN(x) (((x) < 0) ? (-1) : (((x) > 0) ? 1 : 0))
 
 /* round up an integer x to a multiple of s */
-#define ROUNDUP(x,s) ((s) * (((x) + ((s) - 1)) / (s)))
+#define ROUNDUP(x, s) ((s) * (((x) + ((s)-1)) / (s)))
 
-#define ERROR(status,msg) \
-    CHOLMOD(error) (status, __FILE__, __LINE__, msg, Common)
+#define ERROR(status, msg)                                                     \
+    CHOLMOD(error)(status, __FILE__, __LINE__, msg, Common)
 
 /* Check a pointer and return if null.  Set status to invalid, unless the
  * status is already "out of memory" */
-#define RETURN_IF_NULL(A,result) \
-{ \
-    if ((A) == NULL) \
-    { \
-	if (Common->status != CHOLMOD_OUT_OF_MEMORY) \
-	{ \
-	    ERROR (CHOLMOD_INVALID, "argument missing") ; \
-	} \
-	return (result) ; \
-    } \
-}
+#define RETURN_IF_NULL(A, result)                                              \
+    {                                                                          \
+        if ((A) == NULL) {                                                     \
+            if (Common->status != CHOLMOD_OUT_OF_MEMORY) {                     \
+                ERROR(CHOLMOD_INVALID, "argument missing");                    \
+            }                                                                  \
+            return (result);                                                   \
+        }                                                                      \
+    }
 
 /* Return if Common is NULL or invalid */
-#define RETURN_IF_NULL_COMMON(result) \
-{ \
-    if (Common == NULL) \
-    { \
-	return (result) ; \
-    } \
-    if (Common->itype != ITYPE || Common->dtype != DTYPE) \
-    { \
-	Common->status = CHOLMOD_INVALID ; \
-	return (result) ; \
-    } \
-}
+#define RETURN_IF_NULL_COMMON(result)                                          \
+    {                                                                          \
+        if (Common == NULL) {                                                  \
+            return (result);                                                   \
+        }                                                                      \
+        if (Common->itype != ITYPE || Common->dtype != DTYPE) {                \
+            Common->status = CHOLMOD_INVALID;                                  \
+            return (result);                                                   \
+        }                                                                      \
+    }
 
-#define IS_NAN(x)	CHOLMOD_IS_NAN(x)
-#define IS_ZERO(x)	CHOLMOD_IS_ZERO(x)
-#define IS_NONZERO(x)	CHOLMOD_IS_NONZERO(x)
-#define IS_LT_ZERO(x)	CHOLMOD_IS_LT_ZERO(x)
-#define IS_GT_ZERO(x)	CHOLMOD_IS_GT_ZERO(x)
-#define IS_LE_ZERO(x)	CHOLMOD_IS_LE_ZERO(x)
+#define IS_NAN(x) CHOLMOD_IS_NAN(x)
+#define IS_ZERO(x) CHOLMOD_IS_ZERO(x)
+#define IS_NONZERO(x) CHOLMOD_IS_NONZERO(x)
+#define IS_LT_ZERO(x) CHOLMOD_IS_LT_ZERO(x)
+#define IS_GT_ZERO(x) CHOLMOD_IS_GT_ZERO(x)
+#define IS_LE_ZERO(x) CHOLMOD_IS_LE_ZERO(x)
 
 /* 1e308 is a huge number that doesn't take many characters to print in a
  * file, in CHOLMOD/Check/cholmod_read and _write.  Numbers larger than this
@@ -207,13 +203,13 @@
 /* Size_max: the largest value of size_t */
 /* -------------------------------------------------------------------------- */
 
-#define Size_max ((size_t) (-1))
+#define Size_max ((size_t)(-1))
 
 /* routines for doing arithmetic on size_t, and checking for overflow */
-size_t cholmod_add_size_t (size_t a, size_t b, int *ok) ;
-size_t cholmod_mult_size_t (size_t a, size_t k, int *ok) ;
-size_t cholmod_l_add_size_t (size_t a, size_t b, int *ok) ;
-size_t cholmod_l_mult_size_t (size_t a, size_t k, int *ok) ;
+size_t cholmod_add_size_t(size_t a, size_t b, int *ok);
+size_t cholmod_mult_size_t(size_t a, size_t k, int *ok);
+size_t cholmod_l_add_size_t(size_t a, size_t b, int *ok);
+size_t cholmod_l_mult_size_t(size_t a, size_t k, int *ok);
 
 /* -------------------------------------------------------------------------- */
 /* double (also complex double), SuiteSparse_long */
@@ -223,7 +219,7 @@ size_t cholmod_l_mult_size_t (size_t a, size_t k, int *ok) ;
 #define Real double
 #define Int SuiteSparse_long
 #define Int_max SuiteSparse_long_max
-#define CHOLMOD(name) cholmod_l_ ## name
+#define CHOLMOD(name) cholmod_l_##name
 #define LONG
 #define DOUBLE
 #define ITYPE CHOLMOD_LONG
@@ -234,28 +230,28 @@ size_t cholmod_l_mult_size_t (size_t a, size_t k, int *ok) ;
 /* double, int/SuiteSparse_long */
 /* -------------------------------------------------------------------------- */
 
-#elif defined (DMIX)
+#elif defined(DMIX)
 #error "mixed int/SuiteSparse_long not yet supported"
 
 /* -------------------------------------------------------------------------- */
 /* single, int */
 /* -------------------------------------------------------------------------- */
 
-#elif defined (SINT)
+#elif defined(SINT)
 #error "single-precision not yet supported"
 
 /* -------------------------------------------------------------------------- */
 /* single, SuiteSparse_long */
 /* -------------------------------------------------------------------------- */
 
-#elif defined (SLONG)
+#elif defined(SLONG)
 #error "single-precision not yet supported"
 
 /* -------------------------------------------------------------------------- */
 /* single, int/SuiteSparse_long */
 /* -------------------------------------------------------------------------- */
 
-#elif defined (SMIX)
+#elif defined(SMIX)
 #error "single-precision not yet supported"
 
 /* -------------------------------------------------------------------------- */
@@ -273,13 +269,12 @@ size_t cholmod_l_mult_size_t (size_t a, size_t k, int *ok) ;
 #define Real double
 #define Int int
 #define Int_max INT_MAX
-#define CHOLMOD(name) cholmod_ ## name
+#define CHOLMOD(name) cholmod_##name
 #define ITYPE CHOLMOD_INT
 #define DTYPE CHOLMOD_DOUBLE
 #define ID "%d"
 
 #endif
-
 
 /* ========================================================================== */
 /* === real/complex arithmetic ============================================== */
@@ -314,84 +309,83 @@ size_t cholmod_l_mult_size_t (size_t a, size_t k, int *ok) ;
 #endif
 
 /* double, int */
-EXTERN int cholmod_dump ;
-EXTERN int cholmod_dump_malloc ;
-SuiteSparse_long cholmod_dump_sparse (cholmod_sparse  *, const char *,
-    cholmod_common *) ;
-int  cholmod_dump_factor (cholmod_factor  *, const char *, cholmod_common *) ;
-int  cholmod_dump_triplet (cholmod_triplet *, const char *, cholmod_common *) ;
-int  cholmod_dump_dense (cholmod_dense   *, const char *, cholmod_common *) ;
-int  cholmod_dump_subset (int *, size_t, size_t, const char *,
-    cholmod_common *) ;
-int  cholmod_dump_perm (int *, size_t, size_t, const char *, cholmod_common *) ;
-int  cholmod_dump_parent (int *, size_t, const char *, cholmod_common *) ;
-void cholmod_dump_init (const char *, cholmod_common *) ;
-int  cholmod_dump_mem (const char *, SuiteSparse_long, cholmod_common *) ;
-void cholmod_dump_real (const char *, Real *, SuiteSparse_long,
-    SuiteSparse_long, int, int, cholmod_common *) ;
-void cholmod_dump_super (SuiteSparse_long, int *, int *, int *, int *, double *,
-    int, cholmod_common *) ;
-int  cholmod_dump_partition (SuiteSparse_long, int *, int *, int *, int *,
-    SuiteSparse_long, cholmod_common *) ;
-int  cholmod_dump_work(int, int, SuiteSparse_long, cholmod_common *) ;
+EXTERN int cholmod_dump;
+EXTERN int cholmod_dump_malloc;
+SuiteSparse_long cholmod_dump_sparse(cholmod_sparse *, const char *,
+                                     cholmod_common *);
+int cholmod_dump_factor(cholmod_factor *, const char *, cholmod_common *);
+int cholmod_dump_triplet(cholmod_triplet *, const char *, cholmod_common *);
+int cholmod_dump_dense(cholmod_dense *, const char *, cholmod_common *);
+int cholmod_dump_subset(int *, size_t, size_t, const char *, cholmod_common *);
+int cholmod_dump_perm(int *, size_t, size_t, const char *, cholmod_common *);
+int cholmod_dump_parent(int *, size_t, const char *, cholmod_common *);
+void cholmod_dump_init(const char *, cholmod_common *);
+int cholmod_dump_mem(const char *, SuiteSparse_long, cholmod_common *);
+void cholmod_dump_real(const char *, Real *, SuiteSparse_long, SuiteSparse_long,
+                       int, int, cholmod_common *);
+void cholmod_dump_super(SuiteSparse_long, int *, int *, int *, int *, double *,
+                        int, cholmod_common *);
+int cholmod_dump_partition(SuiteSparse_long, int *, int *, int *, int *,
+                           SuiteSparse_long, cholmod_common *);
+int cholmod_dump_work(int, int, SuiteSparse_long, cholmod_common *);
 
 /* double, SuiteSparse_long */
-EXTERN int cholmod_l_dump ;
-EXTERN int cholmod_l_dump_malloc ;
-SuiteSparse_long cholmod_l_dump_sparse (cholmod_sparse  *, const char *,
-    cholmod_common *) ;
-int  cholmod_l_dump_factor (cholmod_factor  *, const char *, cholmod_common *) ;
-int  cholmod_l_dump_triplet (cholmod_triplet *, const char *, cholmod_common *);
-int  cholmod_l_dump_dense (cholmod_dense   *, const char *, cholmod_common *) ;
-int  cholmod_l_dump_subset (SuiteSparse_long *, size_t, size_t, const char *,
-    cholmod_common *) ;
-int  cholmod_l_dump_perm (SuiteSparse_long *, size_t, size_t, const char *,
-    cholmod_common *) ;
-int  cholmod_l_dump_parent (SuiteSparse_long *, size_t, const char *,
-    cholmod_common *) ;
-void cholmod_l_dump_init (const char *, cholmod_common *) ;
-int  cholmod_l_dump_mem (const char *, SuiteSparse_long, cholmod_common *) ;
-void cholmod_l_dump_real (const char *, Real *, SuiteSparse_long,
-    SuiteSparse_long, int, int, cholmod_common *) ;
-void cholmod_l_dump_super (SuiteSparse_long, SuiteSparse_long *,
-    SuiteSparse_long *, SuiteSparse_long *, SuiteSparse_long *,
-    double *, int, cholmod_common *) ;
-int  cholmod_l_dump_partition (SuiteSparse_long, SuiteSparse_long *,
-    SuiteSparse_long *, SuiteSparse_long *,
-    SuiteSparse_long *, SuiteSparse_long, cholmod_common *) ;
-int  cholmod_l_dump_work(int, int, SuiteSparse_long, cholmod_common *) ;
+EXTERN int cholmod_l_dump;
+EXTERN int cholmod_l_dump_malloc;
+SuiteSparse_long cholmod_l_dump_sparse(cholmod_sparse *, const char *,
+                                       cholmod_common *);
+int cholmod_l_dump_factor(cholmod_factor *, const char *, cholmod_common *);
+int cholmod_l_dump_triplet(cholmod_triplet *, const char *, cholmod_common *);
+int cholmod_l_dump_dense(cholmod_dense *, const char *, cholmod_common *);
+int cholmod_l_dump_subset(SuiteSparse_long *, size_t, size_t, const char *,
+                          cholmod_common *);
+int cholmod_l_dump_perm(SuiteSparse_long *, size_t, size_t, const char *,
+                        cholmod_common *);
+int cholmod_l_dump_parent(SuiteSparse_long *, size_t, const char *,
+                          cholmod_common *);
+void cholmod_l_dump_init(const char *, cholmod_common *);
+int cholmod_l_dump_mem(const char *, SuiteSparse_long, cholmod_common *);
+void cholmod_l_dump_real(const char *, Real *, SuiteSparse_long,
+                         SuiteSparse_long, int, int, cholmod_common *);
+void cholmod_l_dump_super(SuiteSparse_long, SuiteSparse_long *,
+                          SuiteSparse_long *, SuiteSparse_long *,
+                          SuiteSparse_long *, double *, int, cholmod_common *);
+int cholmod_l_dump_partition(SuiteSparse_long, SuiteSparse_long *,
+                             SuiteSparse_long *, SuiteSparse_long *,
+                             SuiteSparse_long *, SuiteSparse_long,
+                             cholmod_common *);
+int cholmod_l_dump_work(int, int, SuiteSparse_long, cholmod_common *);
 
-#define DEBUG_INIT(s,Common)  { CHOLMOD(dump_init)(s, Common) ; }
-#define ASSERT(expression) (assert (expression))
+#define DEBUG_INIT(s, Common)                                                  \
+    { CHOLMOD(dump_init)(s, Common); }
+#define ASSERT(expression) (assert(expression))
 
-#define PRK(k,params) \
-{ \
-    if (CHOLMOD(dump) >= (k) && Common->print_function != NULL) \
-    { \
-	(Common->print_function) params ; \
-    } \
-}
+#define PRK(k, params)                                                         \
+    {                                                                          \
+        if (CHOLMOD(dump) >= (k) && Common->print_function != NULL) {          \
+            (Common->print_function) params;                                   \
+        }                                                                      \
+    }
 
-#define PRINT0(params) PRK (0, params)
-#define PRINT1(params) PRK (1, params)
-#define PRINT2(params) PRK (2, params)
-#define PRINT3(params) PRK (3, params)
+#define PRINT0(params) PRK(0, params)
+#define PRINT1(params) PRK(1, params)
+#define PRINT2(params) PRK(2, params)
+#define PRINT3(params) PRK(3, params)
 
-#define PRINTM(params) \
-{ \
-    if (CHOLMOD(dump_malloc) > 0) \
-    { \
-	printf params ; \
-    } \
-}
+#define PRINTM(params)                                                         \
+    {                                                                          \
+        if (CHOLMOD(dump_malloc) > 0) {                                        \
+            printf params;                                                     \
+        }                                                                      \
+    }
 
 #define DEBUG(statement) statement
 
 #else
 
 /* Debugging disabled (the normal case) */
-#define PRK(k,params)
-#define DEBUG_INIT(s,Common)
+#define PRK(k, params)
+#define DEBUG_INIT(s, Common)
 #define PRINT0(params)
 #define PRINT1(params)
 #define PRINT2(params)

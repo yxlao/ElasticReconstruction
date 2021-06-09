@@ -32,22 +32,23 @@
 #include "g2o_types_slam3d_api.h"
 
 namespace g2o {
-  /**
-   * \brief parameters for a camera
-   */
-  class G2O_TYPES_SLAM3D_API ParameterStereoCamera: public ParameterCamera {
-    public:
-      EIGEN_MAKE_ALIGNED_OPERATOR_NEW;
-      ParameterStereoCamera();
+/**
+ * \brief parameters for a camera
+ */
+class G2O_TYPES_SLAM3D_API ParameterStereoCamera : public ParameterCamera {
+  public:
+    EIGEN_MAKE_ALIGNED_OPERATOR_NEW;
+    ParameterStereoCamera();
 
-      virtual bool read(std::istream& is);
-      virtual bool write(std::ostream& os) const;
+    virtual bool read(std::istream &is);
+    virtual bool write(std::ostream &os) const;
 
-      void  setBaseline(double baseline_) { _baseline = baseline_;}
-      double baseline() const {return _baseline;}
-    protected:
-      double _baseline;
-  };
+    void setBaseline(double baseline_) { _baseline = baseline_; }
+    double baseline() const { return _baseline; }
+
+  protected:
+    double _baseline;
 };
+}; // namespace g2o
 
 #endif

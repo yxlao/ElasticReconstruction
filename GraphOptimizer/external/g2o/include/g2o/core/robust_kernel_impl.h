@@ -32,95 +32,91 @@
 
 namespace g2o {
 
-  /**
-   * \brief scale a robust kernel to another delta (window size)
-   *
-   * Scales a robust kernel to another window size. Useful, in case if
-   * one implements a kernel which only is designed for a fixed window
-   * size.
-   */
-  class G2O_CORE_API RobustKernelScaleDelta : public RobustKernel
-  {
-    public:
-      /**
-       * construct the scaled kernel ontop of another kernel which might be shared accross
-       * several scaled kernels
-       */
-      explicit RobustKernelScaleDelta(const RobustKernelPtr& kernel, double delta = 1.);
-      explicit RobustKernelScaleDelta(double delta = 1.);
+/**
+ * \brief scale a robust kernel to another delta (window size)
+ *
+ * Scales a robust kernel to another window size. Useful, in case if
+ * one implements a kernel which only is designed for a fixed window
+ * size.
+ */
+class G2O_CORE_API RobustKernelScaleDelta : public RobustKernel {
+  public:
+    /**
+     * construct the scaled kernel ontop of another kernel which might be shared
+     * accross several scaled kernels
+     */
+    explicit RobustKernelScaleDelta(const RobustKernelPtr &kernel,
+                                    double delta = 1.);
+    explicit RobustKernelScaleDelta(double delta = 1.);
 
-      //! return the underlying kernel
-      const RobustKernelPtr kernel() const { return _kernel;}
-      //! use another kernel for the underlying operation
-      void setKernel(const RobustKernelPtr& ptr);
+    //! return the underlying kernel
+    const RobustKernelPtr kernel() const { return _kernel; }
+    //! use another kernel for the underlying operation
+    void setKernel(const RobustKernelPtr &ptr);
 
-      void robustify(double error, Eigen::Vector3d& rho) const;
+    void robustify(double error, Eigen::Vector3d &rho) const;
 
-    protected:
-      RobustKernelPtr _kernel;
-  };
+  protected:
+    RobustKernelPtr _kernel;
+};
 
-  /**
-   * \brief Huber Cost Function
-   *
-   * Loss function as described by Huber
-   * See http://en.wikipedia.org/wiki/Huber_loss_function
-   *
-   * If e^(1/2) < d
-   * rho(e) = e
-   *
-   * else
-   *
-   *               1/2    2
-   * rho(e) = 2 d e    - d
-   */
-  class G2O_CORE_API RobustKernelHuber : public RobustKernel
-  {
-    public:
-      virtual void robustify(double e2, Eigen::Vector3d& rho) const;
-  };
+/**
+ * \brief Huber Cost Function
+ *
+ * Loss function as described by Huber
+ * See http://en.wikipedia.org/wiki/Huber_loss_function
+ *
+ * If e^(1/2) < d
+ * rho(e) = e
+ *
+ * else
+ *
+ *               1/2    2
+ * rho(e) = 2 d e    - d
+ */
+class G2O_CORE_API RobustKernelHuber : public RobustKernel {
+  public:
+    virtual void robustify(double e2, Eigen::Vector3d &rho) const;
+};
 
-  /**
-   * \brief Pseudo Huber Cost Function
-   *
-   * The smooth pseudo huber cost function:
-   * See http://en.wikipedia.org/wiki/Huber_loss_function
-   *
-   *    2       e
-   * 2 d  (sqrt(-- + 1) - 1)
-   *             2
-   *            d
-   */
-  class G2O_CORE_API RobustKernelPseudoHuber : public RobustKernel
-  {
-    public:
-      virtual void robustify(double e2, Eigen::Vector3d& rho) const;
-  };
+/**
+ * \brief Pseudo Huber Cost Function
+ *
+ * The smooth pseudo huber cost function:
+ * See http://en.wikipedia.org/wiki/Huber_loss_function
+ *
+ *    2       e
+ * 2 d  (sqrt(-- + 1) - 1)
+ *             2
+ *            d
+ */
+class G2O_CORE_API RobustKernelPseudoHuber : public RobustKernel {
+  public:
+    virtual void robustify(double e2, Eigen::Vector3d &rho) const;
+};
 
-  /**
-   * \brief Cauchy cost function
-   *
-   *  2     e
-   * d  log(-- + 1)
-   *         2
-   *        d
-   */
-  class G2O_CORE_API RobustKernelCauchy : public RobustKernel
-  {
-    public:
-      virtual void robustify(double e2, Eigen::Vector3d& rho) const;
-  };
+/**
+ * \brief Cauchy cost function
+ *
+ *  2     e
+ * d  log(-- + 1)
+ *         2
+ *        d
+ */
+class G2O_CORE_API RobustKernelCauchy : public RobustKernel {
+  public:
+    virtual void robustify(double e2, Eigen::Vector3d &rho) const;
+};
 
-  /**
-   * \brief Saturated cost function.
-   *
-   * The error is at most delta^2
-   */
-  class G2O_CORE_API RobustKernelSaturated : public RobustKernel
-  {
-    public:
-      virtual void robustify(double e2, Eigen::Vector3d& rho) const;
-  };
+/**
+ * \brief Saturated cost function.
+ *
+ * The error is at most delta^2
+ */
+class G2O_CORE_API RobustKernelSaturated : public RobustKernel {
+  public:
+    virtual void robustify(double e2, Eigen::Vector3d &rho) const;
+};
 
 } // end namespace g2o
 

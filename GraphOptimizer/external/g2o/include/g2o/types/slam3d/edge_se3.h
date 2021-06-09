@@ -8,77 +8,83 @@
 
 namespace g2o {
 
-  /**
-   * \brief Edge between two 3D pose vertices
-   *
-   * The transformation between the two vertices is given as an Isometry3d.
-   * If z denotes the measurement, then the error function is given as follows:
-   * z^-1 * (x_i^-1 * x_j)
-   */
-  class G2O_TYPES_SLAM3D_API EdgeSE3 : public BaseBinaryEdge<6, Eigen::Isometry3d, VertexSE3, VertexSE3> {
-    public:
-      EIGEN_MAKE_ALIGNED_OPERATOR_NEW;
-      EdgeSE3();
-      virtual bool read(std::istream& is);
-      virtual bool write(std::ostream& os) const;
+/**
+ * \brief Edge between two 3D pose vertices
+ *
+ * The transformation between the two vertices is given as an Isometry3d.
+ * If z denotes the measurement, then the error function is given as follows:
+ * z^-1 * (x_i^-1 * x_j)
+ */
+class G2O_TYPES_SLAM3D_API EdgeSE3
+    : public BaseBinaryEdge<6, Eigen::Isometry3d, VertexSE3, VertexSE3> {
+  public:
+    EIGEN_MAKE_ALIGNED_OPERATOR_NEW;
+    EdgeSE3();
+    virtual bool read(std::istream &is);
+    virtual bool write(std::ostream &os) const;
 
-      void computeError();
+    void computeError();
 
-      virtual void setMeasurement(const Eigen::Isometry3d& m){
+    virtual void setMeasurement(const Eigen::Isometry3d &m) {
         _measurement = m;
         _inverseMeasurement = m.inverse();
-      }
+    }
 
-      virtual bool setMeasurementData(const double* d){
+    virtual bool setMeasurementData(const double *d) {
         Map<const Vector7d> v(d);
         setMeasurement(internal::fromVectorQT(v));
         return true;
-      }
+    }
 
-      virtual bool getMeasurementData(double* d) const{
+    virtual bool getMeasurementData(double *d) const {
         Map<Vector7d> v(d);
         v = internal::toVectorQT(_measurement);
         return true;
-      }
+    }
 
-      void linearizeOplus();
+    void linearizeOplus();
 
-      virtual int measurementDimension() const {return 7;}
+    virtual int measurementDimension() const { return 7; }
 
-      virtual bool setMeasurementFromState() ;
+    virtual bool setMeasurementFromState();
 
-      virtual double initialEstimatePossible(const OptimizableGraph::VertexSet& /*from*/, 
-          OptimizableGraph::Vertex* /*to*/) { 
+    virtual double
+    initialEstimatePossible(const OptimizableGraph::VertexSet & /*from*/,
+                            OptimizableGraph::Vertex * /*to*/) {
         return 1.;
-      }
+    }
 
-      virtual void initialEstimate(const OptimizableGraph::VertexSet& from, OptimizableGraph::Vertex* to);
+    virtual void initialEstimate(const OptimizableGraph::VertexSet &from,
+                                 OptimizableGraph::Vertex *to);
 
-    protected:
-      Eigen::Isometry3d _inverseMeasurement;
-  };
+  protected:
+    Eigen::Isometry3d _inverseMeasurement;
+};
 
-  /**
-   * \brief Output the pose-pose constraint to Gnuplot data file
-   */
-  class G2O_TYPES_SLAM3D_API EdgeSE3WriteGnuplotAction: public WriteGnuplotAction {
+/**
+ * \brief Output the pose-pose constraint to Gnuplot data file
+ */
+class G2O_TYPES_SLAM3D_API EdgeSE3WriteGnuplotAction
+    : public WriteGnuplotAction {
   public:
     EdgeSE3WriteGnuplotAction();
-    virtual HyperGraphElementAction* operator()(HyperGraph::HyperGraphElement* element, 
-            HyperGraphElementAction::Parameters* params_);
-  };
+    virtual HyperGraphElementAction *
+    operator()(HyperGraph::HyperGraphElement *element,
+               HyperGraphElementAction::Parameters *params_);
+};
 
 #ifdef G2O_HAVE_OPENGL
-  /**
-   * \brief Visualize a 3D pose-pose constraint
-   */
-  class G2O_TYPES_SLAM3D_API EdgeSE3DrawAction: public DrawAction{
+/**
+ * \brief Visualize a 3D pose-pose constraint
+ */
+class G2O_TYPES_SLAM3D_API EdgeSE3DrawAction : public DrawAction {
   public:
     EdgeSE3DrawAction();
-    virtual HyperGraphElementAction* operator()(HyperGraph::HyperGraphElement* element, 
-            HyperGraphElementAction::Parameters* params_);
-  };
+    virtual HyperGraphElementAction *
+    operator()(HyperGraph::HyperGraphElement *element,
+               HyperGraphElementAction::Parameters *params_);
+};
 #endif
 
-} // end namespace
+} // namespace g2o
 #endif
