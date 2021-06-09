@@ -1,11 +1,12 @@
 // GraphOptimizer.cpp : Defines the entry point for the console application.
 //
 
-#include "OptApp.h"
 #include <boost/format.hpp>
 #include <boost/program_options.hpp>
 #include <boost/filesystem.hpp>
 #include <iostream>
+
+#include "GraphOptimizer/OptApp.h"
 
 namespace po = boost::program_options;
 namespace fs = boost::filesystem;

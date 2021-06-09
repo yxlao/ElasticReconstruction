@@ -1,13 +1,14 @@
-#include "OptApp.h"
 #include <boost/filesystem.hpp>
 #include <g2o/types/slam3d/edge_se3.h>
 #include <g2o/core/block_solver.h>
 #include <g2o/solvers/csparse/linear_solver_csparse.h>
 #include <g2o/solvers/pcg/linear_solver_pcg.h>
 #include <g2o/core/optimization_algorithm_levenberg.h>
-#include "vertigo/vertex_switchLinear.h"
-#include "vertigo/edge_switchPrior.h"
-#include "vertigo/edge_se3Switchable.h"
+
+#include "GraphOptimizer/OptApp.h"
+#include "GraphOptimizer/vertigo/vertex_switchLinear.h"
+#include "GraphOptimizer/vertigo/edge_switchPrior.h"
+#include "GraphOptimizer/vertigo/edge_se3Switchable.h"
 
 typedef g2o::BlockSolver<g2o::BlockSolverTraits<6, 3>> SlamBlockSolver;
 typedef g2o::LinearSolverCSparse<SlamBlockSolver::PoseMatrixType>

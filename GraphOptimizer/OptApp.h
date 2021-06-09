@@ -1,7 +1,7 @@
 #pragma once
 
 #include <g2o/types/slam3d/se3quat.h>
-#include "helper.h"
+#include "GraphOptimizer/Helper.h"
 
 class COptApp {
   public:
