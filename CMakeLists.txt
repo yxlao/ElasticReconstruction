@@ -163,7 +163,7 @@ function(elastic_reconstruction_set_global_properties target)
         ${CSPARSE_LIBRARY}
         ${PCL_LIBRARIES}
         ${BOOST_LIBRARIES}
-        boost_program_options # TODO: update me
+        boost_program_options # TODO: hard-coded for now
         ${CHOLMOD_LIBRARIES}
         ${G2O_LIBRARIES}
     )
