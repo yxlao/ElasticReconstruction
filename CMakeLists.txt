@@ -49,7 +49,9 @@ set(Boost_NO_SYSTEM_PATHS ON)
 find_package(Boost)
 if(BOOST_FOUND)
     message(STATUS "Boost found")
-    message(STATUS "Boost_LIBRARIES: ${BOOST_LIBRARIES}")
+    message(STATUS "Boost_INCLUDE_DIRS: ${Boost_INCLUDE_DIRS}")
+    message(STATUS "BOOST_LIBRARIES: ${BOOST_LIBRARIES}") # Upper case
+    message(STATUS "Boost_LIBRARY_DIRS: ${Boost_LIBRARY_DIRS}")
 else()
     message(FATAL_ERROR "BOOST_FOUND: ${BOOST_FOUND}")
 endif()
@@ -63,8 +65,6 @@ if(EIGEN_FOUND)
 else()
     message(FATAL_ERROR "EIGEN_FOUND: ${EIGEN_FOUND}")
 endif()
-# add_definitions(-DEIGEN_USE_NEW_STDVECTOR
-#                 -DEIGEN_YES_I_KNOW_SPARSE_MODULE_IS_NOT_STABLE_YET)
 
 # CMake helper functions.
 function(elastic_reconstruction_set_global_properties target)
@@ -93,6 +93,25 @@ function(elastic_reconstruction_set_global_properties target)
     target_compile_definitions(${target} PRIVATE __GLIBC_HAVE_LONG_LONG)
     target_compile_definitions(${target} PRIVATE _GLIBCXX_USE_CXX11_ABI=0)
     target_compile_definitions(${target} PRIVATE BOOST_NO_CXX11_VARIADIC_TEMPLATES)
+
+    # Third-party dependencies
+    target_include_directories(${target} PRIVATE
+        ${PCL_INCLUDE_DIRS}
+        ${Boost_INCLUDE_DIRS}
+        ${EIGEN_INCLUDE_DIRS}
+    )
+    target_link_directories(${target} PRIVATE
+        ${PCL_LIBRARY_DIRS}
+        ${Boost_LIBRARY_DIRS}
+    )
+    target_link_libraries(${target} PRIVATE
+        ${PCL_LIBRARIES}
+        ${BOOST_LIBRARIES}
+    )
+    target_compile_definitions(${target} PRIVATE
+        EIGEN_USE_NEW_STDVECTOR
+        EIGEN_YES_I_KNOW_SPARSE_MODULE_IS_NOT_STABLE_YET
+    )
 endfunction()
 
 # Subdirectories.
