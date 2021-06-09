@@ -9,56 +9,31 @@
 #include <pcl/common/time.h>
 
 int print_help() {
-    cout << "\nApplication parameters:" << endl;
-    cout << "    --help, -h                      : print this message" << endl;
-    cout << "    --rgbdslam <log_file>           : rgbdslam.log/opt_output.log "
-            "file, get ipose"
-         << endl;
-    cout << "    --registration <log_file>       : reg_output.log, invalid "
-            "pair when frame_ == -1"
-         << endl;
-    cout << "    --dir <dir_prefix>              : dir prefix, place to loopup "
-            ".xyzn files"
-         << endl;
-    cout << "    --num <number>                  : number of pieces, important "
-            "parameter"
-         << endl;
-    cout << "    --weight <weight>               : 1.0 for nonrigid, 10000.0 "
-            "for rigid"
-         << endl;
-    cout << "    --resolution <resolution>       : default - 8" << endl;
-    cout << "    --length <length>               : default - 3.0" << endl;
-    cout << "    --interval <interval>           : default - 50" << endl;
-    cout << "    --iteration <max_number>        : default - 5" << endl;
-    cout << "    --inner_iteration <max_number>  : default - 10" << endl;
-    cout << "    --save_to <ctr_file>            : default - output.ctr"
-         << endl;
-    cout << "    --write_xyzn_sample <sample_num>: per <sample_num> write a "
-            "point"
-         << endl;
-    cout << "    --blasklist <blacklist_file>    : each line is the block we "
-            "want to blacklist"
-         << endl;
-    cout << "    --blacklistpair <threshold>     : threshold of accepting "
-            "pairwise registration, default - 10000"
-         << endl;
-    cout << "    --switchable <weight>           : use switchable g2o, default "
-            "weight 0.1"
-         << endl;
-    cout << "    --ipose <log_file>              : get ipose from log file"
-         << endl;
-    cout << "    --verbose <verbpse_level>       : set verbosity level, from "
-            "0(none) to 5(verbose), default 3"
-         << endl;
-    cout << "Optimization options:" << endl;
-    cout << "    --nonrigid                      : default, nonrigid alignment "
-            "published in ICCV 2013"
-         << endl;
-    cout << "    --rigid                         : dense rigid optimization"
-         << endl;
-    cout << "    --slac                          : simultaneous localization "
-            "and calibration, published in CVPR 2014"
-         << endl;
+    // clang-format off
+	cout << "\nApplication parameters:" << endl;
+	cout << "    --help, -h                      : print this message" << endl;
+	cout << "    --rgbdslam <log_file>           : rgbdslam.log/opt_output.log file, get ipose" << endl;
+	cout << "    --registration <log_file>       : reg_output.log, invalid pair when frame_ == -1" << endl;
+	cout << "    --dir <dir_prefix>              : dir prefix, place to loopup .xyzn files" << endl;
+	cout << "    --num <number>                  : number of pieces, important parameter" << endl;
+	cout << "    --weight <weight>               : 1.0 for nonrigid, 10000.0 for rigid" << endl;
+	cout << "    --resolution <resolution>       : default - 8" << endl;
+	cout << "    --length <length>               : default - 3.0" << endl;
+	cout << "    --interval <interval>           : default - 50" << endl;
+	cout << "    --iteration <max_number>        : default - 5" << endl;
+	cout << "    --inner_iteration <max_number>  : default - 10" << endl;
+	cout << "    --save_to <ctr_file>            : default - output.ctr" << endl;
+	cout << "    --write_xyzn_sample <sample_num>: per <sample_num> write a point" << endl;
+	cout << "    --blasklist <blacklist_file>    : each line is the block we want to blacklist" << endl;
+	cout << "    --blacklistpair <threshold>     : threshold of accepting pairwise registration, default - 10000" << endl;
+	cout << "    --switchable <weight>           : use switchable g2o, default weight 0.1" << endl;
+	cout << "    --ipose <log_file>              : get ipose from log file" << endl;
+	cout << "    --verbose <verbpse_level>       : set verbosity level, from 0(none) to 5(verbose), default 3" << endl;
+	cout << "Optimization options:" << endl;
+	cout << "    --nonrigid                      : default, nonrigid alignment published in ICCV 2013" << endl;
+	cout << "    --rigid                         : dense rigid optimization" << endl;
+	cout << "    --slac                          : simultaneous localization and calibration, published in CVPR 2014" << endl;
+    // clang-format on
     return 0;
 }
 

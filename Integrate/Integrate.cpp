@@ -10,40 +10,25 @@
 #include "IntegrateApp.h"
 
 int print_help() {
+    // clang-format off
     cout << "\nApplication parameters:" << endl;
-    cout << "    --help, -h                      : print this message" << endl;
-    cout << "    --ref_traj <log_file>           : use a reference trajectory "
-            "file"
-         << endl;
-    cout << "    --pose_traj <log_file>          : use a pose trajectory file "
-            "to create a reference trajectory"
-         << endl;
-    cout << "    --seg_traj <log_file>           : trajectory within each "
-            "fragment - must have"
-         << endl;
-    cout << "    --ctr <ctr_file>                : enables distortion, must "
-            "specify the following parameters"
-         << endl;
-    cout << "    --num <number>                  : number of pieces, important "
-            "parameter"
-         << endl;
-    cout << "    --resolution <resolution>       : default - 8" << endl;
-    cout << "    --length <length>               : default - 3.0" << endl;
-    cout << "    --interval <interval>           : default - 50" << endl;
-    cout << "    --camera <param_file>           : load camera parameters"
-         << endl;
-    cout << "    --save_to <pcd_file>            : output file, default - "
-            "world.pcd"
-         << endl;
-    cout << "    --start_from <frame_id>         : frames before frame_id will "
-            "be skipped"
-         << endl;
-    cout << "    --end_at <frame_id>             : frames after frame_id will "
-            "be skipped"
-         << endl;
-    cout << "Valid depth data sources:" << endl;
-    cout << "    -dev <device> (default), -oni <oni_file>" << endl;
-    return 0;
+	cout << "    --help, -h                      : print this message" << endl;
+    cout << "    --ref_traj <log_file>           : use a reference trajectory file" << endl;
+	cout << "    --pose_traj <log_file>          : use a pose trajectory file to create a reference trajectory" << endl;
+	cout << "    --seg_traj <log_file>           : trajectory within each fragment - must have" << endl;
+	cout << "    --ctr <ctr_file>                : enables distortion, must specify the following parameters" << endl;
+	cout << "    --num <number>                  : number of pieces, important parameter" << endl;
+	cout << "    --resolution <resolution>       : default - 8" << endl;
+	cout << "    --length <length>               : default - 3.0" << endl;
+	cout << "    --interval <interval>           : default - 50" << endl;
+	cout << "    --camera <param_file>           : load camera parameters" << endl;
+	cout << "    --save_to <pcd_file>            : output file, default - world.pcd" << endl;
+	cout << "    --start_from <frame_id>         : frames before frame_id will be skipped" << endl;
+	cout << "    --end_at <frame_id>             : frames after frame_id will be skipped" << endl;
+	cout << "Valid depth data sources:" << endl;
+	cout << "    -dev <device> (default), -oni <oni_file>" << endl;
+	return 0;
+    // clang-format on
 }
 
 int main(int argc, char *argv[]) {

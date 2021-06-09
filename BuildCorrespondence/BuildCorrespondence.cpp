@@ -9,46 +9,23 @@
 #include <pcl/common/time.h>
 
 int print_help() {
-    cout << "\nApplication parameters:" << endl;
-    cout << "    --help, -h                      : print this message" << endl;
-    cout << "    --traj <log_file>               : initialization, camera pose "
-            "trajectory"
-         << endl;
-    cout << "    --num <num_of_fragments>        : use together with --traj"
-         << endl;
-    cout << "    --interval <interval>           : use together with --traj, "
-            "default : 50"
-         << endl;
-    cout << "    --length <length>               : use together with --traj, "
-            "default : 3.0"
-         << endl;
-    cout << "    --reg_traj <log_file>           : initialization, "
-            "registration.log file, will overwrite --traj"
-         << endl;
-    cout << "    --registration                  : registration results are "
-            "written into reg_output.log file"
-         << endl;
-    cout << "    --reg_dist <dist>               : distance threshold for "
-            "registration, default 0.03"
-         << endl;
-    cout << "    --reg_ratio <ratio>             : correspondence points are "
-            "at least <ratio> in each point cloud, default 0.25"
-         << endl;
-    cout << "    --reg_num <number>              : correspondence point number "
-            "requirement, default 40,000"
-         << endl;
-    cout << "    --blasklist <blacklist_file>    : each line is the block we "
-            "want to blacklist"
-         << endl;
-    cout << "    --save_xyzn                     : save point cloud into ascii "
-            "file"
-         << endl;
-    cout << "    --output_information            : output the registration "
-            "information matrix into reg_output.info"
-         << endl;
-    cout << "    --redux <log_file>              : use transformations in "
-            "<log_file> as constraints"
-         << endl;
+    // clang-format off
+	cout << "\nApplication parameters:" << endl;
+	cout << "    --help, -h                      : print this message" << endl;
+	cout << "    --traj <log_file>               : initialization, camera pose trajectory" << endl;
+	cout << "    --num <num_of_fragments>        : use together with --traj" << endl;
+	cout << "    --interval <interval>           : use together with --traj, default : 50" << endl;
+	cout << "    --length <length>               : use together with --traj, default : 3.0" << endl;
+	cout << "    --reg_traj <log_file>           : initialization, registration.log file, will overwrite --traj" << endl;
+	cout << "    --registration                  : registration results are written into reg_output.log file" << endl;
+	cout << "    --reg_dist <dist>               : distance threshold for registration, default 0.03" << endl;
+	cout << "    --reg_ratio <ratio>             : correspondence points are at least <ratio> in each point cloud, default 0.25" << endl;
+	cout << "    --reg_num <number>              : correspondence point number requirement, default 40,000" << endl;
+	cout << "    --blasklist <blacklist_file>    : each line is the block we want to blacklist" << endl;
+	cout << "    --save_xyzn                     : save point cloud into ascii file" << endl;
+	cout << "    --output_information            : output the registration information matrix into reg_output.info" << endl;
+	cout << "    --redux <log_file>              : use transformations in <log_file> as constraints" << endl;
+    // clang-format on
     return 0;
 }
 
