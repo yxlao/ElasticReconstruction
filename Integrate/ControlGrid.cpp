@@ -1,4 +1,4 @@
-#include "ControlGrid.h"
+#include "Integrate/ControlGrid.h"
 
 ControlGrid::ControlGrid(void) : resolution_(8) {}
 

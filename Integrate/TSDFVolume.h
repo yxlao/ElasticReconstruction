@@ -2,7 +2,7 @@
 #include <unordered_set>
 #include <unordered_map>
 
-#include "TSDFVolumeUnit.h"
+#include "Integrate/TSDFVolumeUnit.h"
 
 /////////////////////////////////////////////////////
 // hash function of TSDFVolumeUnit

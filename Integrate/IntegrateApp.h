@@ -10,8 +10,8 @@
 #include <pcl/visualization/image_viewer.h>
 #endif
 
-#include "TSDFVolume.h"
-#include "ControlGrid.h"
+#include "Integrate/TSDFVolume.h"
+#include "Integrate/ControlGrid.h"
 
 struct SampledScopeTime : public pcl::StopWatch {
     enum { EACH = 33 };

@@ -5,7 +5,7 @@
 #include <pcl/common/time.h>
 #include <boost/filesystem.hpp>
 
-#include "IntegrateApp.h"
+#include "Integrate/IntegrateApp.h"
 
 int print_help() {
     // clang-format off

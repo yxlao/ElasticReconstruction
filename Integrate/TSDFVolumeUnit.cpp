@@ -1,4 +1,4 @@
-#include "TSDFVolumeUnit.h"
+#include "Integrate/TSDFVolumeUnit.h"
 
 TSDFVolumeUnit::TSDFVolumeUnit(int resolution, int xi, int yi, int zi)
     : resolution_(resolution), xi_(xi), yi_(yi), zi_(zi) {

@@ -1,4 +1,4 @@
-#include "IntegrateApp.h"
+#include "Integrate/IntegrateApp.h"
 
 CIntegrateApp::CIntegrateApp(pcl::Grabber &source, bool use_device)
     : cols_(640), rows_(480), volume_(cols_, rows_), capture_(source),

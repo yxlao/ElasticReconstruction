@@ -1,4 +1,4 @@
-#include "TSDFVolume.h"
+#include "Integrate/TSDFVolume.h"
 
 #include <pcl/point_types.h>
 #include <pcl/io/pcd_io.h>
