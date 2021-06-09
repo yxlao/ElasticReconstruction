@@ -119,7 +119,7 @@ ICP refinement for point cloud pairs registered by GlobalRegistration module.
 A CPU-based algorithm that integrates depth images into a voxel, based on
 camera pose trajectory and nonrigid correction produced by previous steps.
 
-+ Matlab_Toolbox
++ MatlabToolbox
 A Matlab toobox for evaluation of camera pose trajectory and global
 registration.
 
