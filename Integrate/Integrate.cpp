@@ -56,7 +56,7 @@ int main(int argc, char *argv[]) {
             use_device = true;
         }
     } catch (const pcl::PCLException & /*e*/) {
-        return std::cout << "Can't open depth source" << endl, -1;
+        return std::cout << "Can't open depth source" << std::endl, -1;
     }
 
     CIntegrateApp app(*capture, use_device);
