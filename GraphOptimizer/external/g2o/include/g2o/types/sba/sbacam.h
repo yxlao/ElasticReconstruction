@@ -210,9 +210,9 @@ class G2O_TYPES_SBA_API EdgeNormal {
         y.normalize(); // need to check if y is close to 0
         R.row(1) = y;
         R.row(0) = normal.cross(R.row(1));
-        //      cout << normal.transpose() << endl;
-        //      cout << R << endl << endl;
-        //      cout << R*R.transpose() << endl << endl;
+        //      std::cout << normal.transpose() << std::endl;
+        //      std::cout << R << endl << std::endl;
+        //      std::cout << R*R.transpose() << endl << std::endl;
     }
 };
 

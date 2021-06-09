@@ -52,83 +52,91 @@ struct Configuration {
 
                     if (item1.compare("visualization") == 0) {
                         vis_ = (item2.compare("true") == 0);
-                        cout << "visualization = " << vis_ << endl;
+                        std::cout << "visualization = " << vis_ << std::endl;
                     }
                     if (item1.compare("estimate_normal") == 0) {
                         estimate_normal_ = (item2.compare("true") == 0);
-                        cout << "estimate_normal = " << estimate_normal_
-                             << endl;
+                        std::cout << "estimate_normal = " << estimate_normal_
+                                  << std::endl;
                     }
                     if (item1.compare("aux_data") == 0) {
                         aux_data_ = (item2.compare("true") == 0);
-                        cout << "aux_data = " << aux_data_ << endl;
+                        std::cout << "aux_data = " << aux_data_ << std::endl;
                     }
                     if (item1.compare("smart_swap") == 0) {
                         smart_swap_ = (item2.compare("true") == 0);
-                        cout << "smart_swap = " << smart_swap_ << endl;
+                        std::cout << "smart_swap = " << smart_swap_
+                                  << std::endl;
                     }
                     if (item1.compare("max_iteration") == 0) {
                         max_iteration_ = boost::lexical_cast<int>(item2);
-                        cout << "max_iteration = " << max_iteration_ << endl;
+                        std::cout << "max_iteration = " << max_iteration_
+                                  << std::endl;
                     }
                     if (item1.compare("num_of_samples") == 0) {
                         num_of_samples_ = boost::lexical_cast<int>(item2);
-                        cout << "num_of_samples = " << num_of_samples_ << endl;
+                        std::cout << "num_of_samples = " << num_of_samples_
+                                  << std::endl;
                     }
                     if (item1.compare("correspondence_randomness") == 0) {
                         correspondence_randomness_ =
                             boost::lexical_cast<int>(item2);
-                        cout << "correspondence_randomness = "
-                             << correspondence_randomness_ << endl;
+                        std::cout << "correspondence_randomness = "
+                                  << correspondence_randomness_ << std::endl;
                     }
                     if (item1.compare("edge_similarity") == 0) {
                         edge_similarity_ = boost::lexical_cast<float>(item2);
-                        cout << "edge_similarity = " << edge_similarity_
-                             << endl;
+                        std::cout << "edge_similarity = " << edge_similarity_
+                                  << std::endl;
                     }
                     if (item1.compare("resample_leaf") == 0) {
                         resample_leaf_ = boost::lexical_cast<float>(item2);
-                        cout << "resample_leaf = " << resample_leaf_ << endl;
+                        std::cout << "resample_leaf = " << resample_leaf_
+                                  << std::endl;
                     }
                     if (item1.compare("max_correspondence_distance") == 0) {
                         max_correspondence_distance_ =
                             boost::lexical_cast<float>(item2);
-                        cout << "max_correspondence_distance = "
-                             << max_correspondence_distance_ << endl;
+                        std::cout << "max_correspondence_distance = "
+                                  << max_correspondence_distance_ << std::endl;
                     }
                     if (item1.compare("inlier_fraction") == 0) {
                         inlier_fraction_ = boost::lexical_cast<float>(item2);
-                        cout << "inlier_fraction = " << inlier_fraction_
-                             << endl;
+                        std::cout << "inlier_fraction = " << inlier_fraction_
+                                  << std::endl;
                     }
                     if (item1.compare("inlier_number") == 0) {
                         inlier_number_ = boost::lexical_cast<int>(item2);
-                        cout << "inlier_number = " << inlier_number_ << endl;
+                        std::cout << "inlier_number = " << inlier_number_
+                                  << std::endl;
                     }
                     if (item1.compare("angle_difference") == 0) {
                         angle_difference_ = boost::lexical_cast<float>(item2);
-                        cout << "angle_difference = " << angle_difference_
-                             << endl;
+                        std::cout << "angle_difference = " << angle_difference_
+                                  << std::endl;
                     }
                     if (item1.compare("normal_radius") == 0) {
                         normal_radius_ = boost::lexical_cast<float>(item2);
-                        cout << "normal_radius = " << normal_radius_ << endl;
+                        std::cout << "normal_radius = " << normal_radius_
+                                  << std::endl;
                     }
                     if (item1.compare("feature_radius") == 0) {
                         feature_radius_ = boost::lexical_cast<float>(item2);
-                        cout << "feature_radius = " << feature_radius_ << endl;
+                        std::cout << "feature_radius = " << feature_radius_
+                                  << std::endl;
                     }
                     if (item1.compare("pcl_verbose") == 0) {
                         pcl_verbose_ = boost::lexical_cast<int>(item2);
-                        cout << "pcl_verbose = " << pcl_verbose_ << endl;
+                        std::cout << "pcl_verbose = " << pcl_verbose_
+                                  << std::endl;
                         pcl::console::setVerbosityLevel(
                             pcl::console::VERBOSITY_LEVEL(pcl_verbose_));
                     }
                 }
             }
         } else {
-            cout << "alignment.config not found! Use default parameters."
-                 << endl;
+            std::cout << "alignment.config not found! Use default parameters."
+                      << std::endl;
         }
     }
 };

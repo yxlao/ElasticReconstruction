@@ -598,18 +598,20 @@ void RansacCurvature<PointSource, PointTarget, FeatureT>::computeTransformation(
             }
 
             /*
-            cout << idxs[ 0 ] << idxs[ 1 ] << idxs[ 2 ] << idxs[ 3 ] << endl <<
-            endl; cout << sn << endl << endl; cout << sp0 << endl; cout << sp1
-            << endl; cout << sp2 << endl; cout << sp3 << endl; cout << endl;
+            std::cout << idxs[ 0 ] << idxs[ 1 ] << idxs[ 2 ] << idxs[ 3 ] <<
+            endl << endl; std::cout << sn << endl << std::endl; std::cout << sp0
+            << std::endl; std::cout << sp1
+            << std::endl; std::cout << sp2 << std::endl; std::cout << sp3 <<
+            std::endl; std::cout << std::endl;
 
-            cout << tn << endl << endl;
-            cout << tp0 << endl;
-            cout << tp1 << endl;
-            cout << tp2 << endl;
-            cout << tp3 << endl;
-            cout << endl;
+            std::cout << tn << endl << std::endl;
+            std::cout << tp0 << std::endl;
+            std::cout << tp1 << std::endl;
+            std::cout << tp2 << std::endl;
+            std::cout << tp3 << std::endl;
+            std::cout << std::endl;
 
-            cout << transformation_ << endl;
+            std::cout << transformation_ << std::endl;
             boost::this_thread::sleep( boost::posix_time::milliseconds( 10000 )
             );
             */
@@ -650,9 +652,9 @@ void RansacCurvature<PointSource, PointTarget, FeatureT>::computeTransformation(
 
             // printf( "(%d,%d), (%d,%d), (%d,%d)\n", corresponding_indices[ 0
             // ], sample_indices[ 0 ], corresponding_indices[ 1 ],
-            // sample_indices[ 1 ], corresponding_indices[ 2 ], sample_indices[ 2
-            // ] ); printf( "%d - %.6f\n", corres[ sample_indices[ 0 ] ], dis2[
-            // sample_indices[ 0 ] ] ); printf( "%d - %.6f\n", corres[
+            // sample_indices[ 1 ], corresponding_indices[ 2 ], sample_indices[
+            // 2 ] ); printf( "%d - %.6f\n", corres[ sample_indices[ 0 ] ],
+            // dis2[ sample_indices[ 0 ] ] ); printf( "%d - %.6f\n", corres[
             // sample_indices[ 1 ] ], dis2[ sample_indices[ 1 ] ] ); printf( "%d
             // - %.6f\n", corres[ sample_indices[ 2 ] ], dis2[ sample_indices[ 2
             // ] ] );

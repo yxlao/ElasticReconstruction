@@ -41,12 +41,12 @@ bool aux_evalSolver(const POLYNOMIAL &pols, SOLVER &psolve) {
 
     bool evalToZero = evr.isZero(test_precision<Scalar>());
     if (!evalToZero) {
-        cerr << "WRONG root: " << endl;
-        cerr << "Polynomial: " << pols.transpose() << endl;
-        cerr << "Roots found: " << roots.transpose() << endl;
+        cerr << "WRONG root: " << std::endl;
+        cerr << "Polynomial: " << pols.transpose() << std::endl;
+        cerr << "Roots found: " << roots.transpose() << std::endl;
         cerr << "Abs value of the polynomial at the roots: " << evr.transpose()
-             << endl;
-        cerr << endl;
+             << std::endl;
+        cerr << std::endl;
     }
 
     std::vector<Scalar> rootModuli(roots.size());
@@ -162,17 +162,17 @@ template <typename _Scalar, int _Deg> void polynomialsolver(int deg) {
     typedef Matrix<_Scalar, Dim::ret, 1> PolynomialType;
     typedef Matrix<_Scalar, _Deg, 1> EvalRootsType;
 
-    cout << "Standard cases" << endl;
+    std::cout << "Standard cases" << std::endl;
     PolynomialType pols = PolynomialType::Random(deg + 1);
     evalSolver<_Deg, PolynomialType>(pols);
 
-    cout << "Hard cases" << endl;
+    std::cout << "Hard cases" << std::endl;
     _Scalar multipleRoot = internal::random<_Scalar>();
     EvalRootsType allRoots = EvalRootsType::Constant(deg, multipleRoot);
     roots_to_monicPolynomial(allRoots, pols);
     evalSolver<_Deg, PolynomialType>(pols);
 
-    cout << "Test sugar" << endl;
+    std::cout << "Test sugar" << std::endl;
     EvalRootsType realRoots = EvalRootsType::Random(deg);
     roots_to_monicPolynomial(realRoots, pols);
     evalSolverSugarFunction<_Deg>(

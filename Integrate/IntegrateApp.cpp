@@ -10,8 +10,9 @@ CIntegrateApp::CIntegrateApp(pcl::Grabber &source, bool use_device)
       start_from_(-1), end_at_(100000000) {
     registration_ = capture_.providesCallback<
         pcl::ONIGrabber::sig_cb_openni_image_depth_image>();
-    cout << "Registration mode: "
-         << (registration_ ? "On" : "Off (not supported by source)") << endl;
+    std::cout << "Registration mode: "
+              << (registration_ ? "On" : "Off (not supported by source)")
+              << std::endl;
 
     depth_.resize(cols_ * rows_);
     scaled_depth_.resize(cols_ * rows_);
@@ -112,10 +113,10 @@ void CIntegrateApp::StartMainLoop(bool triggered_capture) {
                 viewer_depth_.spinOnce(3);
 #endif
             } catch (const std::bad_alloc & /*e*/) {
-                cout << "Bad alloc" << endl;
+                std::cout << "Bad alloc" << std::endl;
                 break;
             } catch (const std::exception & /*e*/) {
-                cout << "Exception" << endl;
+                std::cout << "Exception" << std::endl;
                 break;
             }
 
@@ -130,7 +131,7 @@ void CIntegrateApp::StartMainLoop(bool triggered_capture) {
 
         volume_.SaveWorld(pcd_filename_);
 
-        cout << "Total " << frame_id_ << " frames processed." << endl;
+        std::cout << "Total " << frame_id_ << " frames processed." << std::endl;
 
         // volume_.SaveWorld( std::string( "world.pcd" ) );
     }

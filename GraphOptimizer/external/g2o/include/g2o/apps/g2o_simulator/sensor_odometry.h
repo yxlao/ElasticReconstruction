@@ -54,7 +54,8 @@ class SensorOdometry : public BinarySensor<R, E, O> {
             it++;
         }
         if (!(pcurr && pprev)) {
-            cerr << __PRETTY_FUNCTION__ << ": fatal, trajectory empty" << endl;
+            cerr << __PRETTY_FUNCTION__ << ": fatal, trajectory empty"
+                 << std::endl;
             return;
         }
         _robotPoseObject = pprev;

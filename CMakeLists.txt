@@ -121,6 +121,12 @@ function(elastic_reconstruction_set_global_properties target)
         EIGEN_USE_NEW_STDVECTOR
         EIGEN_YES_I_KNOW_SPARSE_MODULE_IS_NOT_STABLE_YET
     )
+
+    # Ignores some PCL warnings
+    target_compile_options(${target} PRIVATE
+        -Wno-attributes
+        -Wno-unused-result
+    )
 endfunction()
 
 # Subdirectories.

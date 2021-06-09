@@ -1,9 +1,13 @@
-#include "StdAfx.h"
-#include "CorresApp.h"
 #include <pcl/registration/icp.h>
 #include <pcl/registration/transformation_estimation_point_to_plane_lls.h>
 #include <omp.h>
 #include <boost/filesystem.hpp>
+
+#include <cstring>
+#include <cmath>
+#include <unordered_map>
+
+#include "CorresApp.h"
 
 CCorresApp::CCorresApp(void)
     : save_xyzn_(false), save_corres_(true), dist_thresh_(0.015),
@@ -19,7 +23,7 @@ void CCorresApp::LoadData(std::string filename, int num) {
         c = strrchr(filename.c_str(), '/');
     }
     memset(m_pDirName, 0, 1024);
-    strncat_s(m_pDirName, 1024, filename.c_str(), c - filename.c_str() + 1);
+    strncat(m_pDirName, filename.c_str(), c - filename.c_str() + 1);
 
     if (num > 0) {
         RGBDTrajectory temp;
@@ -82,7 +86,7 @@ void CCorresApp::LoadData(std::string filename, int num) {
             PCL_ERROR("Error loading file.\n");
         }
         for (int j = 0; j < (int)rawpcd->points.size(); j++) {
-            if (!_isnan(rawpcd->points[j].normal_x)) {
+            if (!std::isnan(rawpcd->points[j].normal_x)) {
                 pcd->push_back(rawpcd->points[j]);
             }
         }
@@ -212,7 +216,7 @@ void CCorresApp::FindCorrespondence() {
                 ATA += A.transpose() * A;
             }
 
-            // cout << ATA << endl << endl;
+            // std::cout << ATA << endl << std::endl;
             corres_info_.data_[i].information_ = ATA;
         }
     }
@@ -288,8 +292,8 @@ void CCorresApp::Registration() {
             corres_traj_.data_[i].id1_, corres_traj_.data_[i].id2_, cnt, r1,
             pcd0->size(), r2, transformed->size());
         //		bool accept = ( corres_traj_.data_[ i ].id2_ -
-        //corres_traj_.data_[ i ].id1_ == 1 || cnt >= reg_num_ || ( r1 >
-        //reg_ratio_ && r2 > reg_ratio_ ) );
+        // corres_traj_.data_[ i ].id1_ == 1 || cnt >= reg_num_ || ( r1 >
+        // reg_ratio_ && r2 > reg_ratio_ ) );
         bool accept = (cnt >= reg_num_ || (r1 > reg_ratio_ && r2 > reg_ratio_));
         if (accept) {
             PCL_INFO("accept.\n");
@@ -304,7 +308,7 @@ void CCorresApp::Registration() {
         }
 
         if (redux_) {
-            stdext::hash_map<int, int>::iterator it =
+            std::unordered_map<int, int>::iterator it =
                 redux_map_.find(GetReduxIndex(corres_traj_.data_[i].id1_,
                                               corres_traj_.data_[i].id2_));
 
@@ -339,9 +343,9 @@ void CCorresApp::Registration() {
                  corres_traj_.data_[i].id1_, corres_traj_.data_[i].id2_,
                  icp.getFitnessScore());
         PCL_INFO("    Matrix from : \n");
-        cout << corres_traj_.data_[i].transformation_ << endl;
+        std::cout << corres_traj_.data_[i].transformation_ << std::endl;
         PCL_INFO("    To : \n");
-        cout << icp.getFinalTransformation() << endl;
+        std::cout << icp.getFinalTransformation() << std::endl;
         corres_traj_.data_[i].transformation_ =
             icp.getFinalTransformation().cast<double>();
 

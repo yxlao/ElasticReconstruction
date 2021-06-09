@@ -38,7 +38,7 @@ void realRoots_to_monicPolynomial_test(int deg) {
 
     bool evalToZero = evr.isZero(test_precision<_Scalar>());
     if (!evalToZero) {
-        cerr << evr.transpose() << endl;
+        cerr << evr.transpose() << std::endl;
     }
     VERIFY(evalToZero);
 }
@@ -70,9 +70,9 @@ template <typename _Scalar, int _Deg> void CauchyBounds(int deg) {
     _Scalar min = roots.array().abs().minCoeff();
     bool eval = (M >= Max) && (m <= min);
     if (!eval) {
-        cerr << "Roots: " << roots << endl;
-        cerr << "Bounds: (" << m << ", " << M << ")" << endl;
-        cerr << "Min,Max: (" << min << ", " << Max << ")" << endl;
+        cerr << "Roots: " << roots << std::endl;
+        cerr << "Bounds: (" << m << ", " << M << ")" << std::endl;
+        cerr << "Min,Max: (" << min << ", " << Max << ")" << std::endl;
     }
     VERIFY(eval);
 }

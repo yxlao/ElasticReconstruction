@@ -68,23 +68,23 @@ template <typename T_time, typename T_freq> void fwd_inv(size_t nfft) {
     fft.inv(timebuf2, freqbuf);
 
     long double rmse = mag2(timebuf - timebuf2) / mag2(timebuf);
-    cout << "roundtrip rmse: " << rmse << endl;
+    std::cout << "roundtrip rmse: " << rmse << std::endl;
 }
 
 template <typename T_scalar> void two_demos(int nfft) {
-    cout << "     scalar ";
+    std::cout << "     scalar ";
     fwd_inv<T_scalar, std::complex<T_scalar>>(nfft);
-    cout << "    complex ";
+    std::cout << "    complex ";
     fwd_inv<std::complex<T_scalar>, std::complex<T_scalar>>(nfft);
 }
 
 void demo_all_types(int nfft) {
-    cout << "nfft=" << nfft << endl;
-    cout << "   float" << endl;
+    std::cout << "nfft=" << nfft << std::endl;
+    std::cout << "   float" << std::endl;
     two_demos<float>(nfft);
-    cout << "   double" << endl;
+    std::cout << "   double" << std::endl;
     two_demos<double>(nfft);
-    cout << "   long double" << endl;
+    std::cout << "   long double" << std::endl;
     two_demos<long double>(nfft);
 }
 

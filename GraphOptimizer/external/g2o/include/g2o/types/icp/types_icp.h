@@ -92,9 +92,9 @@ class G2O_TYPES_ICP_API EdgeGICP {
         y.normalize(); // need to check if y is close to 0
         R0.row(1) = y;
         R0.row(0) = normal0.cross(R0.row(1));
-        //      cout << normal.transpose() << endl;
-        //      cout << R0 << endl << endl;
-        //      cout << R0*R0.transpose() << endl << endl;
+        //      std::cout << normal.transpose() << std::endl;
+        //      std::cout << R0 << endl << std::endl;
+        //      std::cout << R0*R0.transpose() << endl << std::endl;
     }
 
     // set up rotation matrix for pos1
@@ -177,7 +177,7 @@ class G2O_TYPES_ICP_API Edge_V_V_GICP
             {
               _transforms[_cnum] = vp0->estimate().inverse() * vp1->estimate();
               _tainted[_cnum] = 0;
-              cout << _transforms[_cnum] << endl;
+              std::cout << _transforms[_cnum] << std::endl;
             }
           p1 = _transforms[_cnum].map(measurement().pos1); // do the transform
         }
@@ -188,19 +188,19 @@ class G2O_TYPES_ICP_API Edge_V_V_GICP
             p1 = vp0->estimate().inverse() * p1;
         }
 
-        //      cout << endl << "Error computation; points are: " << endl;
-        //      cout << p0.transpose() << endl;
-        //      cout << p1.transpose() << endl;
+        //      std::cout << endl << "Error computation; points are: " <<
+        //      std::endl; std::cout << p0.transpose() << std::endl; std::cout
+        //      << p1.transpose() << std::endl;
 
         // get their difference
         // this is simple Euclidean distance, for now
         _error = p1 - measurement().pos0;
 
 #if 0
-      cout << "vp0" << endl << vp0->estimate() << endl;
-      cout << "vp1" << endl << vp1->estimate() << endl;
-      cout << "e Jac Xj" << endl <<  _jacobianOplusXj << endl << endl;
-      cout << "e Jac Xi" << endl << _jacobianOplusXi << endl << endl;
+      std::cout << "vp0" << endl << vp0->estimate() << std::endl;
+      std::cout << "vp1" << endl << vp1->estimate() << std::endl;
+      std::cout << "e Jac Xj" << endl <<  _jacobianOplusXj << endl << std::endl;
+      std::cout << "e Jac Xi" << endl << _jacobianOplusXi << endl << std::endl;
 #endif
 
         if (!pl_pl)

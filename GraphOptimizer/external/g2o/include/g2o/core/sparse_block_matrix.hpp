@@ -522,7 +522,7 @@ bool SparseBlockMatrix<MatrixType>::symmPermutation(
                 *b = s->transpose();
             }
         }
-        // cerr << endl;
+        // cerr << std::endl;
         // within each row,
     }
     return true;

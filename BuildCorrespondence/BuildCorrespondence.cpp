@@ -2,29 +2,32 @@
 // application.
 //
 
-#include "stdafx.h"
 #include "CorresApp.h"
+
+#include <string>
+#include <iostream>
+
 #include <pcl/console/parse.h>
 #include <pcl/console/print.h>
 #include <pcl/common/time.h>
 
 int print_help() {
     // clang-format off
-	cout << "\nApplication parameters:" << endl;
-	cout << "    --help, -h                      : print this message" << endl;
-	cout << "    --traj <log_file>               : initialization, camera pose trajectory" << endl;
-	cout << "    --num <num_of_fragments>        : use together with --traj" << endl;
-	cout << "    --interval <interval>           : use together with --traj, default : 50" << endl;
-	cout << "    --length <length>               : use together with --traj, default : 3.0" << endl;
-	cout << "    --reg_traj <log_file>           : initialization, registration.log file, will overwrite --traj" << endl;
-	cout << "    --registration                  : registration results are written into reg_output.log file" << endl;
-	cout << "    --reg_dist <dist>               : distance threshold for registration, default 0.03" << endl;
-	cout << "    --reg_ratio <ratio>             : correspondence points are at least <ratio> in each point cloud, default 0.25" << endl;
-	cout << "    --reg_num <number>              : correspondence point number requirement, default 40,000" << endl;
-	cout << "    --blasklist <blacklist_file>    : each line is the block we want to blacklist" << endl;
-	cout << "    --save_xyzn                     : save point cloud into ascii file" << endl;
-	cout << "    --output_information            : output the registration information matrix into reg_output.info" << endl;
-	cout << "    --redux <log_file>              : use transformations in <log_file> as constraints" << endl;
+	std::cout << "\nApplication parameters:" << std::endl;
+	std::cout << "    --help, -h                      : print this message" << std::endl;
+	std::cout << "    --traj <log_file>               : initialization, camera pose trajectory" << std::endl;
+	std::cout << "    --num <num_of_fragments>        : use together with --traj" << std::endl;
+	std::cout << "    --interval <interval>           : use together with --traj, default : 50" << std::endl;
+	std::cout << "    --length <length>               : use together with --traj, default : 3.0" << std::endl;
+	std::cout << "    --reg_traj <log_file>           : initialization, registration.log file, will overwrite --traj" << std::endl;
+	std::cout << "    --registration                  : registration results are written into reg_output.log file" << std::endl;
+	std::cout << "    --reg_dist <dist>               : distance threshold for registration, default 0.03" << std::endl;
+	std::cout << "    --reg_ratio <ratio>             : correspondence points are at least <ratio> in each point cloud, default 0.25" << std::endl;
+	std::cout << "    --reg_num <number>              : correspondence point number requirement, default 40,000" << std::endl;
+	std::cout << "    --blasklist <blacklist_file>    : each line is the block we want to blacklist" << std::endl;
+	std::cout << "    --save_xyzn                     : save point cloud into ascii file" << std::endl;
+	std::cout << "    --output_information            : output the registration information matrix into reg_output.info" << std::endl;
+	std::cout << "    --redux <log_file>              : use transformations in <log_file> as constraints" << std::endl;
     // clang-format on
     return 0;
 }
@@ -43,7 +46,7 @@ int main(int argc, char *argv[]) {
         app.ToggleSaveXYZN();
     }
 
-    string log_file, reg_log_file, blacklist_file, redux_file;
+    std::string log_file, reg_log_file, blacklist_file, redux_file;
     double reg_dist, reg_ratio;
     int reg_num, num;
 

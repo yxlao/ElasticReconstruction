@@ -383,7 +383,7 @@ bool BlockSolver<Traits>::updateStructure(
 }
 
 template <typename Traits> bool BlockSolver<Traits>::solve() {
-    // cerr << __PRETTY_FUNCTION__ << endl;
+    // cerr << __PRETTY_FUNCTION__ << std::endl;
     if (!_doSchur) {
         double t = get_monotonic_time();
         bool ok = _linearSolver->solve(*_Hpp, _x, _b);
@@ -485,7 +485,7 @@ template <typename Traits> bool BlockSolver<Traits>::solve() {
             }
         }
     }
-    // cerr << "Solve [marginalize] = " <<  get_monotonic_time()-t << endl;
+    // cerr << "Solve [marginalize] = " <<  get_monotonic_time()-t << std::endl;
 
     // _bschur = _b for calling solver, and not touching _b
     memcpy(_bschur, _b, _sizePoses * sizeof(double));
@@ -537,7 +537,8 @@ template <typename Traits> bool BlockSolver<Traits>::solve() {
     memset(xl, 0, _sizeLandmarks * sizeof(double));
     _DInvSchur->multiply(xl, cl);
     //_DInvSchur->rightMultiply(xl,cl);
-    // cerr << "Solve [landmark delta] = " <<  get_monotonic_time()-t << endl;
+    // cerr << "Solve [landmark delta] = " <<  get_monotonic_time()-t <<
+    // std::endl;
 
     return true;
 }
@@ -602,7 +603,7 @@ template <typename Traits> bool BlockSolver<Traits>::buildSystem() {
                                 e->dimension() * v->dimension());
                 if (hasANan) {
                     cerr << "buildSystem(): NaN within Jacobian for edge " << e
-                         << " for vertex " << i << endl;
+                         << " for vertex " << i << std::endl;
                     break;
                 }
             }

@@ -382,10 +382,11 @@ void create_odometry(int num) {
 
 int main(int argc, char *argv[]) {
     if (argc < 2) {
-        cout << "Usage : " << endl;
-        cout << "    GlobalRegistration.exe <dir>" << endl;
-        cout << "    GlobalRegistration.exe <dir> <100-0.log> <segment_length>"
-             << endl;
+        std::cout << "Usage : " << std::endl;
+        std::cout << "    GlobalRegistration.exe <dir>" << std::endl;
+        std::cout
+            << "    GlobalRegistration.exe <dir> <100-0.log> <segment_length>"
+            << std::endl;
         return 0;
     }
     dir_name = std::string(argv[1]);
@@ -396,7 +397,7 @@ int main(int argc, char *argv[]) {
                       [](const boost::filesystem::directory_entry &e) {
                           return e.path().extension() == ".pcd";
                       });
-    cout << num_of_pcds << " detected." << endl << endl;
+    std::cout << num_of_pcds << " detected." << endl << std::endl;
 
     if (argc == 2) {
         do_all(num_of_pcds);
@@ -411,7 +412,8 @@ int main(int argc, char *argv[]) {
         create_odometry(num_of_pcds);
 
         if (boost::filesystem::exists("result.txt")) {
-            cout << "result.txt detected. skip global registration." << endl;
+            std::cout << "result.txt detected. skip global registration."
+                      << std::endl;
         } else {
             do_all(num_of_pcds);
         }

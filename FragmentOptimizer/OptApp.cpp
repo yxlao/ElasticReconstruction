@@ -693,7 +693,7 @@ void COptApp::OptimizeSLAC() {
                                       Eigen::Vector3d::UnitX());
                 aff_mat.translation() = Eigen::Vector3d(
                     result(l * 6 + 3), result(l * 6 + 4), result(l * 6 + 5));
-                // cout << aff_mat.matrix() << endl << endl;
+                // std::cout << aff_mat.matrix() << endl << std::endl;
                 // update
                 pose_[l] = aff_mat.matrix() * pose_[l];
                 pose_rot_t_[l] = pose_[l].block<3, 3>(0, 0).transpose();

@@ -11,22 +11,22 @@
 
 int print_help() {
     // clang-format off
-    cout << "\nApplication parameters:" << endl;
-	cout << "    --help, -h                      : print this message" << endl;
-    cout << "    --ref_traj <log_file>           : use a reference trajectory file" << endl;
-	cout << "    --pose_traj <log_file>          : use a pose trajectory file to create a reference trajectory" << endl;
-	cout << "    --seg_traj <log_file>           : trajectory within each fragment - must have" << endl;
-	cout << "    --ctr <ctr_file>                : enables distortion, must specify the following parameters" << endl;
-	cout << "    --num <number>                  : number of pieces, important parameter" << endl;
-	cout << "    --resolution <resolution>       : default - 8" << endl;
-	cout << "    --length <length>               : default - 3.0" << endl;
-	cout << "    --interval <interval>           : default - 50" << endl;
-	cout << "    --camera <param_file>           : load camera parameters" << endl;
-	cout << "    --save_to <pcd_file>            : output file, default - world.pcd" << endl;
-	cout << "    --start_from <frame_id>         : frames before frame_id will be skipped" << endl;
-	cout << "    --end_at <frame_id>             : frames after frame_id will be skipped" << endl;
-	cout << "Valid depth data sources:" << endl;
-	cout << "    -dev <device> (default), -oni <oni_file>" << endl;
+    std::cout << "\nApplication parameters:" << std::endl;
+	cout << "    --help, -h                      : print this message" << std::endl;
+    std::cout << "    --ref_traj <log_file>           : use a reference trajectory file" << std::endl;
+	cout << "    --pose_traj <log_file>          : use a pose trajectory file to create a reference trajectory" << std::endl;
+	cout << "    --seg_traj <log_file>           : trajectory within each fragment - must have" << std::endl;
+	cout << "    --ctr <ctr_file>                : enables distortion, must specify the following parameters" << std::endl;
+	cout << "    --num <number>                  : number of pieces, important parameter" << std::endl;
+	cout << "    --resolution <resolution>       : default - 8" << std::endl;
+	cout << "    --length <length>               : default - 3.0" << std::endl;
+	cout << "    --interval <interval>           : default - 50" << std::endl;
+	cout << "    --camera <param_file>           : load camera parameters" << std::endl;
+	cout << "    --save_to <pcd_file>            : output file, default - world.pcd" << std::endl;
+	cout << "    --start_from <frame_id>         : frames before frame_id will be skipped" << std::endl;
+	cout << "    --end_at <frame_id>             : frames after frame_id will be skipped" << std::endl;
+	cout << "Valid depth data sources:" << std::endl;
+	cout << "    -dev <device> (default), -oni <oni_file>" << std::endl;
 	return 0;
     // clang-format on
 }
@@ -58,7 +58,7 @@ int main(int argc, char *argv[]) {
             use_device = true;
         }
     } catch (const pcl::PCLException & /*e*/) {
-        return cout << "Can't open depth source" << endl, -1;
+        return std::cout << "Can't open depth source" << endl, -1;
     }
 
     CIntegrateApp app(*capture, use_device);
@@ -84,11 +84,11 @@ int main(int argc, char *argv[]) {
         try {
             app.StartMainLoop(triggered_capture);
         } catch (const pcl::PCLException & /*e*/) {
-            cout << "PCLException" << endl;
+            std::cout << "PCLException" << std::endl;
         } catch (const std::bad_alloc & /*e*/) {
-            cout << "Bad alloc" << endl;
+            std::cout << "Bad alloc" << std::endl;
         } catch (const std::exception & /*e*/) {
-            cout << "Exception" << endl;
+            std::cout << "Exception" << std::endl;
         }
     }
     return 0;

@@ -69,7 +69,7 @@ int main(int argc, char *argv[]) {
     po::notify(vm);
 
     if (argc == 1 || vm.count("help")) {
-        cout << arg_option << endl;
+        std::cout << arg_option << std::endl;
         return 1;
     }
 

@@ -49,7 +49,7 @@ long double fft_rmse(const VT1 &fftbuf, const VT2 &timebuf) {
         // cerr << k0 << "\t" << acc << "\t" <<  x << "\t" << sqrt(norm(dif)) <<
         // endl;
     }
-    cerr << "rmse:" << sqrt(difpower / totalpower) << endl;
+    cerr << "rmse:" << sqrt(difpower / totalpower) << std::endl;
     return sqrt(difpower / totalpower);
 }
 
@@ -118,7 +118,8 @@ template <int Container, typename T> void test_scalar_generic(int nfft) {
         tbuf3[k] *= T(1. / nfft);
 
     // for (size_t i=0;i<(size_t) tbuf.size();++i)
-    //    cout << "freqBuf=" << freqBuf[i] << " in2=" << tbuf3[i] << " -  in="
+    //    std::cout << "freqBuf=" << freqBuf[i] << " in2=" << tbuf3[i] << " -
+    //    in="
     //    << tbuf[i] << " => " << (tbuf3[i] - tbuf[i] ) <<  endl;
 
     VERIFY(dif_rmse(tbuf, tbuf3) < test_precision<T>()); // gross check
