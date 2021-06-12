@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -eu
+
 pcl_kinfu_largeScale_release.exe
 GlobalRegistration.exe
 GraphOptimizer.exe
