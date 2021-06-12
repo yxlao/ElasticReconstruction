@@ -37,7 +37,7 @@ void do_all(int num) {
     for (int i = 0; i < num; i++) {
         for (int j = i + 1; j < num; j++) {
             // Load object and scene
-            pcl::console::print_highlight("Betweeen fragments %d and %d.\n", i,
+            pcl::console::print_highlight("Between fragments %d and %d.\n", i,
                                           j);
             bool smart_swapped = false;
 
