@@ -29,17 +29,24 @@ echo "OMP_NUM_THREADS: ${OMP_NUM_THREADS}"
 # mv result.* ../Sandbox/
 
 # Part III: graph optimization
-${GraphOptimizer} -w 100 \
-    --odometry ../Sandbox/odometry.log \
-    --odometryinfo ../Sandbox/odometry.info \
-    --loop ../Sandbox/result.txt \
-    --loopinfo ../Sandbox/result.info \
-    --pose ../Sandbox/pose.log \
-    --keep ../Sandbox/keep.log \
-    --refine ../Sandbox/pcds/reg_refine_all.log
+# ${GraphOptimizer} -w 100 \
+#     --odometry ../Sandbox/odometry.log \
+#     --odometryinfo ../Sandbox/odometry.info \
+#     --loop ../Sandbox/result.txt \
+#     --loopinfo ../Sandbox/result.info \
+#     --pose ../Sandbox/pose.log \
+#     --keep ../Sandbox/keep.log \
+#     --refine ../Sandbox/pcds/reg_refine_all.log
 
-# BuildCorrespondence.exe --reg_traj ../Sandbox/pcds/reg_refine_all.log --registration --reg_dist 0.05 --reg_ratio 0.25 --reg_num 0 --save_xyzn
-# mv reg_output.* ../Sandbox/
+# Part IV: Build correspondence
+${BuildCorrespondence} \
+    --reg_traj ../Sandbox/pcds/reg_refine_all.log \
+    --registration \
+    --reg_dist 0.05 \
+    --reg_ratio 0.25 \
+    --reg_num 0 \
+    --save_xyzn
+mv reg_output.* ../Sandbox/
 
 # numpcds=$(ls ../Sandbox/pcds/cloud_bin_*.pcd -l | wc -l | tr -d ' ')
 # #FragmentOptimizer.exe --rigid --rgbdslam ../Sandbox/init.log --registration ../Sandbox/reg_output.log --dir ../Sandbox/pcds/ --num $numpcds --resolution 12 --iteration 10 --length 4.0 --write_xyzn_sample 10
