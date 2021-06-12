@@ -32,19 +32,22 @@
 
 namespace g2o {
 
-  class G2O_SIMULATOR_API SensorPointXYZDepth: public PointSensorParameters, public BinarySensor<Robot3D, EdgeSE3PointXYZDepth, WorldObjectTrackXYZ>{
+class G2O_SIMULATOR_API SensorPointXYZDepth
+    : public PointSensorParameters,
+      public BinarySensor<Robot3D, EdgeSE3PointXYZDepth, WorldObjectTrackXYZ> {
   public:
     typedef PoseVertexType::EstimateType RobotPoseType;
-    SensorPointXYZDepth(const std::string& name_);
+    SensorPointXYZDepth(const std::string &name_);
     virtual void sense();
     virtual void addParameters();
-    ParameterSE3Offset* offsetParam() {return _offsetParam;};
-    void addNoise(EdgeType* e);
+    ParameterSE3Offset *offsetParam() { return _offsetParam; };
+    void addNoise(EdgeType *e);
+
   protected:
-    bool isVisible(WorldObjectType* to);
+    bool isVisible(WorldObjectType *to);
     RobotPoseType _sensorPose;
-    ParameterSE3Offset* _offsetParam;
-  };
-}
+    ParameterSE3Offset *_offsetParam;
+};
+} // namespace g2o
 
 #endif

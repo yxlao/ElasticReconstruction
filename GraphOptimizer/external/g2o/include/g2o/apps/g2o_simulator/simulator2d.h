@@ -34,5 +34,4 @@
 #include "sensor_pointxy_bearing.h"
 #include "sensor_pointxy_offset.h"
 
-
 #endif

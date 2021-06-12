@@ -42,126 +42,142 @@
 
 namespace g2o {
 
-  /**
-   * \brief propagation of an initial guess
-   */
-  class EstimatePropagator {
-    public:
-
-      /**
-       * \brief Applying the action for propagating.
-       *
-       * You may derive an own one, if necessary. The default is to call initialEstimate(from, to) for the edge.
-       */
-      struct PropagateAction {
-        virtual void operator()(OptimizableGraph::Edge* e, const OptimizableGraph::VertexSet& from, OptimizableGraph::Vertex* to) const
-        {
-          if (! to->fixed())
-            e->initialEstimate(from, to);
+/**
+ * \brief propagation of an initial guess
+ */
+class EstimatePropagator {
+  public:
+    /**
+     * \brief Applying the action for propagating.
+     *
+     * You may derive an own one, if necessary. The default is to call
+     * initialEstimate(from, to) for the edge.
+     */
+    struct PropagateAction {
+        virtual void operator()(OptimizableGraph::Edge *e,
+                                const OptimizableGraph::VertexSet &from,
+                                OptimizableGraph::Vertex *to) const {
+            if (!to->fixed())
+                e->initialEstimate(from, to);
         }
-      };
+    };
 
-      /**
-       * \brief cost for traversing along active edges in the optimizer
-       *
-       * You may derive an own one, if necessary. The default is to return initialEstimatePossible(from, to) for the edge.
-       */
-      class PropagateCost {
-        public:
-          PropagateCost(SparseOptimizer* graph) : _graph(graph) {}
-          virtual double operator()(OptimizableGraph::Edge* edge, const OptimizableGraph::VertexSet& from, OptimizableGraph::Vertex* to_) const
-          {
-            OptimizableGraph::Edge* e = dynamic_cast<OptimizableGraph::Edge*>(edge);
-            OptimizableGraph::Vertex* to = dynamic_cast<OptimizableGraph::Vertex*>(to_);
-            SparseOptimizer::EdgeContainer::const_iterator it = _graph->findActiveEdge(e);
-            if (it == _graph->activeEdges().end()) // it has to be an active edge
-              return std::numeric_limits<double>::max();
+    /**
+     * \brief cost for traversing along active edges in the optimizer
+     *
+     * You may derive an own one, if necessary. The default is to return
+     * initialEstimatePossible(from, to) for the edge.
+     */
+    class PropagateCost {
+      public:
+        PropagateCost(SparseOptimizer *graph) : _graph(graph) {}
+        virtual double operator()(OptimizableGraph::Edge *edge,
+                                  const OptimizableGraph::VertexSet &from,
+                                  OptimizableGraph::Vertex *to_) const {
+            OptimizableGraph::Edge *e =
+                dynamic_cast<OptimizableGraph::Edge *>(edge);
+            OptimizableGraph::Vertex *to =
+                dynamic_cast<OptimizableGraph::Vertex *>(to_);
+            SparseOptimizer::EdgeContainer::const_iterator it =
+                _graph->findActiveEdge(e);
+            if (it ==
+                _graph->activeEdges().end()) // it has to be an active edge
+                return std::numeric_limits<double>::max();
             return e->initialEstimatePossible(from, to);
-          }
-        protected:
-          SparseOptimizer* _graph;
-      };
+        }
 
-      class AdjacencyMapEntry;
+      protected:
+        SparseOptimizer *_graph;
+    };
 
-      /**
-       * \brief priority queue for AdjacencyMapEntry
-       */
-      class PriorityQueue : public std::multimap<double, AdjacencyMapEntry*> {
-        public:
-          void push(AdjacencyMapEntry* entry);
-          AdjacencyMapEntry* pop();
-      };
+    class AdjacencyMapEntry;
 
-      /**
-       * \brief data structure for loopuk during Dijkstra
-       */
-      class AdjacencyMapEntry {
-        public:
-          friend class EstimatePropagator;
-          friend class PriorityQueue;
-          AdjacencyMapEntry();
-          void reset();
-          OptimizableGraph::Vertex* child() const {return _child;}
-          const OptimizableGraph::VertexSet& parent() const {return _parent;}
-          OptimizableGraph::Edge* edge() const {return _edge;}
-          double distance() const {return _distance;}
-          int frontierLevel() const { return _frontierLevel;}
+    /**
+     * \brief priority queue for AdjacencyMapEntry
+     */
+    class PriorityQueue : public std::multimap<double, AdjacencyMapEntry *> {
+      public:
+        void push(AdjacencyMapEntry *entry);
+        AdjacencyMapEntry *pop();
+    };
 
-        protected:
-          OptimizableGraph::Vertex* _child;
-          OptimizableGraph::VertexSet _parent;
-          OptimizableGraph::Edge* _edge;
-          double _distance;
-          int _frontierLevel;
-        private: // for PriorityQueue
-          bool inQueue;
-          PriorityQueue::iterator queueIt;
-      };
+    /**
+     * \brief data structure for loopuk during Dijkstra
+     */
+    class AdjacencyMapEntry {
+      public:
+        friend class EstimatePropagator;
+        friend class PriorityQueue;
+        AdjacencyMapEntry();
+        void reset();
+        OptimizableGraph::Vertex *child() const { return _child; }
+        const OptimizableGraph::VertexSet &parent() const { return _parent; }
+        OptimizableGraph::Edge *edge() const { return _edge; }
+        double distance() const { return _distance; }
+        int frontierLevel() const { return _frontierLevel; }
 
-      /**
-       * \brief hash function for a vertex
-       */
-      class VertexIDHashFunction {
-        public:
-          size_t operator ()(const OptimizableGraph::Vertex* v) const { return v->id();}
-      };
+      protected:
+        OptimizableGraph::Vertex *_child;
+        OptimizableGraph::VertexSet _parent;
+        OptimizableGraph::Edge *_edge;
+        double _distance;
+        int _frontierLevel;
 
-      typedef std::tr1::unordered_map<OptimizableGraph::Vertex*, AdjacencyMapEntry, VertexIDHashFunction> AdjacencyMap;
+      private: // for PriorityQueue
+        bool inQueue;
+        PriorityQueue::iterator queueIt;
+    };
 
-    public:
-      EstimatePropagator(OptimizableGraph* g);
-      OptimizableGraph::VertexSet& visited() {return _visited; }
-      AdjacencyMap& adjacencyMap() {return _adjacencyMap; }
-      OptimizableGraph* graph() {return _graph;} 
+    /**
+     * \brief hash function for a vertex
+     */
+    class VertexIDHashFunction {
+      public:
+        size_t operator()(const OptimizableGraph::Vertex *v) const {
+            return v->id();
+        }
+    };
 
-      /**
-       * propagate an initial guess starting from v. The function computes a spanning tree
-       * whereas the cost for each edge is determined by calling cost() and the action applied to
-       * each vertex is action().
-       */
-      void propagate(OptimizableGraph::Vertex* v, 
-          const EstimatePropagator::PropagateCost& cost, 
-          const EstimatePropagator::PropagateAction& action = PropagateAction(),
-          double maxDistance=std::numeric_limits<double>::max(), 
-          double maxEdgeCost=std::numeric_limits<double>::max());
+    typedef std::unordered_map<OptimizableGraph::Vertex *, AdjacencyMapEntry,
+                               VertexIDHashFunction>
+        AdjacencyMap;
 
-      /**
-       * same as above but starting to propagate from a set of vertices instead of just a single one.
-       */
-      void propagate(OptimizableGraph::VertexSet& vset, 
-          const EstimatePropagator::PropagateCost& cost, 
-          const EstimatePropagator::PropagateAction& action = PropagateAction(),
-          double maxDistance=std::numeric_limits<double>::max(), 
-          double maxEdgeCost=std::numeric_limits<double>::max());
+  public:
+    EstimatePropagator(OptimizableGraph *g);
+    OptimizableGraph::VertexSet &visited() { return _visited; }
+    AdjacencyMap &adjacencyMap() { return _adjacencyMap; }
+    OptimizableGraph *graph() { return _graph; }
 
-    protected:
-      void reset();
+    /**
+     * propagate an initial guess starting from v. The function computes a
+     * spanning tree whereas the cost for each edge is determined by calling
+     * cost() and the action applied to each vertex is action().
+     */
+    void propagate(
+        OptimizableGraph::Vertex *v,
+        const EstimatePropagator::PropagateCost &cost,
+        const EstimatePropagator::PropagateAction &action = PropagateAction(),
+        double maxDistance = std::numeric_limits<double>::max(),
+        double maxEdgeCost = std::numeric_limits<double>::max());
 
-      AdjacencyMap _adjacencyMap;
-      OptimizableGraph::VertexSet _visited;
-      OptimizableGraph* _graph;
-  };
+    /**
+     * same as above but starting to propagate from a set of vertices instead of
+     * just a single one.
+     */
+    void propagate(
+        OptimizableGraph::VertexSet &vset,
+        const EstimatePropagator::PropagateCost &cost,
+        const EstimatePropagator::PropagateAction &action = PropagateAction(),
+        double maxDistance = std::numeric_limits<double>::max(),
+        double maxEdgeCost = std::numeric_limits<double>::max());
 
-}
+  protected:
+    void reset();
+
+    AdjacencyMap _adjacencyMap;
+    OptimizableGraph::VertexSet _visited;
+    OptimizableGraph *_graph;
+};
+
+} // namespace g2o
 #endif

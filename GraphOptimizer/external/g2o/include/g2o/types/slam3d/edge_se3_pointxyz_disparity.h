@@ -36,18 +36,19 @@
 #define EDGE_PROJECT_DISPARITY_ANALYTIC_JACOBIAN
 namespace g2o {
 
-  /**
-   * \brief edge from a track to a depth camera node using a disparity measurement
-   *
-   * the disparity measurement is normalized: disparity / (focal_x * baseline)
-   */
-  // first two args are the measurement type, second two the connection classes
-  class G2O_TYPES_SLAM3D_API EdgeSE3PointXYZDisparity : public BaseBinaryEdge<3, Vector3d, VertexSE3, VertexPointXYZ> {
+/**
+ * \brief edge from a track to a depth camera node using a disparity measurement
+ *
+ * the disparity measurement is normalized: disparity / (focal_x * baseline)
+ */
+// first two args are the measurement type, second two the connection classes
+class G2O_TYPES_SLAM3D_API EdgeSE3PointXYZDisparity
+    : public BaseBinaryEdge<3, Vector3d, VertexSE3, VertexPointXYZ> {
   public:
     EIGEN_MAKE_ALIGNED_OPERATOR_NEW;
     EdgeSE3PointXYZDisparity();
-    virtual bool read(std::istream& is);
-    virtual bool write(std::ostream& os) const;
+    virtual bool read(std::istream &is);
+    virtual bool write(std::ostream &os) const;
 
     // return the error estimate as a 3-vector
     void computeError();
@@ -56,50 +57,50 @@ namespace g2o {
     virtual void linearizeOplus();
 #endif
 
-    virtual void setMeasurement(const Vector3d& m){
-      _measurement = m;
+    virtual void setMeasurement(const Vector3d &m) { _measurement = m; }
+
+    virtual bool setMeasurementData(const double *d) {
+        Map<const Vector3d> v(d);
+        _measurement = v;
+        return true;
     }
 
-    virtual bool setMeasurementData(const double* d){
-      Map<const Vector3d> v(d);
-      _measurement = v;
-      return true;
+    virtual bool getMeasurementData(double *d) const {
+        Map<Vector3d> v(d);
+        v = _measurement;
+        return true;
     }
 
-    virtual bool getMeasurementData(double* d) const{
-      Map<Vector3d> v(d);
-      v=_measurement;
-      return true;
-    }
-    
-    virtual int measurementDimension() const {return 3;}
+    virtual int measurementDimension() const { return 3; }
 
-    virtual bool setMeasurementFromState() ;
-    
-    virtual double initialEstimatePossible(const OptimizableGraph::VertexSet& from, 
-             OptimizableGraph::Vertex* to) { 
-      (void) to; 
-      return (from.count(_vertices[0]) == 1 ? 1.0 : -1.0);
+    virtual bool setMeasurementFromState();
+
+    virtual double
+    initialEstimatePossible(const OptimizableGraph::VertexSet &from,
+                            OptimizableGraph::Vertex *to) {
+        (void)to;
+        return (from.count(_vertices[0]) == 1 ? 1.0 : -1.0);
     }
 
-    virtual void initialEstimate(const OptimizableGraph::VertexSet& from, OptimizableGraph::Vertex* to);
+    virtual void initialEstimate(const OptimizableGraph::VertexSet &from,
+                                 OptimizableGraph::Vertex *to);
 
   private:
-    Eigen::Matrix<double,3,9> J; // jacobian before projection
+    Eigen::Matrix<double, 3, 9> J; // jacobian before projection
     virtual bool resolveCaches();
-    ParameterCamera* params;
-    CacheCamera* cache;
-  };
-
+    ParameterCamera *params;
+    CacheCamera *cache;
+};
 
 #ifdef G2O_HAVE_OPENGL
-  class G2O_TYPES_SLAM3D_API EdgeProjectDisparityDrawAction: public DrawAction{
+class G2O_TYPES_SLAM3D_API EdgeProjectDisparityDrawAction : public DrawAction {
   public:
     EdgeProjectDisparityDrawAction();
-    virtual HyperGraphElementAction* operator()(HyperGraph::HyperGraphElement* element, 
-            HyperGraphElementAction::Parameters* params_);
-  };
+    virtual HyperGraphElementAction *
+    operator()(HyperGraph::HyperGraphElement *element,
+               HyperGraphElementAction::Parameters *params_);
+};
 #endif
 
-}
+} // namespace g2o
 #endif

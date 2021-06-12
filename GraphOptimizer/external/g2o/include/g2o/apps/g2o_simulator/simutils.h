@@ -32,30 +32,28 @@
 #include "g2o_simulator_api.h"
 
 namespace g2o {
-  // -1: outside
-  // 0: p1Clipped
-  // 1: p2clipped
-  // 2: inside
-  // 3: all clipped
+// -1: outside
+// 0: p1Clipped
+// 1: p2clipped
+// 2: inside
+// 3: all clipped
 
-  int clipSegmentCircle(Vector2d& p1, Vector2d& p2, double r);
+int clipSegmentCircle(Vector2d &p1, Vector2d &p2, double r);
 
-  // -1: outside
-  // 0: p1Clipped
-  // 1: p2clipped
-  // 2: inside
-  int clipSegmentLine(Vector2d& p1, Vector2d& p2, double a, double b, double c );
-  
+// -1: outside
+// 0: p1Clipped
+// 1: p2clipped
+// 2: inside
+int clipSegmentLine(Vector2d &p1, Vector2d &p2, double a, double b, double c);
 
-  // -1: outside
-  // 0: p1Clipped
-  // 1: p2clipped
-  // 2: inside
-  // 3: all clipped
-  int clipSegmentFov(Vector2d& p1, Vector2d& p2, double min, double max);
+// -1: outside
+// 0: p1Clipped
+// 1: p2clipped
+// 2: inside
+// 3: all clipped
+int clipSegmentFov(Vector2d &p1, Vector2d &p2, double min, double max);
 
-  
-  Vector2d computeLineParameters(const Vector2d& p1, const Vector2d& p2);
-}
+Vector2d computeLineParameters(const Vector2d &p1, const Vector2d &p2);
+} // namespace g2o
 
 #endif

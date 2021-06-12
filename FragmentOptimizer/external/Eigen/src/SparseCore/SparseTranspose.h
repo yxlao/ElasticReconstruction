@@ -10,50 +10,63 @@
 #ifndef EIGEN_SPARSETRANSPOSE_H
 #define EIGEN_SPARSETRANSPOSE_H
 
-namespace Eigen { 
+namespace Eigen {
 
-template<typename MatrixType> class TransposeImpl<MatrixType,Sparse>
-  : public SparseMatrixBase<Transpose<MatrixType> >
-{
-    typedef typename internal::remove_all<typename MatrixType::Nested>::type _MatrixTypeNested;
+template <typename MatrixType>
+class TransposeImpl<MatrixType, Sparse>
+    : public SparseMatrixBase<Transpose<MatrixType>> {
+    typedef typename internal::remove_all<typename MatrixType::Nested>::type
+        _MatrixTypeNested;
+
   public:
-
     EIGEN_SPARSE_PUBLIC_INTERFACE(Transpose<MatrixType>)
 
     class InnerIterator;
     class ReverseInnerIterator;
 
-    inline Index nonZeros() const { return derived().nestedExpression().nonZeros(); }
+    inline Index nonZeros() const {
+        return derived().nestedExpression().nonZeros();
+    }
 };
 
-// NOTE: VC10 trigger an ICE if don't put typename TransposeImpl<MatrixType,Sparse>:: in front of Index,
-// a typedef typename TransposeImpl<MatrixType,Sparse>::Index Index;
-// does not fix the issue.
-// An alternative is to define the nested class in the parent class itself.
-template<typename MatrixType> class TransposeImpl<MatrixType,Sparse>::InnerIterator
-  : public _MatrixTypeNested::InnerIterator
-{
+// NOTE: VC10 trigger an ICE if don't put typename
+// TransposeImpl<MatrixType,Sparse>:: in front of Index, a typedef typename
+// TransposeImpl<MatrixType,Sparse>::Index Index; does not fix the issue. An
+// alternative is to define the nested class in the parent class itself.
+template <typename MatrixType>
+class TransposeImpl<MatrixType, Sparse>::InnerIterator
+    : public _MatrixTypeNested::InnerIterator {
     typedef typename _MatrixTypeNested::InnerIterator Base;
-  public:
 
-    EIGEN_STRONG_INLINE InnerIterator(const TransposeImpl& trans, typename TransposeImpl<MatrixType,Sparse>::Index outer)
-      : Base(trans.derived().nestedExpression(), outer)
-    {}
-    inline typename TransposeImpl<MatrixType,Sparse>::Index row() const { return Base::col(); }
-    inline typename TransposeImpl<MatrixType,Sparse>::Index col() const { return Base::row(); }
+  public:
+    EIGEN_STRONG_INLINE
+    InnerIterator(const TransposeImpl &trans,
+                  typename TransposeImpl<MatrixType, Sparse>::Index outer)
+        : Base(trans.derived().nestedExpression(), outer) {}
+    inline typename TransposeImpl<MatrixType, Sparse>::Index row() const {
+        return Base::col();
+    }
+    inline typename TransposeImpl<MatrixType, Sparse>::Index col() const {
+        return Base::row();
+    }
 };
 
-template<typename MatrixType> class TransposeImpl<MatrixType,Sparse>::ReverseInnerIterator
-  : public _MatrixTypeNested::ReverseInnerIterator
-{
+template <typename MatrixType>
+class TransposeImpl<MatrixType, Sparse>::ReverseInnerIterator
+    : public _MatrixTypeNested::ReverseInnerIterator {
     typedef typename _MatrixTypeNested::ReverseInnerIterator Base;
-  public:
 
-    EIGEN_STRONG_INLINE ReverseInnerIterator(const TransposeImpl& xpr, typename TransposeImpl<MatrixType,Sparse>::Index outer)
-      : Base(xpr.derived().nestedExpression(), outer)
-    {}
-    inline typename TransposeImpl<MatrixType,Sparse>::Index row() const { return Base::col(); }
-    inline typename TransposeImpl<MatrixType,Sparse>::Index col() const { return Base::row(); }
+  public:
+    EIGEN_STRONG_INLINE ReverseInnerIterator(
+        const TransposeImpl &xpr,
+        typename TransposeImpl<MatrixType, Sparse>::Index outer)
+        : Base(xpr.derived().nestedExpression(), outer) {}
+    inline typename TransposeImpl<MatrixType, Sparse>::Index row() const {
+        return Base::col();
+    }
+    inline typename TransposeImpl<MatrixType, Sparse>::Index col() const {
+        return Base::row();
+    }
 };
 
 } // end namespace Eigen

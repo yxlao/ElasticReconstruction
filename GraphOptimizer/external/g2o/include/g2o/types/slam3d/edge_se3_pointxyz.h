@@ -36,66 +36,67 @@
 
 namespace g2o {
 
-  /*! \class EdgeSE3PointXYZ
-   * \brief g2o edge from a track to a point node
-   */
-  // first two args are the measurement type, second two the connection classes
-  class G2O_TYPES_SLAM3D_API EdgeSE3PointXYZ : public BaseBinaryEdge<3, Vector3d, VertexSE3, VertexPointXYZ> {
+/*! \class EdgeSE3PointXYZ
+ * \brief g2o edge from a track to a point node
+ */
+// first two args are the measurement type, second two the connection classes
+class G2O_TYPES_SLAM3D_API EdgeSE3PointXYZ
+    : public BaseBinaryEdge<3, Vector3d, VertexSE3, VertexPointXYZ> {
   public:
     EIGEN_MAKE_ALIGNED_OPERATOR_NEW
     EdgeSE3PointXYZ();
-    virtual bool read(std::istream& is);
-    virtual bool write(std::ostream& os) const;
+    virtual bool read(std::istream &is);
+    virtual bool write(std::ostream &os) const;
 
     // return the error estimate as a 3-vector
     void computeError();
     // jacobian
     virtual void linearizeOplus();
-    
 
-    virtual void setMeasurement(const Vector3d& m){
-      _measurement = m;
+    virtual void setMeasurement(const Vector3d &m) { _measurement = m; }
+
+    virtual bool setMeasurementData(const double *d) {
+        Map<const Vector3d> v(d);
+        _measurement = v;
+        return true;
     }
 
-    virtual bool setMeasurementData(const double* d){
-      Map<const Vector3d> v(d);
-      _measurement = v;
-      return true;
+    virtual bool getMeasurementData(double *d) const {
+        Map<Vector3d> v(d);
+        v = _measurement;
+        return true;
     }
 
-    virtual bool getMeasurementData(double* d) const{
-      Map<Vector3d> v(d);
-      v=_measurement;
-      return true;
-    }
-    
-    virtual int measurementDimension() const {return 3;}
+    virtual int measurementDimension() const { return 3; }
 
-    virtual bool setMeasurementFromState() ;
+    virtual bool setMeasurementFromState();
 
-    virtual double initialEstimatePossible(const OptimizableGraph::VertexSet& from, 
-             OptimizableGraph::Vertex* to) { 
-      (void) to; 
-      return (from.count(_vertices[0]) == 1 ? 1.0 : -1.0);
+    virtual double
+    initialEstimatePossible(const OptimizableGraph::VertexSet &from,
+                            OptimizableGraph::Vertex *to) {
+        (void)to;
+        return (from.count(_vertices[0]) == 1 ? 1.0 : -1.0);
     }
 
-    virtual void initialEstimate(const OptimizableGraph::VertexSet& from, OptimizableGraph::Vertex* to);
+    virtual void initialEstimate(const OptimizableGraph::VertexSet &from,
+                                 OptimizableGraph::Vertex *to);
 
   private:
-    Eigen::Matrix<double,3,9> J; // jacobian before projection
-    ParameterSE3Offset* offsetParam;
-    CacheSE3Offset* cache;
+    Eigen::Matrix<double, 3, 9> J; // jacobian before projection
+    ParameterSE3Offset *offsetParam;
+    CacheSE3Offset *cache;
     virtual bool resolveCaches();
-  };
+};
 
 #ifdef G2O_HAVE_OPENGL
-  class EdgeSE3PointXYZDrawAction: public DrawAction{
+class EdgeSE3PointXYZDrawAction : public DrawAction {
   public:
     EdgeSE3PointXYZDrawAction();
-    virtual HyperGraphElementAction* operator()(HyperGraph::HyperGraphElement* element,
-            HyperGraphElementAction::Parameters* params_);
-  };
+    virtual HyperGraphElementAction *
+    operator()(HyperGraph::HyperGraphElement *element,
+               HyperGraphElementAction::Parameters *params_);
+};
 #endif
 
-}
+} // namespace g2o
 #endif

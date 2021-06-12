@@ -16,24 +16,22 @@
 #include <g2o/core/base_multi_edge.h>
 #include <g2o/core/hyper_graph_action.h>
 
-class EdgeSE3Switchable : public g2o::BaseMultiEdge<6, Eigen::Isometry3d>
-{
+class EdgeSE3Switchable : public g2o::BaseMultiEdge<6, Eigen::Isometry3d> {
   public:
     EdgeSE3Switchable();
 
-    virtual bool read(std::istream& is);
-    virtual bool write(std::ostream& os) const;
+    virtual bool read(std::istream &is);
+    virtual bool write(std::ostream &os) const;
     void computeError();
     void linearizeOplus();
 
-    virtual void setMeasurement(const Eigen::Isometry3d& m){
-      _measurement = m;
-      _inverseMeasurement = m.inverse();
+    virtual void setMeasurement(const Eigen::Isometry3d &m) {
+        _measurement = m;
+        _inverseMeasurement = m.inverse();
     }
 
   protected:
     Eigen::Isometry3d _inverseMeasurement;
 };
-
 
 #endif /* EDGE_SE3SWITCHABLE_H_ */

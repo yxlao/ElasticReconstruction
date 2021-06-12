@@ -34,30 +34,39 @@
 
 namespace g2o {
 
-  /**
-   * \brief Landmark measurement that also calibrates an offset for the landmark measurement
-   */
-  class G2O_TYPES_SLAM2D_API EdgeSE2PointXYCalib : public BaseMultiEdge<2, Eigen::Vector2d>
-  {
-    public:
-      EIGEN_MAKE_ALIGNED_OPERATOR_NEW
-      EdgeSE2PointXYCalib();
+/**
+ * \brief Landmark measurement that also calibrates an offset for the landmark
+ * measurement
+ */
+class G2O_TYPES_SLAM2D_API EdgeSE2PointXYCalib
+    : public BaseMultiEdge<2, Eigen::Vector2d> {
+  public:
+    EIGEN_MAKE_ALIGNED_OPERATOR_NEW
+    EdgeSE2PointXYCalib();
 
-      void computeError()
-      {
-        const VertexSE2* v1     = static_cast<const VertexSE2*>(_vertices[0]);
-        const VertexPointXY* l2 = static_cast<const VertexPointXY*>(_vertices[1]);
-        const VertexSE2* calib  = static_cast<const VertexSE2*>(_vertices[2]);
-        _error = ((v1->estimate() * calib->estimate()).inverse() * l2->estimate()) - _measurement;
-      }
+    void computeError() {
+        const VertexSE2 *v1 = static_cast<const VertexSE2 *>(_vertices[0]);
+        const VertexPointXY *l2 =
+            static_cast<const VertexPointXY *>(_vertices[1]);
+        const VertexSE2 *calib = static_cast<const VertexSE2 *>(_vertices[2]);
+        _error =
+            ((v1->estimate() * calib->estimate()).inverse() * l2->estimate()) -
+            _measurement;
+    }
 
-      virtual bool read(std::istream& is);
-      virtual bool write(std::ostream& os) const;
+    virtual bool read(std::istream &is);
+    virtual bool write(std::ostream &os) const;
 
-      virtual double initialEstimatePossible(const OptimizableGraph::VertexSet& from, OptimizableGraph::Vertex* to) { (void) to; return (from.count(_vertices[0]) == 1 ? 1.0 : -1.0);}
-      virtual void initialEstimate(const OptimizableGraph::VertexSet& from, OptimizableGraph::Vertex* to);
-  };
+    virtual double
+    initialEstimatePossible(const OptimizableGraph::VertexSet &from,
+                            OptimizableGraph::Vertex *to) {
+        (void)to;
+        return (from.count(_vertices[0]) == 1 ? 1.0 : -1.0);
+    }
+    virtual void initialEstimate(const OptimizableGraph::VertexSet &from,
+                                 OptimizableGraph::Vertex *to);
+};
 
-}
+} // namespace g2o
 
 #endif

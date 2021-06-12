@@ -31,27 +31,30 @@
 
 namespace g2o {
 
-  class SensorPose3DOffset : public PointSensorParameters, public BinarySensor<Robot3D, EdgeSE3Offset, WorldObjectSE3>  { 
+class SensorPose3DOffset
+    : public PointSensorParameters,
+      public BinarySensor<Robot3D, EdgeSE3Offset, WorldObjectSE3> {
   public:
-    SensorPose3DOffset(const std::string& name_);
+    SensorPose3DOffset(const std::string &name_);
     virtual void sense();
-    int stepsToIgnore() const {return _stepsToIgnore;}
-    void setStepsToIgnore(int stepsToIgnore_) {_stepsToIgnore = stepsToIgnore_;}
-    void addNoise(EdgeType* e);
+    int stepsToIgnore() const { return _stepsToIgnore; }
+    void setStepsToIgnore(int stepsToIgnore_) {
+        _stepsToIgnore = stepsToIgnore_;
+    }
+    void addNoise(EdgeType *e);
     virtual void addParameters();
-    ParameterSE3Offset* offsetParam1() {return _offsetParam1;};
-    ParameterSE3Offset* offsetParam2() {return _offsetParam2;};
+    ParameterSE3Offset *offsetParam1() { return _offsetParam1; };
+    ParameterSE3Offset *offsetParam2() { return _offsetParam2; };
 
   protected:
-    
-    bool isVisible(WorldObjectType* to);
+    bool isVisible(WorldObjectType *to);
     int _stepsToIgnore;
-    ParameterSE3Offset* _offsetParam1, *_offsetParam2;
+    ParameterSE3Offset *_offsetParam1, *_offsetParam2;
 
     // these are temporaries
-    std::set<PoseObject*> _posesToIgnore;
-  };
+    std::set<PoseObject *> _posesToIgnore;
+};
 
-}
+} // namespace g2o
 
 #endif
