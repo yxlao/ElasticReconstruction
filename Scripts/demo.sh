@@ -4,6 +4,16 @@ set -eu
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 source ${SCRIPT_DIR}/setup_env.sh
 
+# Number of CPU cores, not counting hyper-threading:
+# https://stackoverflow.com/a/6481016/1255535
+#
+# Set max number of threads to the number of physical cores, not logical:
+# https://github.com/microsoft/onnxruntime/issues/4869#issuecomment-722045086
+# https://stackoverflow.com/a/36959375/1255535
+NUM_CORES=$(grep ^cpu\\scores /proc/cpuinfo | uniq |  awk '{print $4}')
+export OMP_NUM_THREADS=${NUM_CORES}
+echo "OMP_NUM_THREADS: ${OMP_NUM_THREADS}"
+
 # Part I: create fragments
 # ${pcl_kinfu_largeScale} -r -ic -sd 10 -oni ../Sandbox/input.oni -vs 4 \
 #     --fragment 25 --rgbd_odometry --record_log ../Sandbox/100-0.log \
