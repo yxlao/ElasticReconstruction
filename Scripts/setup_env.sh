@@ -4,6 +4,8 @@
 
 set -eu
 
+echo "#########################################################################"
+
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 BIN_DIR=`realpath ${SCRIPT_DIR}/../build/bin`
 PCL_BIN_DIR=`realpath ${SCRIPT_DIR}/../../StanfordPCL/build/bin`
@@ -26,10 +28,4 @@ echo "# FragmentOptimizer:"                && ls -alh ${FragmentOptimizer}
 echo "# Integrate:"                        && ls -alh ${Integrate}
 echo "# pcl_kinfu_largeScale_mesh_output:" && ls -alh ${pcl_kinfu_largeScale_mesh_output}
 
-echo "# Testing pcl_kinfu_largeScale:"             && ${pcl_kinfu_largeScale} || true
-echo "# Testing GlobalRegistration:"               && ${GlobalRegistration} || true
-echo "# Testing GraphOptimizer:"                   && ${GraphOptimizer} || true
-echo "# Testing BuildCorrespondence:"              && ${BuildCorrespondence} || true
-echo "# Testing FragmentOptimizer:"                && ${FragmentOptimizer} || true
-echo "# Testing Integrate:"                        && ${Integrate} || true
-echo "# Testing pcl_kinfu_largeScale_mesh_output:" && ${pcl_kinfu_largeScale_mesh_output} || true
+echo "#########################################################################"
