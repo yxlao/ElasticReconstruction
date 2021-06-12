@@ -35,7 +35,7 @@ list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/CMake")
 # Dependencies shall be installed here.
 set(ELASTIC_RECONSTRUCTION_DEPS_INSTALL_PREFIX ${PROJECT_SOURCE_DIR}/Deps/build/install)
 
-# Depencency: PCL
+# Dependency: PCL
 find_package(PCL 1.7 PATHS /home/yixing/pcl_install NO_DEFAULT_PATH)
 if(PCL_FOUND)
     message(STATUS "PCL found")
@@ -47,7 +47,7 @@ else()
     message(FATAL_ERROR "PCL_FOUND: ${PCL_FOUND}")
 endif()
 
-# Depencency: Boost
+# Dependency: Boost
 set(BOOST_ROOT ${ELASTIC_RECONSTRUCTION_DEPS_INSTALL_PREFIX})
 set(BOOSTROOT ${ELASTIC_RECONSTRUCTION_DEPS_INSTALL_PREFIX})
 set(Boost_NO_SYSTEM_PATHS ON)
@@ -62,7 +62,7 @@ else()
     message(FATAL_ERROR "BOOST_FOUND: ${BOOST_FOUND}")
 endif()
 
-# Depencency: Eigen
+# Dependency: Eigen
 set(EIGEN_ROOT ${ELASTIC_RECONSTRUCTION_DEPS_INSTALL_PREFIX})
 find_package(Eigen)
 if(EIGEN_FOUND)
@@ -72,7 +72,7 @@ else()
     message(FATAL_ERROR "EIGEN_FOUND: ${EIGEN_FOUND}")
 endif()
 
-# Depencency: SuiteSparse
+# Dependency: SuiteSparse
 set(CSPARSE_ROOT ${ELASTIC_RECONSTRUCTION_DEPS_INSTALL_PREFIX})
 find_package(SuiteSparse)
 if(CSPARSE_FOUND)
@@ -83,7 +83,7 @@ else()
     message(FATAL_ERROR "CSPARSE_FOUND: ${CSPARSE_FOUND}")
 endif()
 
-# Depencency: G2O
+# Dependency: G2O
 set(G2O_ROOT ${ELASTIC_RECONSTRUCTION_DEPS_INSTALL_PREFIX})
 find_package(G2O)
 if(G2O_FOUND)
@@ -131,6 +131,14 @@ else()
     message(FATAL_ERROR "G2O_FOUND: ${G2O_FOUND}")
 endif()
 
+# Dependency: OpenMP
+find_package(OpenMP)
+if(TARGET OpenMP::OpenMP_CXX)
+    message(STATUS "Building with OpenMP")
+else()
+    message(FATAL_ERROR "OpenMP not found.")
+endif()
+
 # CMake helper functions.
 function(elastic_reconstruction_set_global_properties target)
     # Libraries need to be compiled with position independent code
@@ -166,6 +174,7 @@ function(elastic_reconstruction_set_global_properties target)
         boost_program_options # TODO: hard-coded for now
         ${CHOLMOD_LIBRARIES}
         ${G2O_LIBRARIES}
+        OpenMP::OpenMP_CXX
     )
     target_compile_definitions(${target} PRIVATE
         EIGEN_USE_NEW_STDVECTOR
