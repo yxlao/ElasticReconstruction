@@ -5,3 +5,6 @@ x64/
 *.asv
 build/
 .vscode/
+Sandbox/
+*.log
+*.info
