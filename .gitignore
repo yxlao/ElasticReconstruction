@@ -5,3 +5,4 @@ x64/
 *.asv
 build/
 .vscode/
+*.oni
