@@ -22,13 +22,21 @@ echo "OMP_NUM_THREADS: ${OMP_NUM_THREADS}"
 # mv cloud_bin* ../Sandbox/pcds/
 
 # Part II: global registration
-${GlobalRegistration} ../Sandbox/pcds/ ../Sandbox/100-0.log 50
-mv init.log ../Sandbox/
-mv pose.log ../Sandbox/
-mv odometry.* ../Sandbox/
-mv result.* ../Sandbox/
+# ${GlobalRegistration} ../Sandbox/pcds/ ../Sandbox/100-0.log 50
+# mv init.log ../Sandbox/
+# mv pose.log ../Sandbox/
+# mv odometry.* ../Sandbox/
+# mv result.* ../Sandbox/
 
-# GraphOptimizer.exe -w 100 --odometry ../Sandbox/odometry.log --odometryinfo ../Sandbox/odometry.info --loop ../Sandbox/result.txt --loopinfo ../Sandbox/result.info --pose ../Sandbox/pose.log --keep ../Sandbox/keep.log --refine ../Sandbox/pcds/reg_refine_all.log
+# Part III: graph optimization
+${GraphOptimizer} -w 100 \
+    --odometry ../Sandbox/odometry.log \
+    --odometryinfo ../Sandbox/odometry.info \
+    --loop ../Sandbox/result.txt \
+    --loopinfo ../Sandbox/result.info \
+    --pose ../Sandbox/pose.log \
+    --keep ../Sandbox/keep.log \
+    --refine ../Sandbox/pcds/reg_refine_all.log
 
 # BuildCorrespondence.exe --reg_traj ../Sandbox/pcds/reg_refine_all.log --registration --reg_dist 0.05 --reg_ratio 0.25 --reg_num 0 --save_xyzn
 # mv reg_output.* ../Sandbox/
