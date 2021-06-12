@@ -4,17 +4,19 @@ set -eu
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 source ${SCRIPT_DIR}/setup_env.sh
 
-${pcl_kinfu_largeScale} -r -ic -sd 10 -oni ../Sandbox/input.oni -vs 4 \
-    --fragment 25 --rgbd_odometry --record_log ../Sandbox/100-0.log \
-    --camera longrange.param
-mkdir -p ../Sandbox/pcds/
-mv cloud_bin* ../Sandbox/pcds/
+# Part I: create fragments
+# ${pcl_kinfu_largeScale} -r -ic -sd 10 -oni ../Sandbox/input.oni -vs 4 \
+#     --fragment 25 --rgbd_odometry --record_log ../Sandbox/100-0.log \
+#     --camera longrange.param
+# mkdir -p ../Sandbox/pcds/
+# mv cloud_bin* ../Sandbox/pcds/
 
-# GlobalRegistration.exe ../Sandbox/pcds/ ../Sandbox/100-0.log 50
-# mv init.log ../Sandbox/
-# mv pose.log ../Sandbox/
-# mv odometry.* ../Sandbox/
-# mv result.* ../Sandbox/
+# Part II: global registration
+${GlobalRegistration} ../Sandbox/pcds/ ../Sandbox/100-0.log 50
+mv init.log ../Sandbox/
+mv pose.log ../Sandbox/
+mv odometry.* ../Sandbox/
+mv result.* ../Sandbox/
 
 # GraphOptimizer.exe -w 100 --odometry ../Sandbox/odometry.log --odometryinfo ../Sandbox/odometry.info --loop ../Sandbox/result.txt --loopinfo ../Sandbox/result.info --pose ../Sandbox/pose.log --keep ../Sandbox/keep.log --refine ../Sandbox/pcds/reg_refine_all.log
 
