@@ -72,7 +72,7 @@ void CCorresApp::LoadData(std::string filename, int num) {
         PCL_INFO("BBox prune enabled : %.6f\n", bbox_length_);
     }
 
-#pragma omp parallel for num_threads(8) schedule(dynamic)
+#pragma omp parallel for schedule(dynamic)
     for (int i = 0; i < num_; i++) {
         char fn[1024];
         memset(fn, 0, 1024);
@@ -115,7 +115,7 @@ void CCorresApp::FindCorrespondence() {
         }
     }
 
-#pragma omp parallel for num_threads(8) schedule(dynamic)
+#pragma omp parallel for schedule(dynamic)
     for (int i = 0; i < (int)corres_traj_.data_.size(); i++) {
         if (blacklist_.find(corres_traj_.data_[i].id1_) != blacklist_.end() ||
             blacklist_.find(corres_traj_.data_[i].id2_) != blacklist_.end()) {
@@ -230,7 +230,7 @@ void CCorresApp::Registration() {
     int nprocessed = 0;
     // omp_set_num_threads( 8 );
 
-#pragma omp parallel for num_threads(8) schedule(dynamic)
+#pragma omp parallel for schedule(dynamic)
     for (int i = 0; i < (int)corres_traj_.data_.size(); i++) {
         if (blacklist_.find(corres_traj_.data_[i].id1_) != blacklist_.end() ||
             blacklist_.find(corres_traj_.data_[i].id2_) != blacklist_.end()) {
