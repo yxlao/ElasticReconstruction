@@ -39,18 +39,18 @@ echo "OMP_NUM_THREADS: ${OMP_NUM_THREADS}"
 #     --refine ../Sandbox/pcds/reg_refine_all.log
 
 # Part IV: Build correspondence
-# ${BuildCorrespondence} \
-#     --reg_traj ../Sandbox/pcds/reg_refine_all.log \
-#     --registration \
-#     --reg_dist 0.05 \
-#     --reg_ratio 0.25 \
-#     --reg_num 0 \
-#     --save_xyzn
-# mv reg_output.* ../Sandbox/
+${BuildCorrespondence} \
+    --reg_traj ../Sandbox/pcds/reg_refine_all.log \
+    --registration \
+    --reg_dist 0.05 \
+    --reg_ratio 0.25 \
+    --reg_num 0 \
+    --save_xyzn
+mv reg_output.* ../Sandbox/
 
 # Part V: SLAC (or rigid) optimization
-NUM_PCDS=$(ls ../Sandbox/pcds/cloud_bin_*.pcd -l | wc -l | tr -d ' ')
-# FragmentOptimizer.exe --rigid \
+# NUM_PCDS=$(ls ../Sandbox/pcds/cloud_bin_*.pcd -l | wc -l | tr -d ' ')
+# ${FragmentOptimizer} --rigid \
 #     --rgbdslam ../Sandbox/init.log \
 #     --registration ../Sandbox/reg_output.log \
 #     --dir ../Sandbox/pcds/ \
@@ -59,36 +59,36 @@ NUM_PCDS=$(ls ../Sandbox/pcds/cloud_bin_*.pcd -l | wc -l | tr -d ' ')
 #     --iteration 10 \
 #     --length 4.0 \
 #     --write_xyzn_sample 10
-FragmentOptimizer.exe --slac \
-    --rgbdslam ../Sandbox/init.log \
-    --registration ../Sandbox/reg_output.log \
-    --dir ../Sandbox/pcds/ \
-    --num $NUM_PCDS \
-    --resolution 12 \
-    --iteration 10 \
-    --length 4.0 \
-    --write_xyzn_sample 10
+# ${FragmentOptimizer} --slac \
+#     --rgbdslam ../Sandbox/init.log \
+#     --registration ../Sandbox/reg_output.log \
+#     --dir ../Sandbox/pcds/ \
+#     --num $NUM_PCDS \
+#     --resolution 12 \
+#     --iteration 10 \
+#     --length 4.0 \
+#     --write_xyzn_sample 10
+# mv pose.log ../Sandbox/pose_slac.log
+# mv output.ctr ../Sandbox/
 # pcl_viewer_release.exe sample.pcd
-mv pose.log ../Sandbox/pose_slac.log
-mv output.ctr ../Sandbox/
-rm sample.pcd
+# rm sample.pcd
 
 # Part VI: Integration
-${Integrate} --pose_traj ../Sandbox/pose_slac.log \
-    --seg_traj ../Sandbox/100-0.log \
-    --ctr ../Sandbox/output.ctr \
-    --num ${NUM_PCDS} \
-    --resolution 12 \
-    --camera longrange.param \
-    -oni ../Sandbox/input.oni \
-    --length 4.0 \
-    --interval 50
+# ${Integrate} --pose_traj ../Sandbox/pose_slac.log \
+#     --seg_traj ../Sandbox/100-0.log \
+#     --ctr ../Sandbox/output.ctr \
+#     --num ${NUM_PCDS} \
+#     --resolution 12 \
+#     --camera longrange.param \
+#     -oni ../Sandbox/input.oni \
+#     --length 4.0 \
+#     --interval 50
 
 # Part VII: Extract mesh
-${pcl_kinfu_largeScale_mesh_output} world.pcd
-mkdir ../Sandbox/ply/
-mv *.ply ../Sandbox/ply/
-rm world.pcd
+# ${pcl_kinfu_largeScale_mesh_output} world.pcd
+# mkdir ../Sandbox/ply/
+# mv *.ply ../Sandbox/ply/
+# rm world.pcd
 
 # Part VIII: Visualization
 # MeshLab
