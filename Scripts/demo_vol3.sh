@@ -71,7 +71,7 @@ ${FragmentOptimizer} --slac \
 # pcl_viewer_release.exe sample.pcd
 mv pose.log ../Sandbox/pose_slac.log
 mv output.ctr ../Sandbox/
-rm sample.pcd
+# rm sample.pcd
 
 # Part VI: Integration
 ${Integrate} --pose_traj ../Sandbox/pose_slac.log \
@@ -88,7 +88,7 @@ ${Integrate} --pose_traj ../Sandbox/pose_slac.log \
 ${pcl_kinfu_largeScale_mesh_output} world.pcd -vs 3
 mkdir ../Sandbox/ply/
 mv *.ply ../Sandbox/ply/
-rm world.pcd
+# rm world.pcd
 
 # Part VIII: Visualization
 # MeshLab
