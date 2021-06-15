@@ -1,33 +1,98 @@
-#!/bin/bash
+#!/usr/bin/env bash
+set -eu
 
-pcl_kinfu_largeScale_release.exe -r -ic -sd 10 -oni ../sandbox/input.oni -vs 3 --fragment 25 --rgbd_odometry --record_log ../sandbox/100-0.log --camera longrange.param
-mkdir ../sandbox/pcds/
-mv cloud_bin* ../sandbox/pcds/
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+source ${SCRIPT_DIR}/setup_env.sh
 
-GlobalRegistration.exe ../sandbox/pcds/ ../sandbox/100-0.log 50
-mv init.log ../sandbox/
-mv pose.log ../sandbox/
-mv odometry.* ../sandbox/
-mv result.* ../sandbox/
+# Number of CPU cores, not counting hyper-threading:
+# https://stackoverflow.com/a/6481016/1255535
+#
+# Typically, set max # of threads to the # of physical cores, not logical:
+# https://www.thunderheadeng.com/2014/08/openmp-benchmarks/
+# https://stackoverflow.com/a/36959375/1255535
+NUM_CORES=$(grep ^cpu\\scores /proc/cpuinfo | uniq |  awk '{print $4}')
+export OMP_NUM_THREADS=${NUM_CORES}
+echo "OMP_NUM_THREADS: ${OMP_NUM_THREADS}"
 
-GraphOptimizer.exe -w 100 --odometry ../sandbox/odometry.log --odometryinfo ../sandbox/odometry.info --loop ../sandbox/result.txt --loopinfo ../sandbox/result.info --pose ../sandbox/pose.log --keep ../sandbox/keep.log --refine ../sandbox/pcds/reg_refine_all.log
+# Part I: Create fragments
+${pcl_kinfu_largeScale} -r -ic -sd 10 -oni ../Sandbox/input.oni -vs 3 \
+    --fragment 25 --rgbd_odometry --record_log ../Sandbox/100-0.log \
+    --camera longrange.param
+mkdir ../Sandbox/pcds/
+mv cloud_bin* ../Sandbox/pcds/
 
-BuildCorrespondence.exe --reg_traj ../sandbox/pcds/reg_refine_all.log --registration --reg_dist 0.05 --reg_ratio 0.25 --reg_num 0 --save_xyzn
-mv reg_output.* ../sandbox/
+# Part II: Global registration
+${GlobalRegistration} ../Sandbox/pcds/ ../Sandbox/100-0.log 50
+mv init.log ../Sandbox/
+mv pose.log ../Sandbox/
+mv odometry.* ../Sandbox/
+mv result.* ../Sandbox/
 
-numpcds=$(ls ../sandbox/pcds/cloud_bin_*.pcd -l | wc -l | tr -d ' ')
-#FragmentOptimizer.exe --rigid --rgbdslam ../sandbox/init.log --registration ../sandbox/reg_output.log --dir ../sandbox/pcds/ --num $numpcds --resolution 12 --iteration 10 --length 3.0 --write_xyzn_sample 10
-FragmentOptimizer.exe --slac --rgbdslam ../sandbox/init.log --registration ../sandbox/reg_output.log --dir ../sandbox/pcds/ --num $numpcds --resolution 12 --iteration 10 --length 3.0 --write_xyzn_sample 10
-#pcl_viewer_release.exe sample.pcd
-mv pose.log ../sandbox/pose_slac.log
-mv output.ctr ../sandbox/
+# Part III: Graph optimization
+${GraphOptimizer} -w 100 \
+    --odometry ../Sandbox/odometry.log \
+    --odometryinfo ../Sandbox/odometry.info \
+    --loop ../Sandbox/result.txt \
+    --loopinfo ../Sandbox/result.info \
+    --pose ../Sandbox/pose.log \
+    --keep ../Sandbox/keep.log \
+    --refine ../Sandbox/pcds/reg_refine_all.log
+
+# Part IV: Build correspondence
+${BuildCorrespondence} \
+    --reg_traj ../Sandbox/pcds/reg_refine_all.log \
+    --registration \
+    --reg_dist 0.05 \
+    --reg_ratio 0.25 \
+    --reg_num 0 \
+    --save_xyzn
+mv reg_output.* ../Sandbox/
+
+# Part V: SLAC (or rigid) optimization
+NUM_PCDS=$(ls ../Sandbox/pcds/cloud_bin_*.pcd -l | wc -l | tr -d ' ')
+# ${FragmentOptimizer} --rigid \
+#     --rgbdslam ../Sandbox/init.log \
+#     --registration ../Sandbox/reg_output.log \
+#     --dir ../Sandbox/pcds/ \
+#     --num $NUM_PCDS \
+#     --resolution 12 \
+#     --iteration 10 \
+#     --length 3.0 \
+#     --write_xyzn_sample 10
+${FragmentOptimizer} --slac \
+    --rgbdslam ../Sandbox/init.log \
+    --registration ../Sandbox/reg_output.log \
+    --dir ../Sandbox/pcds/ \
+    --num $NUM_PCDS \
+    --resolution 12 \
+    --iteration 10 \
+    --length 3.0 \
+    --write_xyzn_sample 10
+# pcl_viewer_release.exe sample.pcd
+mv pose.log ../Sandbox/pose_slac.log
+mv output.ctr ../Sandbox/
 rm sample.pcd
 
-Integrate.exe --pose_traj ../sandbox/pose_slac.log --seg_traj ../sandbox/100-0.log --ctr ../sandbox/output.ctr --num ${numpcds} --resolution 12 --camera longrange.param -oni ../sandbox/input.oni --length 3.0 --interval 50
+# Part VI: Integration
+${Integrate} --pose_traj ../Sandbox/pose_slac.log \
+    --seg_traj ../Sandbox/100-0.log \
+    --ctr ../Sandbox/output.ctr \
+    --num ${NUM_PCDS} \
+    --resolution 12 \
+    --camera longrange.param \
+    -oni ../Sandbox/input.oni \
+    --length 3.0 \
+    --interval 50
 
-pcl_kinfu_largeScale_mesh_output_release.exe world.pcd
-mkdir ../sandbox/ply/
-mv *.ply ../sandbox/ply/
+# Part VII: Extract mesh
+${pcl_kinfu_largeScale_mesh_output} world.pcd
+mkdir ../Sandbox/ply/
+mv *.ply ../Sandbox/ply/
 rm world.pcd
 
-# MeshLab -> import all ply files -> merge visible layers -> make sure "remove duplicated vertices/faces" are checked -> export final model
+# Part VIII: Visualization
+# MeshLab
+#     -> import all ply files
+#     -> merge visible layers
+#     -> make sure "remove duplicated vertices/faces" are checked
+#     -> export final model
