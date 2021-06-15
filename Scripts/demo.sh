@@ -85,7 +85,7 @@ ${Integrate} --pose_traj ../Sandbox/pose_slac.log \
     --interval 50
 
 # Part VII: Extract mesh
-${pcl_kinfu_largeScale_mesh_output} world.pcd
+${pcl_kinfu_largeScale_mesh_output} world.pcd -vs 4
 mkdir ../Sandbox/ply/
 mv *.ply ../Sandbox/ply/
 # rm world.pcd
