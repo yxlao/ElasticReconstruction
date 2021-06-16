@@ -18,6 +18,6 @@ echo "OMP_NUM_THREADS: ${OMP_NUM_THREADS}"
 NUM_PCDS=$(ls ../Sandbox/pcds/cloud_bin_*.pcd -l | wc -l | tr -d ' ')
 
 # Part VII: Extract mesh
-${pcl_kinfu_largeScale_mesh_output} world.pcd -vs 4
+${pcl_kinfu_largeScale_mesh_output} world.pcd -vs 3
 mkdir ../Sandbox/ply/
 mv *.ply ../Sandbox/ply/
