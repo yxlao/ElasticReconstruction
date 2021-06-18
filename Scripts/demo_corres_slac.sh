@@ -33,7 +33,7 @@ python downsample.py --voxel_size 0.05
 ${BuildCorrespondence} \
     --reg_traj ${SANDBOX_DIR}/pcds/reg_refine_all.log \
     --registration \
-    --reg_dist 0.05 \
+    --reg_dist 0.5 \
     --reg_ratio 0.25 \
     --reg_num 0 \
     --save_xyzn
@@ -49,8 +49,6 @@ mv reg_output.* ${SANDBOX_DIR}/
 #     Sandbox/pose_slac.log                     # 01∶52∶21 AM PDT
 #     Sandbox/output.ctr                        # 01∶52∶21 AM PDT
 #     Sandbox/sample.pcd                        # 01∶52∶22 AM PDT
-echo "Recovering to full-res pointcloud, saving to SandboxDownsample/pcds."
-cp ${SCRIPT_DIR}/../SandboxFullRes/pcds/cloud_bin_*.pcd ${SANDBOX_DIR}/pcds
 NUM_PCDS=$(ls ${SANDBOX_DIR}/pcds/cloud_bin_*.pcd -l | wc -l | tr -d ' ')
 # ${FragmentOptimizer} --rigid \
 #     --rgbdslam ${SANDBOX_DIR}/init.log \
