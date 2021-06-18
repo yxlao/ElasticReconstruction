@@ -32,7 +32,7 @@ int main() {
     // We use an existing .oni file to simulate a oni context environment.
     Player player;
     nRetVal = context.OpenFileRecording(
-        "/home/yixing/repo/ElasticReconstruction/input.oni", player);
+        "/home/yixing/repo/ElasticReconstruction/office1.oni", player);
     CHECK_RC(nRetVal, "Open input file");
 
     DepthGenerator depth;
