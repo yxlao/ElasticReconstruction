@@ -139,6 +139,15 @@ else()
     message(FATAL_ERROR "OpenMP not found.")
 endif()
 
+# Dependency: OpenNI
+find_package(OpenNI)
+if (OPENNI_FOUND)
+  set(HAVE_OPENNI ON)
+  include_directories(SYSTEM ${OPENNI_INCLUDE_DIRS})
+else()
+    message(FATAL_ERROR "OPENNI_FOUND: ${OPENNI_FOUND}")
+endif()
+
 # CMake helper functions.
 function(elastic_reconstruction_set_global_properties target)
     # Libraries need to be compiled with position independent code
