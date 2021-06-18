@@ -19,7 +19,10 @@ def down_sample(pcd, voxel_size=0.05, nb_neighbors=20, std_ratio=2.0):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("--voxel_size", dest="voxel_size", default=0.05)
+    parser.add_argument("--voxel_size",
+                        dest="voxel_size",
+                        default=0.05,
+                        type=float)
     args = parser.parse_args()
     print(f"Downsampling to voxel size {args.voxel_size}")
 
