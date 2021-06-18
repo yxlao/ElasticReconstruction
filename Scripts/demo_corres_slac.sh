@@ -33,7 +33,7 @@ python downsample.py --voxel_size 0.05
 ${BuildCorrespondence} \
     --reg_traj ${SANDBOX_DIR}/pcds/reg_refine_all.log \
     --registration \
-    --reg_dist 0.5 \
+    --reg_dist 0.05 \
     --reg_ratio 0.25 \
     --reg_num 0 \
     --save_xyzn
