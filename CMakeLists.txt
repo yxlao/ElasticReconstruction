@@ -147,6 +147,15 @@ else()
     message(FATAL_ERROR "OPENNI_FOUND: ${OPENNI_FOUND}")
 endif()
 
+# Dependency: OpenNI
+find_package(OpenCV)
+if (OpenCV_FOUND)
+    message(STATUS "OpenCV_FOUND: ${OpenCV_FOUND}")
+    message(STATUS "OpenCV_INCLUDE_DIRS: ${OpenCV_INCLUDE_DIRS}")
+else()
+    message(FATAL_ERROR "OpenCV_FOUND: ${OpenCV_FOUND}")
+endif()
+
 # CMake helper functions.
 function(elastic_reconstruction_set_global_properties target)
     # Libraries need to be compiled with position independent code
@@ -171,6 +180,7 @@ function(elastic_reconstruction_set_global_properties target)
         ${EIGEN_INCLUDE_DIRS}
         ${G2O_INCLUDE_DIR}
         ${OPENNI_INCLUDE_DIRS}
+        ${OpenCV_INCLUDE_DIRS}
     )
     target_link_directories(${target} PRIVATE
         ${PCL_LIBRARY_DIRS}
@@ -184,6 +194,7 @@ function(elastic_reconstruction_set_global_properties target)
         ${CHOLMOD_LIBRARIES}
         ${G2O_LIBRARIES}
         ${OPENNI_LIBRARIES}
+        ${OpenCV_LIBS}
         OpenMP::OpenMP_CXX
     )
     target_compile_definitions(${target} PRIVATE
