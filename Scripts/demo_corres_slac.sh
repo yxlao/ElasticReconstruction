@@ -28,6 +28,8 @@ echo "OMP_NUM_THREADS: ${OMP_NUM_THREADS}"
 #     Sandbox/pcds/corres_xx_xx.txt       * 221 # 01∶46∶40 AM PDT (the last one)
 #     Sandbox/reg_output.log                    # 01∶46∶35 AM PDT
 #     Sandbox/reg_output.info (optional)
+echo "Downsampling point cloud, saving to SandboxDownsample/pcds."
+python downsample.py --voxel_size 0.05
 ${BuildCorrespondence} \
     --reg_traj ${SANDBOX_DIR}/pcds/reg_refine_all.log \
     --registration \
@@ -47,6 +49,8 @@ mv reg_output.* ${SANDBOX_DIR}/
 #     Sandbox/pose_slac.log                     # 01∶52∶21 AM PDT
 #     Sandbox/output.ctr                        # 01∶52∶21 AM PDT
 #     Sandbox/sample.pcd                        # 01∶52∶22 AM PDT
+echo "Recovering to full-res pointcloud, saving to SandboxDownsample/pcds."
+cp ${SCRIPT_DIR}/../SandboxFullRes/pcds/cloud_bin_*.pcd ${SANDBOX_DIR}/pcds
 NUM_PCDS=$(ls ${SANDBOX_DIR}/pcds/cloud_bin_*.pcd -l | wc -l | tr -d ' ')
 # ${FragmentOptimizer} --rigid \
 #     --rgbdslam ${SANDBOX_DIR}/init.log \
