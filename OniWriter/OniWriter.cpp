@@ -1,8 +1,10 @@
 #include <iostream>
 #include <string>
 #include <cstdio>
+#include <iomanip>
 
 #include <XnCppWrapper.h>
+#include <opencv2/opencv.hpp>
 
 #define CHECK_RC(rc, what)                                                     \
     if (rc != XN_STATUS_OK) {                                                  \
@@ -60,65 +62,70 @@ int main() {
     nRetVal = recorder.AddNodeToRecording(mockColor);
     CHECK_RC(nRetVal, "Add node to recording");
 
-    // for (int i = 0; i < frame_num; ++i) {
-    //     std::stringstream ss;
-    //     ss << depth_dir << i << ".png";
-    //     std::string filepath_depth = ss.str();
+    for (int i = 0; i < frame_num; ++i) {
+        std::stringstream ss;
+        ss << depth_dir << "/" << std::setfill('0') << std::setw(5) << i
+           << ".png";
+        std::string filepath_depth = ss.str();
 
-    //     std::stringstream sss;
-    //     sss << color_dir << i << ".png";
-    //     std::string filepath_color = sss.str();
+        std::stringstream sss;
+        sss << color_dir << "/" << std::setfill('0') << std::setw(5) << i
+            << ".jpg";
+        std::string filepath_color = sss.str();
 
-    //     cv::Mat depth_img = cv::imread(
-    //         filepath_depth, CV_LOAD_IMAGE_ANYCOLOR | CV_LOAD_IMAGE_ANYDEPTH);
-    //     depth_img.convertTo(depth_img, CV_16U);
+        std::cout << "filepath_depth: " << filepath_depth << std::endl;
+        std::cout << "filepath_color: " << filepath_color << std::endl;
 
-    //     cv::Mat color_img = cv::imread(
-    //         filepath_color, CV_LOAD_IMAGE_ANYCOLOR | CV_LOAD_IMAGE_ANYDEPTH);
-    //     color_img.convertTo(color_img, CV_8UC3);
+        cv::Mat depth_img = cv::imread(
+            filepath_depth, CV_LOAD_IMAGE_ANYCOLOR | CV_LOAD_IMAGE_ANYDEPTH);
+        depth_img.convertTo(depth_img, CV_16U);
 
-    //     // depth
-    //     DepthMetaData depthMD;
-    //     XnUInt32 &di = depthMD.FrameID();
-    //     di = i; // set frame id.
-    //     XnUInt64 &dt = depthMD.Timestamp();
-    //     dt = i * 30000 + 1; // set a proper timestamp.
+        cv::Mat color_img = cv::imread(
+            filepath_color, CV_LOAD_IMAGE_ANYCOLOR | CV_LOAD_IMAGE_ANYDEPTH);
+        color_img.convertTo(color_img, CV_8UC3);
 
-    //     depthMD.AllocateData(depth_img.cols, depth_img.rows);
-    //     DepthMap &depthMap = depthMD.WritableDepthMap();
-    //     for (XnUInt32 y = 0; y < depthMap.YRes(); y++) {
-    //         for (XnUInt32 x = 0; x < depthMap.XRes(); x++) {
-    //             depthMap(x, y) = depth_img.at<ushort>(y, x);
-    //         }
-    //     }
-    //     nRetVal = mockDepth.SetData(depthMD);
-    //     CHECK_RC(nRetVal, "Set mock node new data");
+        // // depth
+        // DepthMetaData depthMD;
+        // XnUInt32 &di = depthMD.FrameID();
+        // di = i; // set frame id.
+        // XnUInt64 &dt = depthMD.Timestamp();
+        // dt = i * 30000 + 1; // set a proper timestamp.
 
-    //     // color
-    //     ImageMetaData colorMD;
-    //     XnUInt32 &ci = colorMD.FrameID();
-    //     ci = i;
-    //     XnUInt64 &ct = colorMD.Timestamp();
-    //     ct = i * 30000 + 1;
+        // depthMD.AllocateData(depth_img.cols, depth_img.rows);
+        // DepthMap &depthMap = depthMD.WritableDepthMap();
+        // for (XnUInt32 y = 0; y < depthMap.YRes(); y++) {
+        //     for (XnUInt32 x = 0; x < depthMap.XRes(); x++) {
+        //         depthMap(x, y) = depth_img.at<ushort>(y, x);
+        //     }
+        // }
+        // nRetVal = mockDepth.SetData(depthMD);
+        // CHECK_RC(nRetVal, "Set mock node new data");
 
-    //     colorMD.AllocateData(color_img.cols, color_img.rows,
-    //                          XN_PIXEL_FORMAT_RGB24);
-    //     RGB24Map &imageMap = colorMD.WritableRGB24Map();
-    //     for (XnUInt32 y = 0; y < imageMap.YRes(); y++) {
-    //         for (XnUInt32 x = 0; x < imageMap.XRes(); x++) {
-    //             cv::Vec3b intensity = color_img.at<cv::Vec3b>(y, x);
-    //             imageMap(x, y).nBlue = (XnUInt8)intensity.val[0];
-    //             imageMap(x, y).nGreen = (XnUInt8)intensity.val[1];
-    //             imageMap(x, y).nRed = (XnUInt8)intensity.val[2];
-    //         }
-    //     }
-    //     nRetVal = mockColor.SetData(colorMD);
-    //     CHECK_RC(nRetVal, "Set mock node new data");
+        // // color
+        // ImageMetaData colorMD;
+        // XnUInt32 &ci = colorMD.FrameID();
+        // ci = i;
+        // XnUInt64 &ct = colorMD.Timestamp();
+        // ct = i * 30000 + 1;
 
-    //     recorder.Record();
-    //     printf("Recorded: frame %u out of %u\r", depthMD.FrameID(),
-    //     frame_num);
-    // }
+        // colorMD.AllocateData(color_img.cols, color_img.rows,
+        //                      XN_PIXEL_FORMAT_RGB24);
+        // RGB24Map &imageMap = colorMD.WritableRGB24Map();
+        // for (XnUInt32 y = 0; y < imageMap.YRes(); y++) {
+        //     for (XnUInt32 x = 0; x < imageMap.XRes(); x++) {
+        //         cv::Vec3b intensity = color_img.at<cv::Vec3b>(y, x);
+        //         imageMap(x, y).nBlue = (XnUInt8)intensity.val[0];
+        //         imageMap(x, y).nGreen = (XnUInt8)intensity.val[1];
+        //         imageMap(x, y).nRed = (XnUInt8)intensity.val[2];
+        //     }
+        // }
+        // nRetVal = mockColor.SetData(colorMD);
+        // CHECK_RC(nRetVal, "Set mock node new data");
+
+        // recorder.Record();
+        // printf("Recorded: frame %u out of %u\r", depthMD.FrameID(),
+        // frame_num);
+    }
 
     std::cout << "Done" << std::endl;
 }
