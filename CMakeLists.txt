@@ -147,13 +147,13 @@ else()
     message(FATAL_ERROR "OPENNI_FOUND: ${OPENNI_FOUND}")
 endif()
 
-# Dependency: OpenNI
-find_package(OpenCV)
-if (OpenCV_FOUND)
-    message(STATUS "OpenCV_FOUND: ${OpenCV_FOUND}")
-    message(STATUS "OpenCV_INCLUDE_DIRS: ${OpenCV_INCLUDE_DIRS}")
+# OpenCV only used in kinfu_large_scale, check import here
+include(${ELASTIC_RECONSTRUCTION_DEPS_INSTALL_PREFIX}/share/OpenCV/OpenCVConfig.cmake)
+if (NOT OpenCV_INCLUDE_DIRS)
+  message(FATAL_ERROR "OpenCV_INCLUDE_DIRS: ${OpenCV_INCLUDE_DIRS}")
 else()
-    message(FATAL_ERROR "OpenCV_FOUND: ${OpenCV_FOUND}")
+    message(STATUS "OpenCV_INCLUDE_DIRS: ${OpenCV_INCLUDE_DIRS}")
+    message(STATUS "OpenCV_LIBS: ${OpenCV_LIBS}")
 endif()
 
 # CMake helper functions.

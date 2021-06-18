@@ -19,3 +19,6 @@ include(${PROJECT_SOURCE_DIR}/suitesparse/suitesparse.cmake)
 include(${PROJECT_SOURCE_DIR}/g2o/g2o.cmake)
 add_dependencies(ext_g2o ext_eigen)
 add_dependencies(ext_g2o ext_suitesparse)
+
+# OpenCV
+include(${PROJECT_SOURCE_DIR}/opencv/opencv.cmake)
