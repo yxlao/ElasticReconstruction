@@ -32,7 +32,7 @@ int main() {
     // We use an existing .oni file to simulate a oni context environment.
     Player player;
     nRetVal = context.OpenFileRecording(
-        "/home/yixing/data/augmented_icl-nuim/livingroom1.oni", player);
+        "/home/yixing/repo/ElasticReconstruction/input.oni", player);
     CHECK_RC(nRetVal, "Open input file");
 
     DepthGenerator depth;
@@ -84,47 +84,46 @@ int main() {
             filepath_color, CV_LOAD_IMAGE_ANYCOLOR | CV_LOAD_IMAGE_ANYDEPTH);
         color_img.convertTo(color_img, CV_8UC3);
 
-        // // depth
-        // DepthMetaData depthMD;
-        // XnUInt32 &di = depthMD.FrameID();
-        // di = i; // set frame id.
-        // XnUInt64 &dt = depthMD.Timestamp();
-        // dt = i * 30000 + 1; // set a proper timestamp.
+        // depth
+        DepthMetaData depthMD;
+        XnUInt32 &di = depthMD.FrameID();
+        di = i; // set frame id.
+        XnUInt64 &dt = depthMD.Timestamp();
+        dt = i * 30000 + 1; // set a proper timestamp.
 
-        // depthMD.AllocateData(depth_img.cols, depth_img.rows);
-        // DepthMap &depthMap = depthMD.WritableDepthMap();
-        // for (XnUInt32 y = 0; y < depthMap.YRes(); y++) {
-        //     for (XnUInt32 x = 0; x < depthMap.XRes(); x++) {
-        //         depthMap(x, y) = depth_img.at<ushort>(y, x);
-        //     }
-        // }
-        // nRetVal = mockDepth.SetData(depthMD);
-        // CHECK_RC(nRetVal, "Set mock node new data");
+        depthMD.AllocateData(depth_img.cols, depth_img.rows);
+        DepthMap &depthMap = depthMD.WritableDepthMap();
+        for (XnUInt32 y = 0; y < depthMap.YRes(); y++) {
+            for (XnUInt32 x = 0; x < depthMap.XRes(); x++) {
+                depthMap(x, y) = depth_img.at<ushort>(y, x);
+            }
+        }
+        nRetVal = mockDepth.SetData(depthMD);
+        CHECK_RC(nRetVal, "Set mock node new data");
 
-        // // color
-        // ImageMetaData colorMD;
-        // XnUInt32 &ci = colorMD.FrameID();
-        // ci = i;
-        // XnUInt64 &ct = colorMD.Timestamp();
-        // ct = i * 30000 + 1;
+        // color
+        ImageMetaData colorMD;
+        XnUInt32 &ci = colorMD.FrameID();
+        ci = i;
+        XnUInt64 &ct = colorMD.Timestamp();
+        ct = i * 30000 + 1;
 
-        // colorMD.AllocateData(color_img.cols, color_img.rows,
-        //                      XN_PIXEL_FORMAT_RGB24);
-        // RGB24Map &imageMap = colorMD.WritableRGB24Map();
-        // for (XnUInt32 y = 0; y < imageMap.YRes(); y++) {
-        //     for (XnUInt32 x = 0; x < imageMap.XRes(); x++) {
-        //         cv::Vec3b intensity = color_img.at<cv::Vec3b>(y, x);
-        //         imageMap(x, y).nBlue = (XnUInt8)intensity.val[0];
-        //         imageMap(x, y).nGreen = (XnUInt8)intensity.val[1];
-        //         imageMap(x, y).nRed = (XnUInt8)intensity.val[2];
-        //     }
-        // }
-        // nRetVal = mockColor.SetData(colorMD);
-        // CHECK_RC(nRetVal, "Set mock node new data");
+        colorMD.AllocateData(color_img.cols, color_img.rows,
+                             XN_PIXEL_FORMAT_RGB24);
+        RGB24Map &imageMap = colorMD.WritableRGB24Map();
+        for (XnUInt32 y = 0; y < imageMap.YRes(); y++) {
+            for (XnUInt32 x = 0; x < imageMap.XRes(); x++) {
+                cv::Vec3b intensity = color_img.at<cv::Vec3b>(y, x);
+                imageMap(x, y).nBlue = (XnUInt8)intensity.val[0];
+                imageMap(x, y).nGreen = (XnUInt8)intensity.val[1];
+                imageMap(x, y).nRed = (XnUInt8)intensity.val[2];
+            }
+        }
+        nRetVal = mockColor.SetData(colorMD);
+        CHECK_RC(nRetVal, "Set mock node new data");
 
-        // recorder.Record();
-        // printf("Recorded: frame %u out of %u\r", depthMD.FrameID(),
-        // frame_num);
+        recorder.Record();
+        printf("Recorded: frame %u out of %u\n", depthMD.FrameID(), frame_num);
     }
 
     std::cout << "Done" << std::endl;
