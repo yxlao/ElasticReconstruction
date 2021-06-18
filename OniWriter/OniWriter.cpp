@@ -1,15 +1,31 @@
 #include <iostream>
 #include <string>
+#include <cstdio>
+
+#include <XnCppWrapper.h>
+
+#define CHECK_RC(rc, what)                                                     \
+    if (rc != XN_STATUS_OK) {                                                  \
+        printf("%s failed: %s\n", what, xnGetStatusString(rc));                \
+        return rc;                                                             \
+    }
 
 int main() {
-    // using namespace std;
-    // string color_dir = "your_color_dir/", depth_dir = "your_depth_dir/";
-    // int frame_num = 100;
+    using namespace std;
+    using namespace xn;
 
-    // XnStatus nRetVal = XN_STATUS_OK;
-    // Context context;
-    // nRetVal = context.Init();
-    // CHECK_RC(nRetVal, "Init");
+    string color_dir =
+        "/home/yixing/repo/Open3D/examples/python/reconstruction_system/"
+        "dataset/redwood_simulated/livingroom1-simulated/color";
+    string depth_dir =
+        "/home/yixing/repo/Open3D/examples/python/reconstruction_system/"
+        "dataset/redwood_simulated/livingroom1-simulated/depth";
+    int frame_num = 2870;
+
+    XnStatus nRetVal = XN_STATUS_OK;
+    Context context;
+    nRetVal = context.Init();
+    CHECK_RC(nRetVal, "Init");
 
     // Player player;
     // nRetVal = context.OpenFileRecording(
