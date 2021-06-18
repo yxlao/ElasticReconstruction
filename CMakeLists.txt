@@ -142,8 +142,7 @@ endif()
 # Dependency: OpenNI
 find_package(OpenNI)
 if (OPENNI_FOUND)
-  set(HAVE_OPENNI ON)
-  include_directories(SYSTEM ${OPENNI_INCLUDE_DIRS})
+    message(STATUS "OPENNI_FOUND: ${OPENNI_FOUND}")
 else()
     message(FATAL_ERROR "OPENNI_FOUND: ${OPENNI_FOUND}")
 endif()
@@ -171,6 +170,7 @@ function(elastic_reconstruction_set_global_properties target)
         ${Boost_INCLUDE_DIRS}
         ${EIGEN_INCLUDE_DIRS}
         ${G2O_INCLUDE_DIR}
+        ${OPENNI_INCLUDE_DIRS}
     )
     target_link_directories(${target} PRIVATE
         ${PCL_LIBRARY_DIRS}
@@ -183,6 +183,7 @@ function(elastic_reconstruction_set_global_properties target)
         boost_program_options # TODO: hard-coded for now
         ${CHOLMOD_LIBRARIES}
         ${G2O_LIBRARIES}
+        ${OPENNI_LIBRARIES}
         OpenMP::OpenMP_CXX
     )
     target_compile_definitions(${target} PRIVATE
