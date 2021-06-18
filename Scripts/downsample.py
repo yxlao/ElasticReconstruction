@@ -6,7 +6,7 @@ pwd = Path(os.path.dirname(os.path.realpath(__file__)))
 sandbox_dir = pwd.parent / "Sandbox"
 
 
-def down_sample(pcd, voxel_size=0.05, nb_neighbors=20, std_ratio=2.0):
+def down_sample(pcd, voxel_size=0.01, nb_neighbors=20, std_ratio=2.0):
     pcd_down = pcd.voxel_down_sample(voxel_size)
     pcd_down, _ = pcd_down.remove_statistical_outlier(nb_neighbors, std_ratio)
     pcd_down.estimate_normals()
@@ -18,8 +18,8 @@ if __name__ == "__main__":
     # pcd->RemoveStatisticalOutliers(20, 2.0);
     # pcd->EstimateNormals();
 
-    src_dir = sandbox_dir / "pcds"
-    dst_dir = sandbox_dir / "pcds_down"
+    src_dir = pwd.parent / "SandboxFullRes" / "pcds"
+    dst_dir = pwd.parent / "SandboxDownsample" / "pcds"
     dst_dir.mkdir(parents=True, exist_ok=True)  # OK if already exists.
 
     for src_file in sorted(src_dir.glob('*.pcd')):
