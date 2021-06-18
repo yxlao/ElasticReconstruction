@@ -4,6 +4,11 @@ set -eu
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 source ${SCRIPT_DIR}/setup_env.sh
 
+# Customizable Sandbox directory
+SANDBOX_DIR=${SCRIPT_DIR}/../Sandbox # Default
+# SANDBOX_DIR=${SCRIPT_DIR}/../SandboxFullRes
+# SANDBOX_DIR=${SCRIPT_DIR}/../SandboxDownsample
+
 # Number of CPU cores, not counting hyper-threading:
 # https://stackoverflow.com/a/6481016/1255535
 #
@@ -21,11 +26,11 @@ echo "OMP_NUM_THREADS: ${OMP_NUM_THREADS}"
 # Outputs:
 #     Sandbox/pcds/cloud_bin_xxx.pcd * 57
 #     Sandbox/100-0.log                             # 08∶39∶11 PM PDT
-${pcl_kinfu_largeScale} -r -ic -sd 10 -oni ../Sandbox/input.oni -vs 4 \
-    --fragment 25 --rgbd_odometry --record_log ../Sandbox/100-0.log \
+${pcl_kinfu_largeScale} -r -ic -sd 10 -oni ${SANDBOX_DIR}/input.oni -vs 4 \
+    --fragment 25 --rgbd_odometry --record_log ${SANDBOX_DIR}/100-0.log \
     --camera longrange.param
-mkdir -p ../Sandbox/pcds/
-mv cloud_bin* ../Sandbox/pcds/
+mkdir -p ${SANDBOX_DIR}/pcds/
+mv cloud_bin* ${SANDBOX_DIR}/pcds/
 
 # Part II: Global registration
 # Inputs:
@@ -38,11 +43,11 @@ mv cloud_bin* ../Sandbox/pcds/
 #     Sandbox/result.txt    # do_all()              # 01∶09∶55 AM PDT
 #     Sandbox/result.info   # do_all()              # 01∶09∶55 AM PDT
 #     Sandbox/pose.log      # create_pose_traj()    # 01∶09∶55 AM PDT
-${GlobalRegistration} ../Sandbox/pcds/ ../Sandbox/100-0.log 50
-mv init.log ../Sandbox/
-mv pose.log ../Sandbox/
-mv odometry.* ../Sandbox/
-mv result.* ../Sandbox/
+${GlobalRegistration} ${SANDBOX_DIR}/pcds/ ${SANDBOX_DIR}/100-0.log 50
+mv init.log ${SANDBOX_DIR}/
+mv pose.log ${SANDBOX_DIR}/
+mv odometry.* ${SANDBOX_DIR}/
+mv result.* ${SANDBOX_DIR}/
 
 # Part III: Graph optimization
 # Inputs:
@@ -58,13 +63,13 @@ mv result.* ../Sandbox/
 #     Sandbox/pcds/reg_refine_all.log           # 01∶09∶55 AM PDT
 loop_remain_log_file_
 ${GraphOptimizer} -w 100 \
-    --odometry ../Sandbox/odometry.log \
-    --odometryinfo ../Sandbox/odometry.info \
-    --loop ../Sandbox/result.txt \
-    --loopinfo ../Sandbox/result.info \
-    --pose ../Sandbox/pose.log \
-    --keep ../Sandbox/keep.log \
-    --refine ../Sandbox/pcds/reg_refine_all.log
+    --odometry ${SANDBOX_DIR}/odometry.log \
+    --odometryinfo ${SANDBOX_DIR}/odometry.info \
+    --loop ${SANDBOX_DIR}/result.txt \
+    --loopinfo ${SANDBOX_DIR}/result.info \
+    --pose ${SANDBOX_DIR}/pose.log \
+    --keep ${SANDBOX_DIR}/keep.log \
+    --refine ${SANDBOX_DIR}/pcds/reg_refine_all.log
 
 # Part IV: Build correspondence
 # Inputs:
@@ -76,13 +81,13 @@ ${GraphOptimizer} -w 100 \
 #     Sandbox/reg_output.log                    # 01∶46∶35 AM PDT
 #     Sandbox/reg_output.info (optional)
 ${BuildCorrespondence} \
-    --reg_traj ../Sandbox/pcds/reg_refine_all.log \
+    --reg_traj ${SANDBOX_DIR}/pcds/reg_refine_all.log \
     --registration \
     --reg_dist 0.05 \
     --reg_ratio 0.25 \
     --reg_num 0 \
     --save_xyzn
-mv reg_output.* ../Sandbox/
+mv reg_output.* ${SANDBOX_DIR}/
 
 # Part V: SLAC (or rigid) optimization
 # Inputs:
@@ -94,28 +99,28 @@ mv reg_output.* ../Sandbox/
 #     Sandbox/pose_slac.log                     # 01∶52∶21 AM PDT
 #     Sandbox/output.ctr                        # 01∶52∶21 AM PDT
 #     Sandbox/sample.pcd                        # 01∶52∶22 AM PDT
-NUM_PCDS=$(ls ../Sandbox/pcds/cloud_bin_*.pcd -l | wc -l | tr -d ' ')
+NUM_PCDS=$(ls ${SANDBOX_DIR}/pcds/cloud_bin_*.pcd -l | wc -l | tr -d ' ')
 # ${FragmentOptimizer} --rigid \
-#     --rgbdslam ../Sandbox/init.log \
-#     --registration ../Sandbox/reg_output.log \
-#     --dir ../Sandbox/pcds/ \
+#     --rgbdslam ${SANDBOX_DIR}/init.log \
+#     --registration ${SANDBOX_DIR}/reg_output.log \
+#     --dir ${SANDBOX_DIR}/pcds/ \
 #     --num $NUM_PCDS \
 #     --resolution 12 \
 #     --iteration 10 \
 #     --length 4.0 \
 #     --write_xyzn_sample 10
 ${FragmentOptimizer} --slac \
-    --rgbdslam ../Sandbox/init.log \
-    --registration ../Sandbox/reg_output.log \
-    --dir ../Sandbox/pcds/ \
+    --rgbdslam ${SANDBOX_DIR}/init.log \
+    --registration ${SANDBOX_DIR}/reg_output.log \
+    --dir ${SANDBOX_DIR}/pcds/ \
     --num $NUM_PCDS \
     --resolution 12 \
     --iteration 10 \
     --length 4.0 \
     --write_xyzn_sample 10
-mv pose.log ../Sandbox/pose_slac.log
-mv output.ctr ../Sandbox/
-mv sample.pcd ../Sandbox/
+mv pose.log ${SANDBOX_DIR}/pose_slac.log
+mv output.ctr ${SANDBOX_DIR}/
+mv sample.pcd ${SANDBOX_DIR}/
 
 # Part VI: Integration
 # Inputs:
@@ -126,13 +131,13 @@ mv sample.pcd ../Sandbox/
 #     Scripts/longrange.param
 # Outputs:
 #     Scripts/world.pcd
-${Integrate} --pose_traj ../Sandbox/pose_slac.log \
-    --seg_traj ../Sandbox/100-0.log \
-    --ctr ../Sandbox/output.ctr \
+${Integrate} --pose_traj ${SANDBOX_DIR}/pose_slac.log \
+    --seg_traj ${SANDBOX_DIR}/100-0.log \
+    --ctr ${SANDBOX_DIR}/output.ctr \
     --num ${NUM_PCDS} \
     --resolution 12 \
     --camera longrange.param \
-    -oni ../Sandbox/input.oni \
+    -oni ${SANDBOX_DIR}/input.oni \
     --length 4.0 \
     --interval 50
 
@@ -142,9 +147,9 @@ ${Integrate} --pose_traj ../Sandbox/pose_slac.log \
 # Outputs:
 #     Sandbox/ply/mesh_xx.ply * 7
 ${pcl_kinfu_largeScale_mesh_output} world.pcd -vs 4
-mkdir ../Sandbox/ply/
-mv *.ply ../Sandbox/ply/
-mv world.pcd ../Sandbox/
+mkdir ${SANDBOX_DIR}/ply/
+mv *.ply ${SANDBOX_DIR}/ply/
+mv world.pcd ${SANDBOX_DIR}/
 
 # Part VIII: Visualization
 # MeshLab
