@@ -27,11 +27,11 @@ int main() {
     nRetVal = context.Init();
     CHECK_RC(nRetVal, "Init");
 
-    // Player player;
-    // nRetVal = context.OpenFileRecording(
-    //     "input.oni", player); // we use existence .oni file to simulate a oni
-    //                           // context environment.
-    // CHECK_RC(nRetVal, "Open input file");
+    // We use an existing .oni file to simulate a oni context environment.
+    Player player;
+    nRetVal = context.OpenFileRecording(
+        "/home/yixing/data/augmented_icl-nuim/livingroom1.oni", player);
+    CHECK_RC(nRetVal, "Open input file");
 
     // DepthGenerator depth;
     // ImageGenerator color;
@@ -119,4 +119,6 @@ int main() {
     //     printf("Recorded: frame %u out of %u\r", depthMD.FrameID(),
     //     frame_num);
     // }
+
+    std::cout << "Done" << std::endl;
 }
