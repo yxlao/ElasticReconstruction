@@ -33,32 +33,32 @@ int main() {
         "/home/yixing/data/augmented_icl-nuim/livingroom1.oni", player);
     CHECK_RC(nRetVal, "Open input file");
 
-    // DepthGenerator depth;
-    // ImageGenerator color;
-    // nRetVal = context.FindExistingNode(XN_NODE_TYPE_IMAGE, color);
-    // CHECK_RC(nRetVal, "Find color generator");
+    DepthGenerator depth;
+    ImageGenerator color;
+    nRetVal = context.FindExistingNode(XN_NODE_TYPE_IMAGE, color);
+    CHECK_RC(nRetVal, "Find color generator");
 
-    // nRetVal = context.FindExistingNode(XN_NODE_TYPE_DEPTH, depth);
-    // CHECK_RC(nRetVal, "Find depth generator");
+    nRetVal = context.FindExistingNode(XN_NODE_TYPE_DEPTH, depth);
+    CHECK_RC(nRetVal, "Find depth generator");
 
-    // MockDepthGenerator mockDepth;
-    // nRetVal = mockDepth.CreateBasedOn(depth);
-    // CHECK_RC(nRetVal, "Create mock depth node");
-    // MockImageGenerator mockColor;
-    // mockColor.CreateBasedOn(color);
-    // CHECK_RC(nRetVal, "Create mock color node");
+    MockDepthGenerator mockDepth;
+    nRetVal = mockDepth.CreateBasedOn(depth);
+    CHECK_RC(nRetVal, "Create mock depth node");
+    MockImageGenerator mockColor;
+    mockColor.CreateBasedOn(color);
+    CHECK_RC(nRetVal, "Create mock color node");
 
-    // Recorder recorder;
-    // nRetVal = recorder.Create(context);
-    // CHECK_RC(nRetVal, "Create recorder");
+    Recorder recorder;
+    nRetVal = recorder.Create(context);
+    CHECK_RC(nRetVal, "Create recorder");
 
-    // nRetVal = recorder.SetDestination(XN_RECORD_MEDIUM_FILE, "dst.oni");
-    // CHECK_RC(nRetVal, "Set recorder destination file");
+    nRetVal = recorder.SetDestination(XN_RECORD_MEDIUM_FILE, "dst.oni");
+    CHECK_RC(nRetVal, "Set recorder destination file");
 
-    // nRetVal = recorder.AddNodeToRecording(mockDepth);
-    // CHECK_RC(nRetVal, "Add node to recording");
-    // nRetVal = recorder.AddNodeToRecording(mockColor);
-    // CHECK_RC(nRetVal, "Add node to recording");
+    nRetVal = recorder.AddNodeToRecording(mockDepth);
+    CHECK_RC(nRetVal, "Add node to recording");
+    nRetVal = recorder.AddNodeToRecording(mockColor);
+    CHECK_RC(nRetVal, "Add node to recording");
 
     // for (int i = 0; i < frame_num; ++i) {
     //     std::stringstream ss;
