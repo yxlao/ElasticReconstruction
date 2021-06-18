@@ -1,12 +1,16 @@
 import open3d as o3d
 from pathlib import Path
 import os
+import argparse
 
 pwd = Path(os.path.dirname(os.path.realpath(__file__)))
 sandbox_dir = pwd.parent / "Sandbox"
 
 
-def down_sample(pcd, voxel_size=0.01, nb_neighbors=20, std_ratio=2.0):
+def down_sample(pcd, voxel_size=0.05, nb_neighbors=20, std_ratio=2.0):
+    # pcd = pcd->VoxelDownSample(params.voxel_size_);
+    # pcd->RemoveStatisticalOutliers(20, 2.0);
+    # pcd->EstimateNormals();
     pcd_down = pcd.voxel_down_sample(voxel_size)
     pcd_down, _ = pcd_down.remove_statistical_outlier(nb_neighbors, std_ratio)
     pcd_down.estimate_normals()
@@ -14,9 +18,13 @@ def down_sample(pcd, voxel_size=0.01, nb_neighbors=20, std_ratio=2.0):
 
 
 if __name__ == "__main__":
-    # pcd = pcd->VoxelDownSample(params.voxel_size_);
-    # pcd->RemoveStatisticalOutliers(20, 2.0);
-    # pcd->EstimateNormals();
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--voxel_size",
+                        dest="voxel_size",
+                        action="store_const",
+                        default=0.05)
+    args = parser.parse_args()
+    print(f"Downsampling to voxel size {args.voxel_size}")
 
     src_dir = pwd.parent / "SandboxFullRes" / "pcds"
     dst_dir = pwd.parent / "SandboxDownsample" / "pcds"
@@ -26,7 +34,7 @@ if __name__ == "__main__":
         dst_file = dst_dir / src_file.name
 
         pcd = o3d.io.read_point_cloud(str(src_file))
-        pcd_down = down_sample(pcd)
+        pcd_down = down_sample(pcd, voxel_size=args.voxel_size)
         print(f"# points : {len(pcd.points)} -> {len(pcd_down.points)}")
         print(f"# colors : {len(pcd.colors)} -> {len(pcd_down.colors)}")
         print(f"# normals: {len(pcd.normals)} -> {len(pcd_down.normals)}")
