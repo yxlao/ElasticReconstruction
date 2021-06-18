@@ -29,12 +29,14 @@ echo "OMP_NUM_THREADS: ${OMP_NUM_THREADS}"
 #     Sandbox/reg_output.log                    # 01∶46∶35 AM PDT
 #     Sandbox/reg_output.info (optional)
 echo "Downsampling point cloud, saving to SandboxDownsample/pcds."
-python downsample.py --voxel_size 0.05
+python downsample.py --voxel_size 0.05 # SLACOptimizerParams.voxel_size_
+# reg_dist=SLACOptimizerParams.distance_threshold_
+# reg_ratio=SLACOptimizerParams.fitness_threshold_
 ${BuildCorrespondence} \
     --reg_traj ${SANDBOX_DIR}/pcds/reg_refine_all.log \
     --registration \
-    --reg_dist 0.05 \
-    --reg_ratio 0.25 \
+    --reg_dist 0.07 \
+    --reg_ratio 0.3 \
     --reg_num 0 \
     --save_xyzn
 mv reg_output.* ${SANDBOX_DIR}/
@@ -64,10 +66,11 @@ ${FragmentOptimizer} --slac \
     --registration ${SANDBOX_DIR}/reg_output.log \
     --dir ${SANDBOX_DIR}/pcds/ \
     --num $NUM_PCDS \
-    --resolution 12 \
+    --resolution 8 \
     --iteration 10 \
     --length 4.0 \
-    --write_xyzn_sample 10
+    --write_xyzn_sample 10 \
+    --blacklistpair 1000  # If too large, all correspondence will be ingored
 mv pose.log ${SANDBOX_DIR}/pose_slac.log
 mv output.ctr ${SANDBOX_DIR}/
 mv sample.pcd ${SANDBOX_DIR}/
