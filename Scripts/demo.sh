@@ -61,7 +61,6 @@ mv result.* ${SANDBOX_DIR}/
 # Outputs:
 #     Sandbox/keep.log                          # 01∶09∶55 AM PDT
 #     Sandbox/pcds/reg_refine_all.log           # 01∶09∶55 AM PDT
-loop_remain_log_file_
 ${GraphOptimizer} -w 100 \
     --odometry ${SANDBOX_DIR}/odometry.log \
     --odometryinfo ${SANDBOX_DIR}/odometry.info \
