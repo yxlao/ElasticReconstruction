@@ -7,7 +7,7 @@ source ${SCRIPT_DIR}/setup_env.sh
 # Customizable Sandbox directory
 # SANDBOX_DIR=${SCRIPT_DIR}/../Sandbox # Default
 # SANDBOX_DIR=${SCRIPT_DIR}/../SandboxFullRes
-SANDBOX_DIR=${SCRIPT_DIR}/../SandboxDownsample
+SANDBOX_DIR=${SCRIPT_DIR}/../SandboxNoisyDownsample
 
 # Number of CPU cores, not counting hyper-threading:
 # https://stackoverflow.com/a/6481016/1255535
@@ -74,3 +74,24 @@ ${FragmentOptimizer} --slac \
 mv pose.log ${SANDBOX_DIR}/pose_slac.log
 mv output.ctr ${SANDBOX_DIR}/
 mv sample.pcd ${SANDBOX_DIR}/
+
+# Part VI: Integration
+# Inputs:
+#     Sandbox/pose_slac.log
+#     Sandbox/100-0.log
+#     Sandbox/output.ctr
+#     Sandbox/input.oni
+#     Scripts/longrange.param
+# Outputs:
+#     Scripts/world.pcd
+echo "To run: Integrate"
+${Integrate} --pose_traj ${SANDBOX_DIR}/pose_slac.log \
+    --seg_traj ${SANDBOX_DIR}/100-0.log \
+    --ctr ${SANDBOX_DIR}/output.ctr \
+    --num ${NUM_PCDS} \
+    --resolution 8 \
+    --camera longrange.param \
+    -oni ${SANDBOX_DIR}/input.oni \
+    --length 4.0 \
+    --interval 50
+echo "Done: Integrate"
