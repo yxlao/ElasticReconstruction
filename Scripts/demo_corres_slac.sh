@@ -4,6 +4,11 @@ set -eu
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 source ${SCRIPT_DIR}/setup_env.sh
 
+pushd ${SCRIPT_DIR}/../build
+make -j$(nproc)
+popd
+
+
 # Customizable Sandbox directory
 # SANDBOX_DIR=${SCRIPT_DIR}/../Sandbox # Default
 # SANDBOX_DIR=${SCRIPT_DIR}/../SandboxFullRes
@@ -99,3 +104,7 @@ ${Integrate} --pose_traj ${SANDBOX_DIR}/pose_slac.log \
     --length 4.0 \
     --interval 50
 echo "Done: Integrate"
+
+# Part VII: Extract mesh
+# Not needed here.
+mv world.pcd ${SANDBOX_DIR}/

@@ -469,6 +469,8 @@ void COptApp::OptimizeSLAC() {
         baseJJ *= default_weight;
 
         for (int itr = 0; itr < max_iteration_; itr++) {
+            pcl::ScopeTime time(
+                ("SLAC iteration " + std::to_string(itr)).c_str());
             Eigen::VectorXd thisJb(matrix_size_);
             Eigen::MatrixXd thisJJ(baseJJ.triangularView<Eigen::Upper>());
             Eigen::VectorXd result;
