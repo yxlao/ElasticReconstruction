@@ -21,13 +21,21 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--voxel_size",
                         dest="voxel_size",
+                        required=True,
                         default=0.05,
                         type=float)
+    parser.add_argument("--src_dir", dest="src_dir", required=True, type=str)
+    parser.add_argument("--dst_dir", dest="dst_dir", required=True, type=str)
     args = parser.parse_args()
-    print(f"Downsampling to voxel size {args.voxel_size}")
+    print(f"[downsample.py] voxel_size: {args.voxel_size}")
+    print(f"[downsample.py] src_dir   : {args.src_dir}")
+    print(f"[downsample.py] dst_dir   : {args.dst_dir}")
 
-    src_dir = pwd.parent / "SandboxFullRes" / "pcds"
-    dst_dir = pwd.parent / "SandboxDownsample" / "pcds"
+    if args.src_dir == args.dst_dir:
+        raise ValueError("src_dir cannot be the same as dst_dir")
+
+    src_dir = Path(args.src_dir)
+    dst_dir = Path(args.dst_dir)
     dst_dir.mkdir(parents=True, exist_ok=True)  # OK if already exists.
 
     for src_file in sorted(src_dir.glob('*.pcd')):
@@ -41,3 +49,8 @@ if __name__ == "__main__":
 
         o3d.io.write_point_cloud(str(dst_file), pcd_down)
         print(f"src: {src_file}->\ndst: {dst_file}")
+
+    print(f"[downsample.py] voxel_size: {args.voxel_size}")
+    print(f"[downsample.py] src_dir   : {args.src_dir}")
+    print(f"[downsample.py] dst_dir   : {args.dst_dir}")
+    print(f"[downsample.py] Downsampling done.")

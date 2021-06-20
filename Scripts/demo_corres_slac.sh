@@ -29,7 +29,11 @@ echo "OMP_NUM_THREADS: ${OMP_NUM_THREADS}"
 #     Sandbox/reg_output.log                    # 01∶46∶35 AM PDT
 #     Sandbox/reg_output.info (optional)
 echo "Downsampling point cloud, saving to SandboxDownsample/pcds."
-python downsample.py --voxel_size 0.05 # SLACOptimizerParams.voxel_size_
+python downsample.py \
+    --voxel_size 0.05 \
+    --src_dir ${SCRIPT_DIR}/../SandboxNoisyFullRes/pcds \
+    --dst_dir ${SANDBOX_DIR}/pcds
+
 # reg_dist=SLACOptimizerParams.distance_threshold_
 # reg_ratio=SLACOptimizerParams.fitness_threshold_
 ${BuildCorrespondence} \
