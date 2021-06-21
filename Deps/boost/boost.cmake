@@ -11,5 +11,5 @@ ExternalProject_Add(
     UPDATE_COMMAND ""
     CONFIGURE_COMMAND ./bootstrap.sh -prefix=<INSTALL_DIR>
     BUILD_COMMAND ""
-    INSTALL_COMMAND ./b2 toolset=gcc-4.8 cxxflags=-fPIC define=_GLIBCXX_USE_CXX11_ABI=0 link=static install -j ${NPROC}
+    INSTALL_COMMAND ./b2 --without-python toolset=gcc-4.8 cxxflags=-fPIC define=_GLIBCXX_USE_CXX11_ABI=0 link=static install -j ${NPROC}
 )
