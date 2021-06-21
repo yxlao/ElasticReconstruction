@@ -35,8 +35,9 @@ list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/CMake")
 # Dependencies shall be installed here.
 set(ELASTIC_RECONSTRUCTION_DEPS_INSTALL_PREFIX ${PROJECT_SOURCE_DIR}/Deps/build/install)
 
-# Dependency: PCL
-find_package(PCL 1.7 PATHS /home/yixing/pcl_install NO_DEFAULT_PATH)
+# Dependency: our custom version of PCL: yxlao/StanfordPCL
+# Assuming it is installed in ~/pcl_install
+find_package(PCL 1.7 PATHS $ENV{HOME}/pcl_install NO_DEFAULT_PATH)
 if(PCL_FOUND)
     message(STATUS "PCL found")
     message(STATUS "PCL_INCLUDE_DIRS: ${PCL_INCLUDE_DIRS}")
