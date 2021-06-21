@@ -31,6 +31,7 @@ if __name__ == "__main__":
     elif args.pointcloud:
         print(f"Loading pointcloud from: {args.pointcloud}")
         pcd = o3d.io.read_point_cloud(args.pointcloud)
+        pcd.estimate_normals()
         o3d.visualization.draw(pcd)
     else:
         raise ValueError("Must specify --mesh or --pointcloud")
