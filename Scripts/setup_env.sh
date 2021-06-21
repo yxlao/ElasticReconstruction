@@ -14,7 +14,11 @@ echo "BIN_DIR: ${BIN_DIR}"
 echo "PCL_BIN_DIR: ${PCL_BIN_DIR}"
 
 # Append lib path to LD_LIBRARY_PATH
-export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:${DEPS_LIB_DIR}
+if [ -z ${LD_LIBRARY_PATH+x} ]; then
+    export LD_LIBRARY_PATH=${DEPS_LIB_DIR}
+else
+    export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:${DEPS_LIB_DIR}
+fi
 
 export pcl_kinfu_largeScale=${PCL_BIN_DIR}/pcl_kinfu_largeScale
 export GlobalRegistration=${BIN_DIR}/GlobalRegistration
