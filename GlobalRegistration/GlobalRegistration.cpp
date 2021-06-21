@@ -407,9 +407,17 @@ int main(int argc, char *argv[]) {
         segment_traj.LoadFromFile(argv[2]);
         sscanf(argv[3], "%d", &fragment);
 
+        std::cout << "To run: create_init_traj()" << std::endl;
         create_init_traj();
+        std::cout << "Done: create_init_traj()" << std::endl;
+
+        std::cout << "To run: create_pose_traj()" << std::endl;
         create_pose_traj();
+        std::cout << "Done: create_pose_traj()" << std::endl;
+
+        std::cout << "To run: create_odometry()" << std::endl;
         create_odometry(num_of_pcds);
+        std::cout << "Done: create_odometry()" << std::endl;
 
         if (boost::filesystem::exists("result.txt")) {
             std::cout << "result.txt detected. skip global registration."

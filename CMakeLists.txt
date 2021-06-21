@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.16)
+cmake_minimum_required(VERSION 3.13)
 
 project(ElasticReconstruction LANGUAGES C CXX)
 
@@ -35,8 +35,9 @@ list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/CMake")
 # Dependencies shall be installed here.
 set(ELASTIC_RECONSTRUCTION_DEPS_INSTALL_PREFIX ${PROJECT_SOURCE_DIR}/Deps/build/install)
 
-# Dependency: PCL
-find_package(PCL 1.7 PATHS /home/yixing/pcl_install NO_DEFAULT_PATH)
+# Dependency: our custom version of PCL: yxlao/StanfordPCL
+# Assuming it is installed in ~/pcl_install
+find_package(PCL 1.7 PATHS $ENV{HOME}/pcl_install NO_DEFAULT_PATH)
 if(PCL_FOUND)
     message(STATUS "PCL found")
     message(STATUS "PCL_INCLUDE_DIRS: ${PCL_INCLUDE_DIRS}")
@@ -139,6 +140,23 @@ else()
     message(FATAL_ERROR "OpenMP not found.")
 endif()
 
+# Dependency: OpenNI
+find_package(OpenNI)
+if (OPENNI_FOUND)
+    message(STATUS "OPENNI_FOUND: ${OPENNI_FOUND}")
+else()
+    message(FATAL_ERROR "OPENNI_FOUND: ${OPENNI_FOUND}")
+endif()
+
+# OpenCV only used in kinfu_large_scale, check import here
+include(${ELASTIC_RECONSTRUCTION_DEPS_INSTALL_PREFIX}/share/OpenCV/OpenCVConfig.cmake)
+if (NOT OpenCV_INCLUDE_DIRS)
+  message(FATAL_ERROR "OpenCV_INCLUDE_DIRS: ${OpenCV_INCLUDE_DIRS}")
+else()
+    message(STATUS "OpenCV_INCLUDE_DIRS: ${OpenCV_INCLUDE_DIRS}")
+    message(STATUS "OpenCV_LIBS: ${OpenCV_LIBS}")
+endif()
+
 # CMake helper functions.
 function(elastic_reconstruction_set_global_properties target)
     # Libraries need to be compiled with position independent code
@@ -162,6 +180,8 @@ function(elastic_reconstruction_set_global_properties target)
         ${Boost_INCLUDE_DIRS}
         ${EIGEN_INCLUDE_DIRS}
         ${G2O_INCLUDE_DIR}
+        ${OPENNI_INCLUDE_DIRS}
+        ${OpenCV_INCLUDE_DIRS}
     )
     target_link_directories(${target} PRIVATE
         ${PCL_LIBRARY_DIRS}
@@ -174,6 +194,8 @@ function(elastic_reconstruction_set_global_properties target)
         boost_program_options # TODO: hard-coded for now
         ${CHOLMOD_LIBRARIES}
         ${G2O_LIBRARIES}
+        ${OPENNI_LIBRARIES}
+        ${OpenCV_LIBS}
         OpenMP::OpenMP_CXX
     )
     target_compile_definitions(${target} PRIVATE
@@ -222,3 +244,4 @@ add_subdirectory(FragmentOptimizer)
 add_subdirectory(GlobalRegistration)
 add_subdirectory(GraphOptimizer)
 add_subdirectory(Integrate)
+add_subdirectory(OniWriter)
