@@ -1,5 +1,6 @@
 #include <chrono>
 #include <exception>
+#include <pcl/common/time.h>
 
 #include "Integrate/IntegrateApp.h"
 
@@ -131,6 +132,10 @@ void CIntegrateApp::StartMainLoop(bool triggered_capture) {
     using namespace openni_wrapper;
     typedef boost::shared_ptr<DepthImage> DepthImagePtr;
     typedef boost::shared_ptr<Image> ImagePtr;
+
+    pcl::ScopeTime time(("SLAC integration of (including IO) " +
+                         std::to_string(traj_.data_.size()) + " frames")
+                            .c_str());
 
     SingletonAccumulativeTimer::GetInstance().Reset();
 
