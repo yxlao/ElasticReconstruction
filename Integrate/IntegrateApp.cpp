@@ -1,6 +1,65 @@
-#include <pcl/common/time.h>
+#include <chrono>
+#include <exception>
 
 #include "Integrate/IntegrateApp.h"
+
+///////////////////////////////////////////////////////////////////////////////
+class SingletonAccumulativeTimer {
+  public:
+    static SingletonAccumulativeTimer &GetInstance();
+    void Start();
+    void Pause();
+    void Reset();
+    double GetDuration();
+
+  private:
+    SingletonAccumulativeTimer();
+    ~SingletonAccumulativeTimer();
+    static double GetSystemTimeInMS();
+    bool is_running_;
+    double duration_time_ms_;
+    double start_time_ms_;
+};
+
+SingletonAccumulativeTimer &SingletonAccumulativeTimer::GetInstance() {
+    static SingletonAccumulativeTimer instance;
+    return instance;
+}
+void SingletonAccumulativeTimer::Start() {
+    if (is_running_) {
+        throw std::runtime_error("Timer is already running, cannot Start().");
+    }
+    start_time_ms_ = GetSystemTimeInMS();
+    is_running_ = true;
+}
+void SingletonAccumulativeTimer::Pause() {
+    if (!is_running_) {
+        throw std::runtime_error("Timer is not running, cannot Pause().");
+    }
+    // Accumulate time in duration_time_ms_.
+    double end_time_ms = GetSystemTimeInMS();
+    duration_time_ms_ = duration_time_ms_ + end_time_ms - start_time_ms_;
+    is_running_ = false;
+}
+void SingletonAccumulativeTimer::Reset() {
+    is_running_ = false;
+    duration_time_ms_ = 0;
+}
+double SingletonAccumulativeTimer::GetDuration() {
+    if (is_running_) {
+        throw std::runtime_error("Please call Pause() before GetDuration().");
+    }
+    return duration_time_ms_;
+}
+SingletonAccumulativeTimer::SingletonAccumulativeTimer()
+    : is_running_(false), duration_time_ms_(0) {}
+SingletonAccumulativeTimer::~SingletonAccumulativeTimer() {}
+double SingletonAccumulativeTimer::GetSystemTimeInMS() {
+    std::chrono::duration<double, std::milli> current_time =
+        std::chrono::high_resolution_clock::now().time_since_epoch();
+    return current_time.count();
+}
+///////////////////////////////////////////////////////////////////////////////
 
 CIntegrateApp::CIntegrateApp(pcl::Grabber &source, bool use_device)
     : cols_(640), rows_(480), volume_(cols_, rows_), capture_(source),
@@ -73,9 +132,7 @@ void CIntegrateApp::StartMainLoop(bool triggered_capture) {
     typedef boost::shared_ptr<DepthImage> DepthImagePtr;
     typedef boost::shared_ptr<Image> ImagePtr;
 
-    pcl::ScopeTime time(("SLAC integration of " +
-                         std::to_string(traj_.data_.size()) + " frames")
-                            .c_str());
+    SingletonAccumulativeTimer::GetInstance().Reset();
 
     boost::function<void(const ImagePtr &, const DepthImagePtr &,
                          float constant)>
@@ -109,6 +166,7 @@ void CIntegrateApp::StartMainLoop(bool triggered_capture) {
             } else {
                 ten_has_data_fail_then_we_call_it_a_day++;
             }
+            SingletonAccumulativeTimer::GetInstance().Start();
             try {
                 this->Execute(has_data);
 
@@ -128,6 +186,7 @@ void CIntegrateApp::StartMainLoop(bool triggered_capture) {
             if (ten_has_data_fail_then_we_call_it_a_day >= 10) {
                 exit_ = true;
             }
+            SingletonAccumulativeTimer::GetInstance().Pause();
         }
 
         if (!triggered_capture) {
@@ -137,6 +196,14 @@ void CIntegrateApp::StartMainLoop(bool triggered_capture) {
         volume_.SaveWorld(pcd_filename_);
 
         std::cout << "Total " << frame_id_ << " frames processed." << std::endl;
+
+        double total_time_without_io =
+            SingletonAccumulativeTimer::GetInstance().GetDuration();
+        std::cout << "total_time_without_io: " << total_time_without_io
+                  << std::endl;
+        std::cout << "total_frames: " << frame_id_ << std::endl;
+        std::cout << "avg time per frame wihout io: "
+                  << total_time_without_io / frame_id_ << std::endl;
 
         // volume_.SaveWorld( std::string( "world.pcd" ) );
     }
