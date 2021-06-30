@@ -1,3 +1,5 @@
+#include <pcl/common/time.h>
+
 #include "Integrate/IntegrateApp.h"
 
 CIntegrateApp::CIntegrateApp(pcl::Grabber &source, bool use_device)
@@ -70,6 +72,10 @@ void CIntegrateApp::StartMainLoop(bool triggered_capture) {
     using namespace openni_wrapper;
     typedef boost::shared_ptr<DepthImage> DepthImagePtr;
     typedef boost::shared_ptr<Image> ImagePtr;
+
+    pcl::ScopeTime time(("SLAC integration of " +
+                         std::to_string(traj_.data_.size()) + " frames")
+                            .c_str());
 
     boost::function<void(const ImagePtr &, const DepthImagePtr &,
                          float constant)>
