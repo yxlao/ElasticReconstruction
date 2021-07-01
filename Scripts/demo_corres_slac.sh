@@ -50,6 +50,9 @@ ${BuildCorrespondence} \
     --save_xyzn
 mv reg_output.* ${SANDBOX_DIR}/
 
+# Part IV.V: Report correspondence statistics
+python report_correspondence_stats.py ${SANDBOX_DIR}/reg_output.log
+
 # Part V: SLAC (or rigid) optimization
 # Inputs:
 #     Sandbox/pcds/cloud_bin_xxx.pcd * 57
